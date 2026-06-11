@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<title>Aula 4 — Continuidade e Bolzano — Preparação Mat A 12.º · 2026</title>
+
+<!-- MathJax para renderização de LaTeX -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+
+<style>
+  /* ============================================================
+     CSS pensado para impressão / gravação em A4
+     ============================================================ */
+  @page {
+    size: A4 portrait;
+    margin: 18mm 16mm 18mm 16mm;
+  }
+  @media print {
+    body { background: white !important; }
+    .pagina { box-shadow: none !important; margin: 0 !important; }
+    .no-print { display: none !important; }
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: #2C2C2A;
+    font-size: 11pt;
+    line-height: 1.45;
+    background: #f3f3ef;
+  }
+
+   /* Container A4 — para visualização em ecrã */
+  .pagina {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 18mm 16mm;
+    margin: 0 auto 6mm auto;
+    background: white;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+    page-break-after: always;
+    position: relative;
+    /* --- NOVAS PROPRIEDADES --- */
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  .pagina:last-child { page-break-after: auto; }
+
+  /* Cabeçalho de página */
+  .header-pagina {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 6pt;
+    border-bottom: 0.5pt solid #999;
+    font-size: 9pt;
+    color: #666;
+    margin-bottom: 14pt;
+  }
+  .header-pagina .esquerda { font-weight: 500; }
+  .header-pagina .direita { letter-spacing: 0.3pt; }
+
+  /* Capa */
+  .capa {
+    text-align: center;
+    padding-top: 5mm;
+  }
+  .capa h1 {
+    font-size: 24pt;
+    font-weight: 500;
+    color: #1F4E79;
+    margin: 0 0 8pt;
+    letter-spacing: -0.3pt;
+  }
+  .capa .subt {
+    font-size: 14pt;
+    color: #5F5E5A;
+    margin: 0 0 6pt;
+    font-weight: 400;
+  }
+  .capa .info-prova {
+    margin-top: 20mm;
+    padding: 14pt 18pt;
+    background: #F1EFE8;
+    border-radius: 4pt;
+    text-align: left;
+    font-size: 10pt;
+    line-height: 1.7;
+  }
+  .capa .info-prova strong { color: #1F4E79; }
+  .capa .indice {
+    margin-top: 14pt;
+    padding: 14pt 18pt;
+    border: 0.5pt solid #ccc;
+    border-radius: 4pt;
+    text-align: left;
+    font-size: 10pt;
+  }
+  .capa .indice h3 {
+    margin: 0 0 8pt;
+    font-size: 11pt;
+    color: #1F4E79;
+    font-weight: 500;
+  }
+  .capa .indice ol {
+    margin: 0;
+    padding-left: 20pt;
+    line-height: 1.8;
+  }
+  .capa .rodape-capa {
+    margin-top: 18mm;
+    font-size: 9pt;
+    color: #888;
+    font-style: italic;
+  }
+
+  /* Estrutura de exercício */
+  h2.titulo-aula {
+    font-size: 16pt;
+    color: #1F4E79;
+    margin: 0 0 4pt;
+    font-weight: 500;
+    border-bottom: 1pt solid #1F4E79;
+    padding-bottom: 4pt;
+  }
+  h2.titulo-aula .subtitulo {
+    font-size: 11pt;
+    color: #5F5E5A;
+    font-weight: 400;
+    display: block;
+    margin-top: 2pt;
+  }
+
+  /* Separador de secção */
+  .secao-sep {
+    background: #1F4E79;
+    color: white;
+    padding: 10pt 14pt;
+    border-radius: 4pt;
+    margin: 0 0 14pt;
+    font-size: 12pt;
+    font-weight: 500;
+  }
+  .secao-sep .num {
+    background: white;
+    color: #1F4E79;
+    border-radius: 50%;
+    width: 22pt;
+    height: 22pt;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-right: 10pt;
+    font-size: 11pt;
+  }
+  .secao-sep .desc {
+    display: block;
+    font-size: 9.5pt;
+    font-weight: 400;
+    margin-top: 4pt;
+    opacity: 0.9;
+  }
+
+  .ex {
+    margin-bottom: 12pt;
+    page-break-inside: avoid;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Permite que o bloco do exercício ocupe o espaço livre vertical */
+  }
+  .ex-cabec {
+    background: #E6F1FB;
+    padding: 6pt 10pt;
+    border-left: 3pt solid #1F4E79;
+    margin-bottom: 8pt;
+    page-break-after: avoid;
+  }
+  .ex-cabec .ex-num {
+    font-size: 13pt;
+    font-weight: 500;
+    color: #0C447C;
+    margin: 0;
+  }
+  .ex-cabec .ex-meta {
+    font-size: 9pt;
+    color: #5F5E5A;
+    margin: 2pt 0 0;
+  }
+  .ex-cabec .ex-cot {
+    background: #1F4E79;
+    color: white;
+    padding: 2pt 8pt;
+    border-radius: 10pt;
+    font-size: 9pt;
+    font-weight: 500;
+  }
+
+  .ex-enunciado {
+    font-size: 11pt;
+    line-height: 1.6;
+    margin: 0 0 8pt;
+  }
+  .ex-enunciado p { margin: 0 0 6pt; }
+  .ex-enunciado ul {
+    margin: 4pt 0 6pt 0;
+    padding-left: 20pt;
+  }
+  .ex-enunciado li { margin-bottom: 2pt; }
+
+  /* Espaço de resolução */
+  .resolucao {
+    margin-top: 8pt;
+    padding: 6pt 10pt;
+    background: #FBFAF6;
+    border: 0.5pt dashed #ccc;
+    border-radius: 3pt;
+    /* --- NOVA PROPRIEDADE --- */
+    flex-grow: 1; /* Força a caixa tracejada a esticar até baixo */
+  }
+  
+  /* As tuas classes de altura mínima mantêm-se como rede de segurança (fallback) */
+  .resolucao.curta { min-height: 35mm; }
+  .resolucao.media { min-height: 60mm; }
+  .resolucao.longa { min-height: 85mm; }
+  .resolucao.muitolonga { min-height: 110mm; }  
+
+  .resolucao .lab {
+    font-size: 9pt;
+    color: #888;
+    font-style: italic;
+    margin: 0 0 4pt;
+  }
+  .resolucao.curta { min-height: 35mm; }
+  .resolucao.media { min-height: 60mm; }
+  .resolucao.longa { min-height: 85mm; }
+  .resolucao.muitolonga { min-height: 110mm; }
+
+  /* Caixa de avisos / nota */
+  .nota {
+    background: #FAEEDA;
+    border-left: 3pt solid #BA7517;
+    padding: 6pt 10pt;
+    font-size: 9.5pt;
+    color: #633806;
+    margin: 8pt 0;
+    border-radius: 0 3pt 3pt 0;
+    line-height: 1.55;
+  }
+  .nota strong { color: #412402; }
+  .nota.essencial {
+    background: #E6F1FB;
+    border-left-color: #1F4E79;
+    color: #0C447C;
+  }
+  .nota.essencial strong { color: #0C447C; }
+
+  /* Caixa de conteúdos a rever */
+  .conteudos {
+    background: #FBFAF6;
+    border: 0.5pt solid #ccc;
+    border-radius: 3pt;
+    padding: 10pt 14pt;
+    margin: 8pt 0 14pt;
+    page-break-inside: avoid;
+  }
+  .conteudos h3 {
+    margin: 0 0 6pt;
+    font-size: 11pt;
+    color: #1F4E79;
+    font-weight: 500;
+  }
+  .conteudos h4 {
+    margin: 8pt 0 3pt;
+    font-size: 10pt;
+    color: #2C2C2A;
+    font-weight: 500;
+  }
+  .conteudos ul {
+    margin: 0 0 4pt;
+    padding-left: 18pt;
+    font-size: 10pt;
+    line-height: 1.65;
+  }
+  .conteudos li { margin-bottom: 2pt; }
+
+  /* Bloco de função por ramos */
+  .ramos-display {
+    margin: 8pt 0 8pt 14pt;
+  }
+
+  /* Notas finais */
+  .rodape-pagina {
+    position: absolute;
+    bottom: 12mm;
+    left: 16mm;
+    right: 16mm;
+    font-size: 8pt;
+    color: #888;
+    text-align: center;
+    border-top: 0.5pt solid #ddd;
+    padding-top: 4pt;
+  }
+
+  /* Quebras de página utilitárias */
+  .quebra-pagina { page-break-before: always; }
+  .sem-quebra { page-break-inside: avoid; }
+
+  /* MathJax ajustes */
+  mjx-container { font-size: 105% !important; }
+  mjx-container[display="true"] { margin: 8pt 0 !important; }
+</style>
+</head>
+<body>
+
+<!-- ===========================================================
+     PÁGINA 1 — CAPA
+     =========================================================== -->
+<div class="pagina">
+  <div class="capa">
+    <h1>Continuidade e Bolzano</h1>
+    <p class="subt">Aula 4 — Preparação para o Exame Nacional</p>
+    <p class="subt" style="font-size:12pt;">Matemática A · 12.º ano · 2026</p>
+
+    <div class="info-prova">
+      <strong>Estrutura desta aula.</strong> O Teorema de Bolzano-Cauchy e a continuidade de funções por ramos são conteúdos OBRIGATÓRIOS em todos os exames desde 2020. Tipicamente, há 1 item de continuidade (12 ou 14 pts) e 1 item de Bolzano (14 pts) em cada exame, com tendência crescente desde 2022 para itens de "proposições falsas".<br><br>
+
+      <strong>Os 13 exercícios deste documento</strong> foram selecionados das 1.ª fases, 2.ª fases e épocas especiais dos exames de 2020 a 2024 — todos do referencial AE 2018. Os exames de 2025 ficam reservados para as simulações finais.<br><br>
+
+      <!-- <strong>Atenção crítica (2026).</strong> Todos os limites devem ser calculados com os limites notáveis do formulário. Invocar EXPLICITAMENTE o Teorema de Bolzano-Cauchy pelo nome é OBRIGATÓRIO — vale 2 pontos só por isso. -->
+    </div>
+
+    <div class="indice">
+      <h3>Índice de exercícios</h3>
+      <p style="font-weight:500; color:#0C447C; margin: 0 0 4pt;">SECÇÃO A — Teorema de Bolzano-Cauchy (7 exercícios)</p>
+      <ol style="margin: 0 0 8pt; padding-left:20pt;">
+        <li><strong>A</strong> — Bolzano + reta tangente (2021 · 1.ª fase · item 11)</li>
+        <li><strong>B</strong> — Existência de zero (com parâmetro $a$) (2024 · Época Especial · item 8)</li>
+        <li><strong>C</strong> — Existência de zero por métodos analíticos (2020 · Época Especial · item 10.3)</li>
+        <li><strong>D</strong> — Intersecção com reta (2023 · 1.ª fase · item 12.2)</li>
+        <li><strong>E</strong> — Intersecção entre dois gráficos $f(x)=g(x)$ (2020 · 2.ª fase · item 10.2)</li>
+        <li><strong>F</strong> — Proposições falsas: Bolzano + assíntota (2024 · 1.ª fase · item 8)</li>
+        <li><strong>G</strong> — Ponto com ordenada igual à abcissa (2023 · Época Especial · item 9.2)</li>
+      </ol>
+      <p style="font-weight:500; color:#0C447C; margin: 6pt 0 4pt;">SECÇÃO B — Continuidade (4 exercícios)</p>
+      <ol style="margin: 0; padding-left:20pt;" start="8">
+        <li><strong>H</strong> — Continuidade num ponto (2023 · 1.ª fase · item 4.1)</li>
+        <li><strong>I</strong> — Continuidade com limite notável (2022 · Época Especial · item 10)</li>
+        <li><strong>J</strong> — Continuidade — caso falso (2022 · 2.ª fase · item 8)</li>
+        <li><strong>K</strong> — Continuidade com parâmetro $k$ (2024 · 2.ª fase · item 6.2)</li>
+      </ol>
+    </div>
+
+    <p class="rodape-capa">
+      Documento de preparação para o exame · 23 de junho de 2026<br>
+      Compilado a partir dos enunciados oficiais do IAVE / EduQA
+    </p>
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 2 — CONTEÚDOS A REVER
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 4 · Continuidade e Bolzano</span>
+    <span class="direita">Conteúdos a rever</span>
+  </div>
+
+  <h2 class="titulo-aula">Aula 4 — Continuidade e Bolzano
+    <span class="subtitulo">Conteúdos a rever antes dos exercícios</span>
+  </h2>
+
+  <div class="conteudos">
+    <h4>1. Continuidade num ponto — definição</h4>
+    <ul>
+      <li>A função $f$ é contínua em $x = a$ se $\;\displaystyle\lim_{x \to a} f(x) = f(a)$</li>
+      <li>Em funções por ramos, é nos pontos de "transição" que se testa: calcular os limites laterais e verificar a igualdade $\;\displaystyle\lim_{x \to a^-} f(x) = \lim_{x \to a^+} f(x) = f(a)$</li>
+    </ul>
+
+    <h4>2. Limites notáveis do formulário (essenciais)</h4>
+    <ul>
+      <li>$\displaystyle\lim_{x \to 0} \frac{\sin x}{x} = 1$</li>
+      <li>$\displaystyle\lim_{x \to 0} \frac{e^x - 1}{x} = 1$</li>
+      <li>$\displaystyle\lim_{x \to +\infty} \frac{\ln x}{x} = 0$</li>
+      <li>$\displaystyle\lim_{x \to +\infty} \frac{e^x}{x^p} = +\infty$, para todo $p \in \mathbb{R}$</li>
+      <li>Para indeterminações $\tfrac{0}{0}$ ou $\tfrac{\infty}{\infty}$: usar estes limites notáveis com mudança de variável, fatorização, conjugado ou agrupamento</li>
+    </ul>
+
+    <h4>3. Teorema de Bolzano-Cauchy</h4>
+    <ul>
+      <li><strong>Enunciado clássico:</strong> Se $f$ é contínua em $[a, b]$ e $f(a) \cdot f(b) < 0$, então existe pelo menos um $c \in {]}a, b[$ tal que $f(c) = 0$</li>
+      <li><strong>Variante (valor intermédio):</strong> Se $f$ é contínua em $[a, b]$ e $k$ está entre $f(a)$ e $f(b)$, então existe $c \in {]}a, b[$ tal que $f(c) = k$</li>
+    </ul>
+
+    <h4>4. Estrutura formal obrigatória da resposta</h4>
+    <ul>
+      <li><strong>(1)</strong> Justificar a continuidade de $f$ em $[a, b]$ (soma/produto/quociente/composta de contínuas)</li>
+      <li><strong>(2)</strong> Calcular $f(a)$ e $f(b)$</li>
+      <li><strong>(3)</strong> Verificar $f(a) \cdot f(b) < 0$, ou que $k$ está entre $f(a)$ e $f(b)$</li>
+      <li><strong>(4)</strong> Invocar EXPLICITAMENTE o Teorema de Bolzano-Cauchy pelo nome</li>
+      <li><strong>(5)</strong> Concluir: "existe pelo menos um $c \in {]}a, b[$ tal que $f(c) = 0$ (ou $f(c) = k$)"</li>
+    </ul>
+
+    <h4>5. Tipos de aplicação no exame</h4>
+    <ul>
+      <li><strong>Existência de zero da função num intervalo</strong> — aplicação direta a $f(x)$</li>
+      <li><strong>Intersecção do gráfico com uma reta</strong> $y = mx + b$ — aplicar Bolzano a $h(x) = f(x) - (mx+b)$</li>
+      <li><strong>Existência de ponto onde a reta tangente tem declive específico</strong> $m$ — aplicar Bolzano a $h(x) = f'(x) - m$</li>
+      <li><strong>Intersecção entre dois gráficos</strong> — aplicar Bolzano a $h(x) = f(x) - g(x)$</li>
+      <li><strong>Proposições falsas</strong> — mostrar com contraexemplo ou impossibilidade lógica</li>
+    </ul>
+
+    <h4>6. Determinação de parâmetro $k$ para continuidade</h4>
+    <ul>
+      <li>Dada $f$ por ramos com parâmetro $k$, calcular $\;\displaystyle\lim_{x \to a^-} f(x)$, $\;\displaystyle\lim_{x \to a^+} f(x)$ e $f(a)$</li>
+      <li>Igualar os três valores → equação em $k$ → resolver</li>
+    </ul>
+  </div>
+
+  <div class="nota">
+    <strong>Erros mais frequentes:</strong> (1) Esquecer de invocar o Teorema de Bolzano-Cauchy pelo nome — perdem-se 2 pontos garantidos. (2) Não justificar a continuidade no intervalo. (3) Confundir limite à esquerda com limite à direita. (4) Em casos de intersecção/tangente, não construir a função auxiliar $h$ adequada.
+  </div>
+
+  <div class="rodape-pagina">
+    Continuidade e Bolzano · Aula 4 · Preparação Mat A 12.º · 2026 · Página 2
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     SECÇÃO A — TEOREMA DE BOLZANO-CAUCHY
+     =========================================================== -->
+
+<!-- PÁGINA 3 — Separador secção A + EXERCÍCIO 1 -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 4 · SECÇÃO A · Bolzano-Cauchy</span>
+    <span class="direita">Exame 2021 · 1.ª fase · item 11</span>
+  </div>
+
+  <div class="secao-sep">
+    <span class="num">A</span>Teorema de Bolzano-Cauchy — 7 exercícios
+    <span class="desc">Aplicações: existência de zero, intersecção com reta, tangente com declive específico, proposições falsas</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício A — Bolzano + reta tangente <span class="ex-cot">essencial</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2021 · 1.ª fase · item 11 · 14 pts</p>
+    </div>
+
+    <div class="nota essencial">
+      <strong>Por que é o exercício mais importante desta aula.</strong> É o modelo formal mais completo de aplicação do Teorema de Bolzano-Cauchy. Articula derivação, equação da reta tangente, continuidade e a estrutura formal "verificar continuidade → calcular extremos → invocar Bolzano-Cauchy". Os alunos devem dominar este tipo exato.
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Resolva este item sem recorrer à calculadora.</p>
+      <p>Seja $g$ a função, de domínio $\left[\tfrac{\pi}{2},\, \tfrac{3\pi}{2}\right]$, definida por:</p>
+      <p style="text-align:center; margin:8pt 0;">$$g(x) = x \cdot \cos(x) + \sin(x)$$</p>
+      <p><strong>Mostre, recorrendo ao Teorema de Bolzano-Cauchy, que existe pelo menos um ponto pertencente ao gráfico da função $g$ tal que a reta tangente ao gráfico da função nesse ponto tem declive igual a $-\tfrac{1}{2}$.</strong></p>
+    </div>
+
+    <div class="resolucao muitolonga">
+      <p class="lab">Resolução (estrutura formal completa):</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong> Calcular $g'(x) = \cos(x) - x\sin(x) + \cos(x) = 2\cos(x) - x\sin(x)$. Definir a função auxiliar $h(x) = g'(x) + \tfrac{1}{2}$ — queremos mostrar que existe $c$ tal que $h(c) = 0$. Verificar a continuidade de $h$ em $\left[\tfrac{\pi}{2},\, \tfrac{3\pi}{2}\right]$, calcular $h\!\left(\tfrac{\pi}{2}\right) = 0 - \tfrac{\pi}{2} + \tfrac{1}{2} = \tfrac{1-\pi}{2} \approx -1{,}07 < 0$ e $h\!\left(\tfrac{3\pi}{2}\right) = 0 - \tfrac{3\pi}{2}(-1) + \tfrac{1}{2} = \tfrac{3\pi+1}{2} \approx 5{,}21 > 0$. Pelo Teorema de Bolzano-Cauchy, existe $c \in \left]\tfrac{\pi}{2},\, \tfrac{3\pi}{2}\right[$ tal que $h(c) = 0$, ou seja, $g'(c) = -\tfrac{1}{2}$.
+  </div>
+
+  <div class="rodape-pagina">
+    Continuidade e Bolzano · Aula 4 · Preparação Mat A 12.º · 2026 · Página 3
+  </div>
+</div>
+
+
+<!-- PÁGINA 4 — EXERCÍCIO B (2024 EE · item 8) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 4 · SECÇÃO A · Bolzano-Cauchy</span>
+    <span class="direita">Exame 2024 · Época Especial · item 8</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício B — Existência de zero (com parâmetro $a$) <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2024 · Época Especial · item 8</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Resolva este item sem recorrer à calculadora.</p>
+      <p>Seja $a$ um número real maior do que $1$, e seja $f$ a função, de domínio $\mathbb{R}$, definida por</p>
+      <p style="text-align:center; margin:8pt 0;">$$f(x) = a x^3 + x - 2$$</p>
+      <p><strong>Mostre que a função $f$ tem, pelo menos, um zero no intervalo $\;]0,\,1[$.</strong></p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução (estrutura formal):</strong>
+    <br>(1) $f$ é contínua em $[0, 1]$ por ser função polinomial (contínua em $\mathbb{R}$).
+    <br>(2) $f(0) = 0 + 0 - 2 = -2 < 0$.
+    <br>(3) $f(1) = a + 1 - 2 = a - 1$. Como $a > 1$, tem-se $a - 1 > 0$, logo $f(1) > 0$.
+    <br>(4) Como $f$ é contínua em $[0, 1]$ e $f(0) \cdot f(1) < 0$, pelo Teorema de Bolzano-Cauchy existe pelo menos um $c \in {]}0, 1[$ tal que $f(c) = 0$.
+    <br><br>
+    <strong>Atenção:</strong> a chave é perceber que a condição $a > 1$ garante $a - 1 > 0$. Sem essa observação, a conclusão não fica completa.
+  </div>
+
+  <div class="rodape-pagina">
+    Continuidade e Bolzano · Aula 4 · Preparação Mat A 12.º · 2026 · Página 4
+  </div>
+</div>
+
+
+<!-- PÁGINA 5 — EXERCÍCIO C (2020 EE · item 10.3) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 4 · SECÇÃO A · Bolzano-Cauchy</span>
+    <span class="direita">Exame 2020 · Época Especial · item 10.3</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício C — Existência de zero por métodos analíticos <span class="ex-cot">16 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2020 · Época Especial · item 10.3</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Considere a função $g$, de domínio $\mathbb{R}$, definida por:</p>
+      <p class="ramos-display" style="text-align:center;">
+        $$g(x) = \begin{cases} \dfrac{x^2 - x}{k - kx}, & \text{se } x < 1 \\[6pt] x^2 - 10 + 8\ln x, & \text{se } x \geq 1 \end{cases}$$
+      </p>
+      <p style="font-size:9.5pt; color:#666;">[No exame, o item 10.1 já tinha determinado $k$ por continuidade. Para este item interessa apenas o ramo de $x \geq 1$.]</p>
+      <p><strong>Mostre, recorrendo a métodos exclusivamente analíticos, que a função $g$ tem, pelo menos, um zero no intervalo $\;]\sqrt{e},\, e[$.</strong></p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong> "Métodos exclusivamente analíticos" significa sem usar a calculadora gráfica. Como $\sqrt{e} > 1$ e $e > 1$, no intervalo $[\sqrt{e}, e]$ usa-se o ramo $g(x) = x^2 - 10 + 8\ln x$, que é soma de funções contínuas em $\mathbb{R}^+$.
+    <br>(1) $g$ é contínua em $[\sqrt{e},\, e]$.
+    <br>(2) $g(\sqrt{e}) = e - 10 + 8 \ln \sqrt{e} = e - 10 + 8 \cdot \tfrac{1}{2} = e - 10 + 4 = e - 6 \approx -3{,}28 < 0$.
+    <br>(3) $g(e) = e^2 - 10 + 8\ln e = e^2 - 10 + 8 = e^2 - 2 \approx 5{,}39 > 0$.
+    <br>(4) Como $g$ é contínua em $[\sqrt{e},\, e]$ e $g(\sqrt{e}) \cdot g(e) < 0$, pelo Teorema de Bolzano-Cauchy existe pelo menos um $c \in {]}\sqrt{e},\, e[$ tal que $g(c) = 0$.
+  </div>
+
+  <div class="rodape-pagina">
+    Continuidade e Bolzano · Aula 4 · Preparação Mat A 12.º · 2026 · Página 5
+  </div>
+</div>
+
+
+<!-- PÁGINA 6 — EXERCÍCIO D (2023 F1 · item 12.2 — intersecção com reta) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 4 · SECÇÃO A · Bolzano-Cauchy</span>
+    <span class="direita">Exame 2023 · 1.ª fase · item 12.2</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício D — Intersecção do gráfico com uma reta <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2023 · 1.ª fase · item 12.2</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Resolva este item sem recorrer à calculadora, exceto em eventuais cálculos numéricos.</p>
+      <p>Seja $f$ a função, de domínio $[0,\, \pi]$, definida por</p>
+      <p style="text-align:center; margin:8pt 0;">$$f(x) = \operatorname{sen}(2x) + x$$</p>
+      <p>e seja $r$ a reta de equação $y = -x + 2$.</p>
+      <p><strong>Mostre, recorrendo ao Teorema de Bolzano-Cauchy, que o gráfico da função $f$ intersecta a reta $r$ em, pelo menos, um ponto de abcissa pertencente ao intervalo $\;\left]\tfrac{\pi}{6},\, \tfrac{\pi}{3}\right[$.</strong></p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong> Define-se a função auxiliar
+    $$h(x) = f(x) - (-x + 2) = \operatorname{sen}(2x) + x + x - 2 = \operatorname{sen}(2x) + 2x - 2$$
+    Mostrar que $h$ tem um zero em $\left]\tfrac{\pi}{6},\, \tfrac{\pi}{3}\right[$ é equivalente a mostrar que existe abcissa onde $f(x) = -x + 2$.
+    <br>(1) $h$ é contínua em $\left[\tfrac{\pi}{6},\, \tfrac{\pi}{3}\right]$ (soma de contínuas em $\mathbb{R}$).
+    <br>(2) $h\!\left(\tfrac{\pi}{6}\right) = \operatorname{sen}\!\left(\tfrac{\pi}{3}\right) + \tfrac{\pi}{3} - 2 = \tfrac{\sqrt{3}}{2} + \tfrac{\pi}{3} - 2 \approx 0{,}87 + 1{,}05 - 2 = -0{,}08 < 0$.
+    <br>(3) $h\!\left(\tfrac{\pi}{3}\right) = \operatorname{sen}\!\left(\tfrac{2\pi}{3}\right) + \tfrac{2\pi}{3} - 2 = \tfrac{\sqrt{3}}{2} + \tfrac{2\pi}{3} - 2 \approx 0{,}87 + 2{,}09 - 2 = 0{,}96 > 0$.
+    <br>(4) Como $h$ é contínua em $\left[\tfrac{\pi}{6},\, \tfrac{\pi}{3}\right]$ e $h\!\left(\tfrac{\pi}{6}\right) \cdot h\!\left(\tfrac{\pi}{3}\right) < 0$, pelo Teorema de Bolzano-Cauchy existe $c \in \left]\tfrac{\pi}{6},\, \tfrac{\pi}{3}\right[$ tal que $h(c) = 0$, ou seja, $f(c) = -c + 2$.
+  </div>
+
+  <div class="rodape-pagina">
+    Continuidade e Bolzano · Aula 4 · Preparação Mat A 12.º · 2026 · Página 6
+  </div>
+</div>
+
+
+<!-- PÁGINA 7 — EXERCÍCIO E (2020 F2 · item 10.2 — intersecção entre dois gráficos) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 4 · SECÇÃO A · Bolzano-Cauchy</span>
+    <span class="direita">Exame 2020 · 2.ª fase · item 10.2</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício E — Intersecção entre dois gráficos <span class="ex-cot">16 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2020 · 2.ª fase · item 10.2</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Sejam $f$ e $g$ as funções, de domínio $\mathbb{R}$, definidas, respetivamente, por</p>
+      <p style="text-align:center; margin:8pt 0;">$$f(x) = x^2 \quad\text{e}\quad g(x) = \cos x$$</p>
+      <p><strong>Mostre, recorrendo ao Teorema de Bolzano-Cauchy, que a equação $f(x) = g(x)$ tem, pelo menos, uma solução no intervalo $\;\left]0,\, \tfrac{\pi}{3}\right[$.</strong></p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong> Para mostrar que $f(x) = g(x)$ tem solução, define-se a função auxiliar
+    $$h(x) = f(x) - g(x) = x^2 - \cos x$$
+    e mostra-se que $h$ tem um zero em $\left]0,\, \tfrac{\pi}{3}\right[$.
+    <br>(1) $h$ é contínua em $\left[0,\, \tfrac{\pi}{3}\right]$ (diferença de uma função polinomial com uma função trigonométrica, ambas contínuas em $\mathbb{R}$).
+    <br>(2) $h(0) = 0 - \cos 0 = -1 < 0$.
+    <br>(3) $h\!\left(\tfrac{\pi}{3}\right) = \dfrac{\pi^2}{9} - \cos\!\left(\tfrac{\pi}{3}\right) = \dfrac{\pi^2}{9} - \tfrac{1}{2} \approx 1{,}097 - 0{,}5 = 0{,}597 > 0$.
+    <br>(4) Como $h$ é contínua em $\left[0,\, \tfrac{\pi}{3}\right]$ e $h(0) \cdot h\!\left(\tfrac{\pi}{3}\right) < 0$, pelo Teorema de Bolzano-Cauchy existe $c \in \left]0,\, \tfrac{\pi}{3}\right[$ tal que $h(c) = 0$, ou seja, $f(c) = g(c)$.
+  </div>
+
+  <div class="rodape-pagina">
+    Continuidade e Bolzano · Aula 4 · Preparação Mat A 12.º · 2026 · Página 7
+  </div>
+</div>
+
+
+<!-- PÁGINA 8 — EXERCÍCIO F (2024 F1 · item 8 — proposições falsas) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 4 · SECÇÃO A · Bolzano-Cauchy</span>
+    <span class="direita">Exame 2024 · 1.ª fase · item 8</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício F — Proposições falsas: Bolzano + assíntota <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2024 · 1.ª fase · item 8 · tipo emergente</p>
+    </div>
+
+    <div class="nota essencial">
+      <strong>Tipo emergente desde 2023.</strong> Apresentam-se proposições sobre uma função e pede-se para justificar que são falsas. Itens de 14 pts.
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Seja $f$ uma função de domínio $\mathbb{R}$.</p>
+      <p>Sabe-se que:</p>
+      <ul>
+        <li>para qualquer número real $a$, com $a \neq 2$, $\;\displaystyle\lim_{x \to a} f(x) = f(a)$</li>
+        <li>$\displaystyle\lim_{x \to 2^+} f(x) = f(2)$, com $f(2) > 0$, e $\displaystyle\lim_{x \to 2^-} f(x) = -\infty$</li>
+        <li>$f(1) \times f(3) < 0$</li>
+      </ul>
+      <p>Considere as proposições seguintes:</p>
+      <p style="margin-left:18pt;">
+        <strong>I.</strong> O Teorema de Bolzano-Cauchy permite afirmar que a função $f$ tem, pelo menos, um zero no intervalo $\;]1,\, 3[$.<br>
+        <strong>II.</strong> A reta de equação $x = 2$ é assíntota ao gráfico da função $\dfrac{1}{f}$.
+      </p>
+      <p style="margin-top:8pt;"><strong>Justifique que as proposições I e II são falsas. Na sua resposta, apresente, para cada uma das proposições, uma razão que justifique a sua falsidade.</strong></p>
+    </div>
+
+    <div class="resolucao muitolonga">
+      <p class="lab">Resolução (justificar falsidade de I e II):</p>
+    </div>
+  </div>
+
+  <div class="rodape-pagina">
+    Continuidade e Bolzano · Aula 4 · Preparação Mat A 12.º · 2026 · Página 8
+  </div>
+</div>
+
+
+<!-- PÁGINA 9 — Pista para F + EXERCÍCIO G -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 4 · SECÇÃO A · Bolzano-Cauchy</span>
+    <span class="direita">Pista do Exercício F + Exercício G</span>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução para o Exercício F:</strong>
+    <br><br>
+    <strong>Proposição I (FALSA):</strong> Para aplicar o Teorema de Bolzano-Cauchy ao intervalo $[1, 3]$ seria necessário que $f$ fosse contínua em $[1, 3]$. Mas $\displaystyle\lim_{x \to 2^-} f(x) = -\infty$, logo $f$ NÃO é contínua em $x = 2 \in [1, 3]$. As hipóteses do teorema não se verificam — não se pode <em>aplicar</em> o teorema, mesmo que $f(1) \cdot f(3) < 0$.
+    <br><br>
+    <strong>Proposição II (FALSA):</strong> Para que $x=2$ fosse assíntota de $\dfrac{1}{f}$, era preciso que $\displaystyle\lim_{x \to 2} \dfrac{1}{f(x)} = \pm\infty$ por algum dos lados. Ora:
+    <br>— $\displaystyle\lim_{x \to 2^+} \dfrac{1}{f(x)} = \dfrac{1}{f(2)} \in \mathbb{R}$ (finito, pois $f(2) > 0$)
+    <br>— $\displaystyle\lim_{x \to 2^-} \dfrac{1}{f(x)} = \dfrac{1}{-\infty} = 0$
+    <br>Os dois limites laterais são finitos, logo a reta $x=2$ NÃO é assíntota vertical de $\dfrac{1}{f}$.
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício G — Ponto com ordenada igual à abcissa <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2023 · Época Especial · item 9.2</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Resolva este item sem recorrer à calculadora, exceto em eventuais cálculos numéricos.</p>
+      <p>Considere a função $g$, de domínio $[0,\, \pi[$, definida por</p>
+      <p style="text-align:center; margin:8pt 0;">$$g(x) = e^x \cos x$$</p>
+      <p><strong>Mostre, recorrendo ao Teorema de Bolzano-Cauchy, que existe, pelo menos, um ponto do gráfico de $g$ cuja ordenada é igual à abcissa, no intervalo $\;\left]\tfrac{\pi}{3},\, \tfrac{\pi}{2}\right[$.</strong></p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong> "Ordenada igual à abcissa" significa que existe $c$ tal que $g(c) = c$. Define-se a função auxiliar
+    $$h(x) = g(x) - x = e^x \cos x - x$$
+    e mostra-se que $h$ tem um zero em $\left]\tfrac{\pi}{3},\, \tfrac{\pi}{2}\right[$.
+    <br>(1) $h$ é contínua em $\left[\tfrac{\pi}{3},\, \tfrac{\pi}{2}\right]$ (produto e diferença de contínuas).
+    <br>(2) $h\!\left(\tfrac{\pi}{3}\right) = e^{\pi/3} \cdot \cos\!\left(\tfrac{\pi}{3}\right) - \tfrac{\pi}{3} = e^{\pi/3} \cdot \tfrac{1}{2} - \tfrac{\pi}{3} \approx 2{,}849 \cdot 0{,}5 - 1{,}047 = 1{,}425 - 1{,}047 \approx 0{,}377 > 0$.
+    <br>(3) $h\!\left(\tfrac{\pi}{2}\right) = e^{\pi/2} \cdot \cos\!\left(\tfrac{\pi}{2}\right) - \tfrac{\pi}{2} = 0 - \tfrac{\pi}{2} \approx -1{,}571 < 0$.
+    <br>(4) Como $h$ é contínua em $\left[\tfrac{\pi}{3},\, \tfrac{\pi}{2}\right]$ e $h\!\left(\tfrac{\pi}{3}\right) \cdot h\!\left(\tfrac{\pi}{2}\right) < 0$, pelo Teorema de Bolzano-Cauchy existe $c \in \left]\tfrac{\pi}{3},\, \tfrac{\pi}{2}\right[$ tal que $h(c) = 0$, ou seja, $g(c) = c$.
+  </div>
+
+  <div class="rodape-pagina">
+    Continuidade e Bolzano · Aula 4 · Preparação Mat A 12.º · 2026 · Página 9
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     SECÇÃO B — CONTINUIDADE
+     =========================================================== -->
+
+<!-- PÁGINA 10 — Separador secção B + EXERCÍCIO H (2023 F1 · item 4.1) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 4 · SECÇÃO B · Continuidade</span>
+    <span class="direita">Exame 2023 · 1.ª fase · item 4.1</span>
+  </div>
+
+  <div class="secao-sep">
+    <span class="num">B</span>Continuidade — 4 exercícios
+    <span class="desc">Continuidade num ponto, casos com limites notáveis, casos falsos, determinação de parâmetro $k$</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício H — Continuidade num ponto (sem parâmetro) <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2023 · 1.ª fase · item 4.1</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Considere a função $g$, de domínio $\mathbb{R}$, definida por</p>
+      <p class="ramos-display" style="text-align:center;">
+        $$g(x) = \begin{cases} \dfrac{4x - 4}{e^{x-1} - 1}, & \text{se } x < 1 \\[6pt] 7 \times 3^{x-1} - 3, & \text{se } x \geq 1 \end{cases}$$
+      </p>
+      <p><strong>Resolva este item sem recorrer à calculadora.</strong></p>
+      <p style="margin-top:8pt;"><strong>4.1.</strong> Averigue se a função $g$ é contínua em $x = 1$.</p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong> No ramo da esquerda ($x<1$) há indeterminação $\tfrac{0}{0}$. Usa-se o limite notável $\displaystyle\lim_{u \to 0} \tfrac{e^u - 1}{u} = 1$ com a substituição $u = x - 1$:
+    $$\lim_{x \to 1^-} \frac{4x-4}{e^{x-1}-1} = \lim_{x \to 1^-} \frac{4(x-1)}{e^{x-1}-1} = 4 \cdot \lim_{x \to 1^-} \frac{1}{\;\frac{e^{x-1}-1}{x-1}\;} = 4 \cdot \frac{1}{1} = 4$$
+    No ramo da direita: $g(1) = 7 \times 3^{0} - 3 = 7 - 3 = 4$, e $\displaystyle\lim_{x \to 1^+}\left(7 \times 3^{x-1} - 3\right) = 4$.
+    <br>Como $\displaystyle\lim_{x \to 1^-} g(x) = \lim_{x \to 1^+} g(x) = g(1) = 4$, a função $g$ é contínua em $x = 1$.
+  </div>
+
+  <div class="rodape-pagina">
+    Continuidade e Bolzano · Aula 4 · Preparação Mat A 12.º · 2026 · Página 10
+  </div>
+</div>
+
+
+<!-- PÁGINA 11 — EXERCÍCIO I (2022 EE · item 10) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 4 · SECÇÃO B · Continuidade</span>
+    <span class="direita">Exame 2022 · Época Especial · item 10</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício I — Continuidade com limite notável <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · Época Especial · item 10</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Seja $f$ a função, de domínio $\mathbb{R}$, definida por</p>
+      <p class="ramos-display" style="text-align:center;">
+        $$f(x) = \begin{cases} \dfrac{3x}{e^{5x} - 1}, & \text{se } x \neq 0 \\[6pt] \dfrac{3}{5}, & \text{se } x = 0 \end{cases}$$
+      </p>
+      <p><strong>Averigue, sem recorrer à calculadora, se a função $f$ é contínua em $x = 0$.</strong></p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong> Há indeterminação $\tfrac{0}{0}$ no limite quando $x \to 0$. Aplica-se o limite notável $\displaystyle\lim_{u \to 0} \tfrac{e^u - 1}{u} = 1$ com $u = 5x$. Multiplicando e dividindo por 5:
+    $$\lim_{x \to 0} \frac{3x}{e^{5x}-1} = \lim_{x \to 0} \frac{3x}{5x} \cdot \frac{5x}{e^{5x}-1} = \frac{3}{5} \cdot \lim_{x \to 0} \frac{1}{\;\tfrac{e^{5x}-1}{5x}\;} = \frac{3}{5} \cdot \frac{1}{1} = \frac{3}{5}$$
+    Como $\displaystyle\lim_{x \to 0} f(x) = \tfrac{3}{5} = f(0)$, a função $f$ é contínua em $x = 0$.
+    <br><br>
+    <strong>Atenção:</strong> $f$ está definida em $x=0$ pelo segundo ramo, e a função do primeiro ramo é o mesmo objeto matemático para $x \neq 0$ — o exercício pede continuidade num ponto (definição clássica), não prolongamento por continuidade.
+  </div>
+
+  <div class="rodape-pagina">
+    Continuidade e Bolzano · Aula 4 · Preparação Mat A 12.º · 2026 · Página 11
+  </div>
+</div>
+
+
+<!-- PÁGINA 12 — EXERCÍCIO J (2022 F2 · item 8) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 4 · SECÇÃO B · Continuidade</span>
+    <span class="direita">Exame 2022 · 2.ª fase · item 8</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício J — Continuidade (verificar se é ou não contínua) <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · 2.ª fase · item 8</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Resolva este item sem recorrer à calculadora.</p>
+      <p>Seja $f$ a função, de domínio $\mathbb{R}$, definida por</p>
+      <p class="ramos-display" style="text-align:center;">
+        $$f(x) = \begin{cases} \dfrac{1 - \cos x}{x}, & \text{se } x < 0 \\[6pt] \ln \sqrt{e + x}, & \text{se } x \geq 0 \end{cases}$$
+      </p>
+      <p><strong>Averigue se a função $f$ é contínua em $x = 0$.</strong></p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong> 
+    <br><strong>Limite à esquerda:</strong> $\displaystyle\lim_{x \to 0^-} \dfrac{1-\cos x}{x}$. Multiplica-se pelo conjugado para obter o limite notável do seno:
+    $$\lim_{x \to 0^-} \frac{(1-\cos x)(1+\cos x)}{x(1+\cos x)} = \lim_{x \to 0^-} \frac{1-\cos^2 x}{x(1+\cos x)} = \lim_{x \to 0^-} \left( \frac{\sin x}{x} \cdot \frac{\sin x}{1+\cos x} \right) = 1 \cdot \frac{0}{2} = 0$$
+    <br><strong>Limite à direita e $f(0)$:</strong>
+    $$f(0) = \ln \sqrt{e} = \ln e^{1/2} = \tfrac{1}{2}, \quad \lim_{x \to 0^+} \ln\sqrt{e+x} = \ln\sqrt{e} = \tfrac{1}{2}$$
+    Como $\displaystyle\lim_{x \to 0^-} f(x) = 0 \neq \tfrac{1}{2} = f(0) = \displaystyle\lim_{x \to 0^+} f(x)$, a função $f$ NÃO é contínua em $x=0$.
+    <br><br>
+    <!-- <strong>Nota pedagógica:</strong> mostre aos alunos que neste caso o limite à esquerda dá zero e o à direita dá meio — a resposta correta é "não é contínua", apresentando os cálculos que o demonstram. É um exercício excelente para combater a expectativa de que "é sempre contínua". -->
+  </div>
+
+  <div class="rodape-pagina">
+    Continuidade e Bolzano · Aula 4 · Preparação Mat A 12.º · 2026 · Página 12
+  </div>
+</div>
+
+
+<!-- PÁGINA 13 — EXERCÍCIO K (2024 F2 · item 6.2 — continuidade com k) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 4 · SECÇÃO B · Continuidade</span>
+    <span class="direita">Exame 2024 · 2.ª fase · item 6.2</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício K — Continuidade com determinação de $k$ <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2024 · 2.ª fase · item 6.2</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Seja $f$ uma função contínua, de domínio $[0,\, +\infty[$, com $f(0) = 2$, e seja $g$ uma função, de domínio $\mathbb{R}$, definida, para um certo valor de $k$ real, por</p>
+      <p class="ramos-display" style="text-align:center;">
+        $$g(x) = \begin{cases} f(x), & \text{se } x \geq 0 \\[6pt] \dfrac{e^{-k}(e^x - 1)}{-x^2 + 2x}, & \text{se } x < 0 \end{cases}$$
+      </p>
+      <p><strong>Determine, sem recorrer à calculadora, o valor de $k$, sabendo que a função $g$ é contínua em $x = 0$.</strong></p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução (estratégia):</strong>
+    <br>(1) $g(0) = f(0) = 2$ (ramo $x \geq 0$).
+    <br>(2) $\displaystyle\lim_{x \to 0^+} g(x) = \lim_{x \to 0^+} f(x) = f(0) = 2$ (pois $f$ é contínua).
+    <br>(3) Calcular $\displaystyle\lim_{x \to 0^-} g(x)$ usando o ramo da esquerda, com fatorização do denominador $-x^2 + 2x = x(-x+2) = -x(x-2)$:
+    $$\lim_{x \to 0^-} \frac{e^{-k}(e^x-1)}{-x(x-2)} = e^{-k} \cdot \lim_{x \to 0^-} \frac{e^x-1}{x} \cdot \lim_{x \to 0^-} \frac{1}{-(x-2)} = e^{-k} \cdot 1 \cdot \frac{1}{2} = \frac{e^{-k}}{2}$$
+    (limite notável $\displaystyle\lim_{x \to 0} \tfrac{e^x-1}{x} = 1$).
+    <br>(4) Continuidade em $x=0$ exige $\dfrac{e^{-k}}{2} = 2$, ou seja, $e^{-k} = 4$, donde $-k = \ln 4$, e portanto $\boxed{k = -\ln 4 = -2\ln 2}$.
+  </div>
+
+  <div class="rodape-pagina">
+    Continuidade e Bolzano · Aula 4 · Preparação Mat A 12.º · 2026 · Página 13
+  </div>
+</div>
+
+
+<!-- PÁGINA 14 — SÍNTESE FINAL -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Síntese final</span>
+    <span class="direita">Aula 4 · Continuidade e Bolzano</span>
+  </div>
+
+  <h2 class="titulo-aula">Síntese da Aula 4 — Continuidade e Bolzano</h2>
+
+  <div class="conteudos">
+    <h4>Tabela síntese dos 11 exercícios</h4>
+    <table style="width:100%; border-collapse:collapse; font-size:9.5pt; margin-top:6pt;">
+      <thead>
+        <tr style="background:#1F4E79; color:white;">
+          <th style="padding:5pt; text-align:left; width:5%;">Ex.</th>
+          <th style="padding:5pt; text-align:left; width:22%;">Origem</th>
+          <th style="padding:5pt; text-align:left;">Tipo</th>
+          <th style="padding:5pt; text-align:center; width:10%;">Cot.</th>
+          <th style="padding:5pt; text-align:left; width:30%;">Foco didático</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#E6F1FB;"><td colspan="5" style="padding:4pt; font-weight:500;">SECÇÃO A — Teorema de Bolzano-Cauchy</td></tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>Q</strong></td>
+          <td style="padding:4pt;">2021 · 1.ª fase · 11</td>
+          <td style="padding:4pt;"><strong>Bolzano + tangente</strong></td>
+          <td style="padding:4pt; text-align:center;">14 pts</td>
+          <td style="padding:4pt;"><strong>Modelo formal completo</strong></td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>N</strong></td>
+          <td style="padding:4pt;">2024 · Ép. Especial · 8</td>
+          <td style="padding:4pt;">Existência de zero (param. $a$)</td>
+          <td style="padding:4pt; text-align:center;">14 pts</td>
+          <td style="padding:4pt;">$ax^3+x-2$ em $]0,1[$, com $a>1$</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>T</strong></td>
+          <td style="padding:4pt;">2020 · Ép. Especial · 10.3</td>
+          <td style="padding:4pt;">Existência de zero analítica</td>
+          <td style="padding:4pt; text-align:center;">16 pts</td>
+          <td style="padding:4pt;">$x^2-10+8\ln x$ em $]\sqrt e, e[$</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>U</strong></td>
+          <td style="padding:4pt;">2023 · 1.ª fase · 12.2</td>
+          <td style="padding:4pt;"><strong>Intersecção com reta</strong></td>
+          <td style="padding:4pt; text-align:center;">14 pts</td>
+          <td style="padding:4pt;">Construir função auxiliar $h(x)=f(x)-(mx+b)$</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>V</strong></td>
+          <td style="padding:4pt;">2020 · 2.ª fase · 10.2</td>
+          <td style="padding:4pt;">Intersecção entre 2 gráficos</td>
+          <td style="padding:4pt; text-align:center;">16 pts</td>
+          <td style="padding:4pt;">$f(x)=g(x)$ com $h=f-g$</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>K</strong></td>
+          <td style="padding:4pt;">2024 · 1.ª fase · 8</td>
+          <td style="padding:4pt;"><strong>Proposições falsas</strong></td>
+          <td style="padding:4pt; text-align:center;">14 pts</td>
+          <td style="padding:4pt;">Bolzano falha + assíntota de $1/f$</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>W</strong></td>
+          <td style="padding:4pt;">2023 · Ép. Especial · 9.2</td>
+          <td style="padding:4pt;">Ordenada = abcissa</td>
+          <td style="padding:4pt; text-align:center;">14 pts</td>
+          <td style="padding:4pt;">$g(x)=x$ com $g(x)=e^x \cos x$</td>
+        </tr>
+        <tr style="background:#E6F1FB;"><td colspan="5" style="padding:4pt; font-weight:500;">SECÇÃO B — Continuidade</td></tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>M</strong></td>
+          <td style="padding:4pt;">2023 · 1.ª fase · 4.1</td>
+          <td style="padding:4pt;">Continuidade num ponto</td>
+          <td style="padding:4pt; text-align:center;">14 pts</td>
+          <td style="padding:4pt;">Limite notável $(e^u-1)/u$ em $x=1$</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>O</strong></td>
+          <td style="padding:4pt;">2022 · Ép. Especial · 10</td>
+          <td style="padding:4pt;">Continuidade num ponto</td>
+          <td style="padding:4pt; text-align:center;">14 pts</td>
+          <td style="padding:4pt;">$\frac{3x}{e^{5x}-1}$ em $x=0$</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>P</strong></td>
+          <td style="padding:4pt;">2022 · 2.ª fase · 8</td>
+          <td style="padding:4pt;">Continuidade (caso falso)</td>
+          <td style="padding:4pt; text-align:center;">14 pts</td>
+          <td style="padding:4pt;">$\frac{1-\cos x}{x}$ vs $\ln\sqrt{e+x}$ em $x=0$</td>
+        </tr>
+        <tr>
+          <td style="padding:4pt;"><strong>L</strong></td>
+          <td style="padding:4pt;">2024 · 2.ª fase · 6.2</td>
+          <td style="padding:4pt;">Continuidade com parâmetro</td>
+          <td style="padding:4pt; text-align:center;">14 pts</td>
+          <td style="padding:4pt;">Determinar $k$ ($e^{-k}(e^x-1)/(-x^2+2x)$)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="conteudos">
+    <h4>Tipos de Bolzano-Cauchy — guia rápido</h4>
+    <table style="width:100%; border-collapse:collapse; font-size:9.5pt; margin-top:6pt;">
+      <thead>
+        <tr style="background:#E6F1FB; color:#0C447C;">
+          <th style="padding:5pt; text-align:left; width:30%;">Tipo</th>
+          <th style="padding:5pt; text-align:left;">Função auxiliar $h$ a definir</th>
+          <th style="padding:5pt; text-align:left; width:18%;">Exercícios</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>Existência de zero</strong></td>
+          <td style="padding:4pt;">$h(x) = f(x)$ (a própria função)</td>
+          <td style="padding:4pt;">N, T</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>Intersecção com reta</strong> $y = mx + b$</td>
+          <td style="padding:4pt;">$h(x) = f(x) - (mx + b)$</td>
+          <td style="padding:4pt;">U, W</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>Tangente com declive</strong> $m$</td>
+          <td style="padding:4pt;">$h(x) = f'(x) - m$</td>
+          <td style="padding:4pt;">Q</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>Intersecção entre 2 gráficos</strong></td>
+          <td style="padding:4pt;">$h(x) = f(x) - g(x)$</td>
+          <td style="padding:4pt;">V</td>
+        </tr>
+        <tr>
+          <td style="padding:4pt;"><strong>Proposições falsas</strong></td>
+          <td style="padding:4pt;">Não há $h$: identificar onde as hipóteses falham (contínua? mudança de sinal?)</td>
+          <td style="padding:4pt;">K</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="conteudos">
+    <h4>Sugestão de gestão de tempo (90 min)</h4>
+    <p style="margin:6pt 0; font-size:10pt;">
+      <strong>15 min</strong> — revisão (continuidade, limites notáveis, enunciado de Bolzano-Cauchy)<br>
+      <strong>20 min</strong> — <strong>Exercício A</strong> (modelo formal, guiado pelo professor)<br>
+      <strong>15 min</strong> — Exercício N ou T (existência de zero, autónomo)<br>
+      <strong>15 min</strong> — Exercício U (intersecção com reta — função auxiliar)<br>
+      <strong>20 min</strong> — Exercício K (proposições falsas, em grupo — exige análise fina)<br>
+      <strong>5 min</strong> — síntese
+    </p>
+    <p style="margin:6pt 0; font-size:10pt;"><strong>Para casa:</strong> exercícios V e W (Bolzano), e os 4 exercícios de continuidade (M, O, P, L).</p>
+  </div>
+
+  <div class="nota" style="background:#E1F5EE; border-left-color:#1D9E75; color:#085041;">
+    <strong>Recurso adicional muito recomendado:</strong> a compilação do Prof. José Carlos Pereira em <em>mat.absolutamente.net</em> tem todos os exercícios de Bolzano-Cauchy dos exames nacionais (1997–2025) reunidos num único PDF. Excelente para treino adicional.
+  </div>
+
+  <div class="nota" style="background:#FAEEDA; border-left-color:#BA7517; color:#633806;">
+    <strong>Reservado para simulações finais:</strong> Os exames de 2025 (1.ª fase, 2.ª fase, Época Especial) estão guardados para as simulações de exame integrais nas semanas finais. O item de Bolzano com intersecção com reta de 2025 1.ª fase · 12.2 (com $f(x)=3-2e^x+e^{-x}$ e reta $y=3x+4$ em $]0,1[$) é uma variante muito interessante para o treino final.
+  </div>
+
+  <p style="margin-top:14pt; font-size:9pt; color:#888; text-align:center; font-style:italic;">
+    Documento elaborado para a preparação do Exame Nacional de Matemática A — 12.º ano — 1.ª fase, 23 de junho de 2026.<br>
+    Referencial AE 2018. Compilado dos exames originais do IAVE / EduQA (2020–2024).
+  </p>
+
+  <div class="rodape-pagina">
+    Continuidade e Bolzano · Aula 4 · Preparação Mat A 12.º · 2026 · Página 14
+  </div>
+</div>
+
+</body>
+</html>

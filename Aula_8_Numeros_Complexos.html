@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula 8 — Números Complexos · Preparação Mat A 12.º · 2026</title>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+  };
+</script>
+<script id="MathJax-script" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+  :root{
+    --azul-escuro:#1F4E79; --azul-medio:#2E6CA4; --azul-claro:#D6E4F0;
+    --azul-callout:#EAF1FB; --creme:#FFF8E7; --amarelo:#E0A800;
+    --cinza-texto:#222; --cinza-claro:#666; --linha:#cfd8e3;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    color:var(--cinza-texto); line-height:1.5; margin:0; background:#f0f2f5;
+    font-size:15px;
+  }
+  .page{
+    width:210mm; min-height:297mm; background:#fff; margin:14px auto;
+    padding:20mm 18mm 16mm 18mm; position:relative;
+    box-shadow:0 1px 6px rgba(0,0,0,.18);
+  }
+  .page-head{
+    display:flex; justify-content:space-between; font-size:11px;
+    color:var(--cinza-claro); border-bottom:1px solid var(--linha);
+    padding-bottom:6px; margin-bottom:16px;
+  }
+  .page-foot{
+    position:absolute; bottom:10mm; left:18mm; right:18mm; text-align:center;
+    font-size:10.5px; color:var(--cinza-claro); border-top:1px solid var(--linha);
+    padding-top:6px;
+  }
+  /* Capa */
+  .capa h1{font-size:30px; color:var(--azul-escuro); margin:0 0 4px}
+  .capa .sub{font-size:16px; color:var(--azul-medio); font-weight:600; margin-bottom:26px}
+  .bloco-info{
+    background:var(--azul-callout); border-left:4px solid var(--azul-medio);
+    padding:12px 16px; border-radius:4px; font-size:13.5px; margin-bottom:22px;
+  }
+  /* Secções e exercícios */
+  .secao{
+    background:var(--azul-escuro); color:#fff; padding:10px 14px; border-radius:5px;
+    margin:26px 0 14px; display:flex; align-items:center; gap:12px;
+  }
+  .secao .badge{
+    background:#fff; color:var(--azul-escuro); width:30px; height:30px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700; flex:0 0 30px;
+  }
+  .secao h2{margin:0; font-size:17px}
+  .secao .desc{font-size:11.5px; opacity:.9; margin-top:2px}
+  .ex-head{
+    background:var(--azul-claro); border-radius:5px; padding:9px 13px; margin:18px 0 8px;
+  }
+  .ex-head h3{margin:0; font-size:15.5px; color:var(--azul-escuro)}
+  .ex-head .origem{font-size:11.5px; color:#3a536b; margin-top:2px}
+  .tag{
+    font-size:10.5px; background:var(--azul-medio); color:#fff; padding:1px 8px;
+    border-radius:10px; vertical-align:middle; margin-left:6px;
+  }
+  .tag.alt{background:#7a5c00}
+  .tag.essencial{background:#0a7a3b}
+  .callout{
+    background:var(--azul-callout); border-left:4px solid var(--azul-medio);
+    padding:9px 13px; border-radius:4px; font-size:13px; margin:10px 0;
+  }
+  .enunciado{margin:10px 0}
+  .resolucao{
+    border:1.5px dashed #b9c4d2; border-radius:5px; min-height:120px;
+    padding:10px 12px; color:#9aa6b4; font-style:italic; font-size:12.5px; margin:8px 0;
+  }
+  .dica{
+    background:var(--creme); border-left:4px solid var(--amarelo);
+    padding:11px 14px; border-radius:4px; font-size:13.5px; margin-top:10px;
+  }
+  .dica .rot{font-weight:700; color:#8a6d00}
+  .reservado{border:1.5px dashed #c98b00; background:#fffaf0}
+  .reservado .ex-head{background:#ffe9bf}
+  .nota-reserva{font-size:11.5px;color:#8a6d00;background:#fff3d6;border-radius:4px;padding:4px 9px;display:inline-block;margin-top:4px}
+  table{border-collapse:collapse; width:100%; font-size:13px; margin:10px 0}
+  th,td{border:1px solid var(--linha); padding:6px 8px; text-align:left}
+  th{background:var(--azul-claro); color:var(--azul-escuro)}
+  .chave{font-weight:600; color:#0a7a3b}
+  ol.indice{margin:6px 0 0 18px; padding:0}
+  ol.indice li{margin:3px 0; font-size:13.5px}
+  .rever h4{color:var(--azul-escuro); margin:16px 0 4px; font-size:14.5px; border-bottom:1px solid var(--linha); padding-bottom:3px}
+  .rever ul{margin:4px 0 4px 18px}
+  .rever li{margin:3px 0; font-size:13.5px}
+  .opcoes{margin:6px 0 0 6px}
+  .opcoes span{display:inline-block; min-width:120px; margin:2px 0}
+  .fig-nota{font-size:12px;color:#3a536b;background:#f3f7fc;border:1px solid var(--linha);border-radius:4px;padding:7px 10px;margin:8px 0}
+  /* Figura única do enunciado */
+  .figura{
+    text-align:center; margin:12px 0; padding:10px;
+    border:1px solid var(--linha); border-radius:6px; background:#fcfdff;
+  }
+  .figura img{max-width:300px; width:100%; height:auto; display:block; margin:0 auto}
+  .figura figcaption{font-size:11.5px; color:var(--cinza-claro); margin-top:6px}
+  /* Grelha 2x2 de opções-imagem (escolha múltipla com gráficos) */
+  .opcoes-img{
+    display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0;
+  }
+  .opcoes-img .op{
+    border:1px solid var(--linha); border-radius:6px; background:#fcfdff;
+    padding:8px; text-align:center;
+  }
+  .opcoes-img .op .rotulo{font-weight:700; color:var(--azul-escuro); font-size:13px; display:block; margin-bottom:4px; text-align:left}
+  .opcoes-img .op img{max-width:100%; height:auto; display:block; margin:0 auto}
+  @media print{
+    body{background:#fff}
+    .page{box-shadow:none; margin:0; width:auto; min-height:auto; padding:14mm}
+    .page{page-break-after:always}
+    .no-print{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ CAPA ============ -->
+<section class="page capa">
+  <div class="page-head"><span>Aula 8 · Números Complexos</span><span>Preparação Exame Nacional · Mat A 635 · 2026</span></div>
+  <h1>Números Complexos</h1>
+  <div class="sub">Aula 8 (componente de Complexos) — Preparação para o Exame Nacional · Matemática A · 12.º ano · 2026</div>
+
+  <div class="bloco-info">
+    <strong>Estrutura desta aula.</strong> Os números complexos valem cerca de <strong>24 pontos</strong> em cada exame (~12% da prova): <strong>1 item de escolha múltipla</strong> de 12 pontos (argumento, módulo, afixo de transformação ou região no plano complexo) + <strong>1 item de construção</strong> de 14 pontos, quase sempre <em>"sem recorrer à calculadora"</em> (raízes n-ésimas, equações, condições sobre módulo e argumento). O tema esteve presente em <strong>todos os 21 exames do arquivo, de 2019 a 2025</strong>, sem exceção.
+    <br><br>
+    Os 13 exercícios foram <strong>retirados diretamente dos enunciados oficiais</strong> das 1.ª e 2.ª fases e épocas especiais de 2022 a 2025. Dois itens (marcados a tracejado e a cor de âmbar) provêm da <strong>1.ª fase de 2025</strong>: por isso, reserve a <strong>2.ª fase de 2025</strong> para a simulação completa da Aula 10.
+  </div>
+
+  <div class="secao"><span class="badge">A</span><div><h2>Argumento e transformações no plano complexo</h2><div class="desc">4 exercícios · escolha múltipla</div></div></div>
+  <ol class="indice">
+    <li>A — Argumento de \(2iz\) <span class="tag">EM</span> (2023 · época especial · item 12)</li>
+    <li>B — Rotação de \(\tfrac{\pi}{3}\) do afixo de \(z=-2i\) <span class="tag">EM</span> (2024 · 2.ª fase · item 12)</li>
+    <li>C — Argumento de \(w\times z\) (figura) <span class="tag">EM</span> (2023 · 1.ª fase · item 10)</li>
+    <li>D — Afixo de \(i\,w^3\) (figura) <span class="tag">EM</span> <span class="tag alt">2025 F1</span> (2025 · 1.ª fase · item 8)</li>
+  </ol>
+
+  <div class="secao"><span class="badge">B</span><div><h2>Regiões e configurações geométricas</h2><div class="desc">3 exercícios · escolha múltipla</div></div></div>
+  <ol class="indice" start="5">
+    <li>E — Região definida por \(z\times\bar z=4\) <span class="tag">EM</span> (2022 · 2.ª fase · item 6)</li>
+    <li>F — Triângulo equilátero: quadrante de \(z_1^{\,2}\times z_2\) <span class="tag">EM</span> (2023 · 2.ª fase · item 11)</li>
+    <li>G — Raízes cúbicas num triângulo: determinar \(w\) <span class="tag">EM</span> (2024 · 1.ª fase · item 11)</li>
+  </ol>
+
+  <div class="secao"><span class="badge">C</span><div><h2>Raízes n-ésimas e equações</h2><div class="desc">3 exercícios · construção, sem calculadora</div></div></div>
+  <ol class="indice" start="8">
+    <li>H — Restantes raízes cúbicas de \(w\) (2022 · 2.ª fase · item 7)</li>
+    <li>I — Soluções da equação \(z^2=w\) (2023 · 1.ª fase · item 11)</li>
+    <li>J — \(w\) é raiz sexta de \(z\): determinar \(iz\) (2024 · 2.ª fase · item 13)</li>
+  </ol>
+
+  <div class="secao"><span class="badge">D</span><div><h2>Condições sobre módulo, argumento e afixos</h2><div class="desc">3 exercícios · construção, sem calculadora</div></div></div>
+  <ol class="indice" start="11">
+    <li>K — Menor \(n\) para que \(w\) seja imaginário puro (2023 · época especial · item 13)</li>
+    <li>L — \(z\times w\) com módulo \(5\sqrt2\) e afixo na bissetriz do 3.º Q (2024 · 1.ª fase · item 12)</li>
+    <li>M — Afixo de \(w\) equidistante de dois afixos <span class="tag alt">2025 F1</span> (2025 · 1.ª fase · item 9)</li>
+  </ol>
+
+  <div class="page-foot">Números Complexos · Aula 8 · Preparação Mat A 12.º · 2026 · Página 1</div>
+</section>
+
+<!-- ============ CONTEÚDOS A REVER ============ -->
+<section class="page rever">
+  <div class="page-head"><span>Aula 8 · Conteúdos a rever</span><span>Programa de Matemática A · Ensino Secundário</span></div>
+  <h2 style="color:var(--azul-escuro)">Conteúdos a rever antes dos exercícios</h2>
+  <p style="font-size:13px;color:var(--cinza-claro)">Síntese alinhada com o Programa / Aprendizagens Essenciais de Matemática A (Números Complexos — 12.º ano). As fórmulas de De Moivre e das raízes n-ésimas constam do formulário do exame.</p>
+
+  <h4>1. Formas algébrica e trigonométrica</h4>
+  <ul>
+    <li><strong>Forma algébrica</strong>: \(z=a+bi\); módulo \(|z|=\sqrt{a^2+b^2}\); conjugado \(\bar z=a-bi\). Propriedade-chave: \(z\times\bar z=|z|^2\) (sempre real, não negativo).</li>
+    <li><strong>Forma trigonométrica</strong>: \(z=\rho\,e^{i\theta}=\rho\,(\cos\theta+i\,\mathrm{sen}\,\theta)\), com \(\rho=|z|\) e \(\theta=\mathrm{Arg}(z)\).</li>
+    <li><strong>Potências de \(i\)</strong>: ciclo de 4 — \(i^n=i^{\,n\bmod 4}\). Ex.: \(i^{17}=i\), \(i^{18}=-1\), \(i^{19}=-i\), \(i^{23}=-i\). Aparece em quase todos os itens de construção.</li>
+    <li><strong>Divisão na forma algébrica</strong>: multiplicar pelo conjugado do denominador. Ex.: \(\dfrac{4}{1-i}=\dfrac{4(1+i)}{2}=2+2i\).</li>
+  </ul>
+
+  <h4>2. Operações na forma trigonométrica (no formulário)</h4>
+  <ul>
+    <li>\(\mathrm{Arg}(z\times w)=\mathrm{Arg}(z)+\mathrm{Arg}(w)\) (mód. \(2\pi\)); \(|z\times w|=|z|\,|w|\); \(\left|\tfrac zw\right|=\tfrac{|z|}{|w|}\).</li>
+    <li><strong>Multiplicar por \(i\)</strong> = rotação de \(\tfrac{\pi}{2}\) (sentido positivo); por \(i^k\) = rotação de \(k\tfrac{\pi}{2}\). Multiplicar por \(e^{i\alpha}\) = rotação de \(\alpha\). Conjugar = simetria em relação ao eixo real (\(\mathrm{Arg}(\bar z)=-\mathrm{Arg}(z)\)).</li>
+    <li><strong>Fórmula de De Moivre</strong>: \(\left(\rho\,e^{i\theta}\right)^n=\rho^{\,n}e^{\,i\,n\theta}\).</li>
+  </ul>
+
+  <h4>3. Raízes n-ésimas (no formulário)</h4>
+  <ul>
+    <li>\(z^n=\rho\,e^{i\varphi}\Rightarrow z_k=\rho^{1/n}\,e^{\,i\frac{\varphi+2k\pi}{n}},\;k=0,1,\dots,n-1\).</li>
+    <li>Os \(n\) afixos são os <strong>vértices de um polígono regular</strong> inscrito na circunferência de raio \(\rho^{1/n}\) centrada na origem; argumentos consecutivos diferem de \(\tfrac{2\pi}{n}\). <em>Atalho de exame</em>: conhecida uma raiz, as restantes obtêm-se somando múltiplos de \(\tfrac{2\pi}{n}\) ao argumento.</li>
+    <li>Converter \(e^{i\theta}\) em \(a+bi\) com valores exatos quando \(\theta\) é múltiplo de \(\tfrac{\pi}{6}\), \(\tfrac{\pi}{4}\) ou \(\tfrac{\pi}{3}\).</li>
+  </ul>
+
+  <h4>4. Regiões e lugares geométricos no plano complexo</h4>
+  <ul>
+    <li>\(|z-z_0|\le r\): disco de centro no afixo de \(z_0\) e raio \(r\); \(|z-z_0|=r\): circunferência. Nota: \(z\times\bar z=r^2 \Leftrightarrow |z|=r\).</li>
+    <li>\(\mathrm{Re}(z)\ge a\) ou \(\mathrm{Im}(z)\le b\): semiplanos; \(|z-z_1|=|z-z_2|\): mediatriz do segmento que une os afixos.</li>
+    <li>\(\mathrm{Arg}(z)=\theta\): semirreta com origem em \(O\). Bissetriz do 1.º quadrante: \(\theta=\tfrac{\pi}{4}\) (ou \(\mathrm{Im}=\mathrm{Re}>0\)); do 3.º quadrante: \(\theta=\tfrac{5\pi}{4}\) (ou \(\mathrm{Im}=\mathrm{Re}<0\)).</li>
+    <li><strong>Imaginário puro</strong>: \(\mathrm{Re}(z)=0\) e \(\mathrm{Im}(z)\neq0\) ⇔ argumento \(\tfrac{\pi}{2}+k\pi\). <strong>Real</strong>: argumento \(0+k\pi\).</li>
+  </ul>
+
+  <div class="dica" style="margin-top:18px">
+    <span class="rot">Erros mais frequentes.</span> (1) Trocar o sentido da rotação: multiplicar por \(i\) roda \(+\tfrac{\pi}{2}\), dividir por \(i\) (ou multiplicar por \(-i\)) roda \(-\tfrac{\pi}{2}\). (2) Esquecer reduzir potências de \(i\) módulo 4 antes de tudo o resto. (3) Nas raízes n-ésimas, esquecer o \(2k\pi\) e apresentar uma única raiz. (4) Confundir \(z\times\bar z=|z|^2\) (real) com \(z^2\). (5) Apresentar a resposta na forma errada — verifique sempre se o enunciado pede <em>forma trigonométrica</em> ou <em>forma \(a+bi\)</em>: a classificação penaliza a forma errada.
+  </div>
+
+  <div class="page-foot">Números Complexos · Aula 8 · Preparação Mat A 12.º · 2026 · Página 2</div>
+</section>
+
+<!-- ============ SECÇÃO A ============ -->
+<section class="page">
+  <div class="page-head"><span>Aula 8 · SECÇÃO A · Argumento e transformações</span><span>Exames 2023–2025</span></div>
+  <div class="secao"><span class="badge">A</span><div><h2>Argumento e transformações no plano complexo — 4 exercícios</h2><div class="desc">Item de escolha múltipla presente em todos os exames (12 pontos)</div></div></div>
+
+  <!-- A -->
+  <div class="ex-head"><h3>Exercício A — Argumento de \(2iz\) <span class="tag">EM</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2023 · época especial · item 12 · 12 pts</div></div>
+  <div class="enunciado">
+    <p>Seja \(z\) um número complexo de argumento \(\dfrac{\pi}{7}\).</p>
+    <p>Qual dos seguintes valores é um argumento de \(2iz\) ?</p>
+    <div class="opcoes">
+      <span>(A) \(\dfrac{5\pi}{14}\)</span><span>(B) \(\dfrac{9\pi}{14}\)</span>
+      <span>(C) \(\dfrac{6\pi}{7}\)</span><span>(D) \(\dfrac{8\pi}{7}\)</span>
+    </div>
+  </div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> multiplicar por \(2\) não altera o argumento; multiplicar por \(i\) soma \(\tfrac{\pi}{2}\):
+    \[\mathrm{Arg}(2iz)=\frac{\pi}{2}+\frac{\pi}{7}=\frac{7\pi+2\pi}{14}=\frac{9\pi}{14}.\]
+    <span class="chave">Resposta: (B).</span>
+  </div>
+
+  <!-- B -->
+  <div class="ex-head"><h3>Exercício B — Rotação de \(\tfrac{\pi}{3}\) <span class="tag">EM</span> <span class="tag essencial">essencial</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2024 · 2.ª fase · item 12 · 12 pts</div></div>
+  <div class="callout"><strong>Porque é importante.</strong> Traduz a rotação para a linguagem dos complexos: rodar o afixo de \(z\) de \(\alpha\) em torno da origem é multiplicar por \(e^{i\alpha}\). É a versão "inversa" do exercício A.</div>
+  <div class="enunciado">
+    <p>Considere o ponto \(A\), afixo no plano complexo do número \(z=-2i\).</p>
+    <p>Qual dos seguintes números complexos tem como afixo o transformado do ponto \(A\) por uma rotação de centro na origem e de ângulo orientado de amplitude \(\dfrac{\pi}{3}\) radianos?</p>
+    <div class="opcoes">
+      <span>(A) \(\sqrt3-i\)</span><span>(B) \(-\sqrt3+i\)</span>
+      <span>(C) \(1-\sqrt3\,i\)</span><span>(D) \(-1+\sqrt3\,i\)</span>
+    </div>
+  </div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> \(z=-2i=2e^{i\left(-\frac{\pi}{2}\right)}\). Rodar de \(\tfrac{\pi}{3}\) é multiplicar por \(e^{i\frac{\pi}{3}}\):
+    \[2e^{i\left(-\frac{\pi}{2}+\frac{\pi}{3}\right)}=2e^{-i\frac{\pi}{6}}=2\left(\cos\tfrac{\pi}{6}-i\,\mathrm{sen}\tfrac{\pi}{6}\right)=\sqrt3-i.\]
+    <span class="chave">Resposta: (A).</span>
+  </div>
+
+  <!-- C -->
+  <div class="ex-head"><h3>Exercício C — Argumento de \(w\times z\) (figura) <span class="tag">EM</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2023 · 1.ª fase · item 10 · 12 pts</div></div>
+  <div class="enunciado">
+    <p>Na Figura, estão representados, no plano complexo, os pontos \(A\) e \(B\). O ponto \(O\) é a origem do referencial.</p>
+    <figure class="figura">
+      <img src="imagens/aula8_exc_c.png" alt="Figura 4 — afixos A e B no plano complexo, ângulo AOB de 5π/8">
+      <figcaption>Figura 4 (2023 · 1.ª fase)</figcaption>
+    </figure>
+    <p>O ponto \(A\) é o afixo de um número complexo \(z\) tal que \(\mathrm{Im}(z)=\mathrm{Re}(z)\) e \(\mathrm{Re}(z)>0\).</p>
+    <p>O ponto \(B\) (no 2.º quadrante) é o afixo de um número complexo \(w\) tal que o ângulo convexo \(AOB\) tem amplitude \(\dfrac{5\pi}{8}\) radianos.</p>
+    <p>Qual dos valores seguintes é um argumento de \(w\times z\) ?</p>
+    <div class="opcoes">
+      <span>(A) \(\dfrac{3\pi}{8}\)</span><span>(B) \(\dfrac{5\pi}{8}\)</span>
+      <span>(C) \(\dfrac{9\pi}{8}\)</span><span>(D) \(\dfrac{11\pi}{8}\)</span>
+    </div>
+  </div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> de \(\mathrm{Im}(z)=\mathrm{Re}(z)>0\) vem \(\mathrm{Arg}(z)=\tfrac{\pi}{4}\). Como \(B\) está no 2.º quadrante, \(\mathrm{Arg}(w)=\tfrac{\pi}{4}+\tfrac{5\pi}{8}=\tfrac{7\pi}{8}\). Então
+    \[\mathrm{Arg}(w\times z)=\frac{7\pi}{8}+\frac{\pi}{4}=\frac{9\pi}{8}.\]
+    <span class="chave">Resposta: (C).</span>
+  </div>
+
+  <div class="page-foot">Números Complexos · Aula 8 · Preparação Mat A 12.º · 2026 · Página 3</div>
+</section>
+
+<section class="page">
+  <div class="page-head"><span>Aula 8 · SECÇÃO A · Argumento e transformações</span><span>Exames 2023–2025</span></div>
+
+  <!-- D -->
+  <div class="reservado" style="border-radius:6px;padding:6px 10px 2px;margin-top:6px">
+  <div class="ex-head"><h3>Exercício D — Afixo de \(i\,w^3\) (figura) <span class="tag">EM</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2025 · 1.ª fase · item 8 · 12 pts</div>
+    <div class="nota-reserva">Item de 2025 · 1.ª fase — reserve a 2.ª fase de 2025 para a simulação (Aula 10)</div></div>
+  <div class="enunciado">
+    <p>Na Figura, estão representados, no plano complexo, os afixos de cinco números complexos. Sabe-se que:</p>
+    <ul style="margin:4px 0 4px 18px">
+      <li>os pontos \(A\) e \(C\) pertencem, respetivamente, ao 2.º e ao 3.º quadrantes;</li>
+      <li>o ponto \(B\) pertence ao semieixo real negativo;</li>
+      <li>o ponto \(D\) pertence ao semieixo imaginário negativo;</li>
+      <li>o ponto \(W\) pertence ao 1.º quadrante e é o afixo de um número complexo \(w\) tal que \(\mathrm{Im}(w)=\mathrm{Re}(w)\).</li>
+    </ul>
+    <figure class="figura">
+      <img src="imagens/aula8_exc_d.png" alt="Figura 2 — afixos de cinco números complexos A, B, C, D, W no plano complexo">
+      <figcaption>Figura 2 (2025 · 1.ª fase)</figcaption>
+    </figure>
+    <p>Qual dos pontos seguintes pode ser o afixo do número complexo \(i\,w^3\) ?</p>
+    <div class="opcoes">
+      <span>(A) Ponto \(A\)</span><span>(B) Ponto \(B\)</span>
+      <span>(C) Ponto \(C\)</span><span>(D) Ponto \(D\)</span>
+    </div>
+  </div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> \(W\) no 1.º quadrante com \(\mathrm{Im}=\mathrm{Re}\) dá \(\mathrm{Arg}(w)=\tfrac{\pi}{4}\). Por De Moivre, \(\mathrm{Arg}(w^3)=\tfrac{3\pi}{4}\); multiplicar por \(i\) soma \(\tfrac{\pi}{2}\):
+    \[\mathrm{Arg}\!\left(i\,w^3\right)=\frac{3\pi}{4}+\frac{\pi}{2}=\frac{5\pi}{4}\;\Rightarrow\;\text{3.º quadrante}.\]
+    <span class="chave">Resposta: (C) Ponto C.</span> <em>(Erro típico: ler \(i\,w^3\) como \((iw)^3\), que daria argumento \(\tfrac{9\pi}{4}\equiv\tfrac{\pi}{4}\) — 1.º quadrante.)</em>
+  </div>
+  </div>
+
+  <!-- ============ SECÇÃO B (início) ============ -->
+  <div class="secao"><span class="badge">B</span><div><h2>Regiões e configurações geométricas — 3 exercícios</h2><div class="desc">Identificar lugares geométricos e ler configurações de afixos (12 pontos)</div></div></div>
+
+  <!-- E -->
+  <div class="ex-head"><h3>Exercício E — Região definida por \(z\times\bar z=4\) <span class="tag">EM</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2022 · 2.ª fase · item 6 · 12 pts</div></div>
+  <div class="enunciado">
+    <p>Considere, em \(\mathbb C\), conjunto dos números complexos, a condição \(z\times\bar z=4\).</p>
+    <p>Em qual das opções seguintes está representado, no plano complexo, o conjunto de pontos definido por esta condição?</p>
+    <div class="opcoes-img">
+      <div class="op"><span class="rotulo">(A)</span><img src="imagens/aula8_exc_E_opA.png" alt="Opção A — circunferência de centro O e raio 2"></div>
+      <div class="op"><span class="rotulo">(B)</span><img src="imagens/aula8_exc_E_opB.png" alt="Opção B — circunferência de centro O e raio 4"></div>
+      <div class="op"><span class="rotulo">(C)</span><img src="imagens/aula8_exc_E_opC.png" alt="Opção C — ramos de hipérbole por (2,1)"></div>
+      <div class="op"><span class="rotulo">(D)</span><img src="imagens/aula8_exc_E_opD.png" alt="Opção D — ramos de hipérbole por (2,2)"></div>
+    </div>
+  </div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> \(z\times\bar z=|z|^2\), logo a condição equivale a \(|z|^2=4 \Leftrightarrow |z|=2\): circunferência centrada na origem e raio \(2\). <span class="chave">Resposta: (A).</span> <em>(As hipérboles são o "isco" para quem lê \(\mathrm{Re}(z)\times\mathrm{Im}(z)=4\).)</em>
+  </div>
+
+  <div class="page-foot">Números Complexos · Aula 8 · Preparação Mat A 12.º · 2026 · Página 4</div>
+</section>
+
+<section class="page">
+  <div class="page-head"><span>Aula 8 · SECÇÃO B · Regiões e configurações</span><span>Exames 2022–2024</span></div>
+
+  <!-- F -->
+  <div class="ex-head"><h3>Exercício F — Triângulo equilátero: quadrante de \(z_1^{\,2}\times z_2\) <span class="tag">EM</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2023 · 2.ª fase · item 11 · 12 pts</div></div>
+  <div class="enunciado">
+    <p>Na Figura, está representado, no plano complexo, um triângulo equilátero \([ABC]\), inscrito numa circunferência de centro na origem do referencial, \(O\).</p>
+    <p>O ponto \(A\) pertence ao semieixo imaginário positivo. Os pontos \(A\) e \(B\) são os afixos dos números complexos \(z_1\) e \(z_2\), respetivamente (\(B\) no 3.º quadrante).</p>
+    <figure class="figura">
+      <img src="imagens/aula8_exc_f.png" alt="Figura 5 — triângulo equilátero ABC inscrito na circunferência centrada em O, A no semieixo imaginário positivo">
+      <figcaption>Figura 5 (2023 · 2.ª fase)</figcaption>
+    </figure>
+    <p>A qual dos quadrantes do plano complexo pertence o afixo do número complexo \(z_1^{\,2}\times z_2\) ?</p>
+    <div class="opcoes">
+      <span>(A) Ao primeiro.</span><span>(B) Ao segundo.</span>
+      <span>(C) Ao terceiro.</span><span>(D) Ao quarto.</span>
+    </div>
+  </div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> \(\mathrm{Arg}(z_1)=\tfrac{\pi}{2}\); os vértices do triângulo equilátero distam \(\tfrac{2\pi}{3}\), logo \(\mathrm{Arg}(z_2)=\tfrac{\pi}{2}+\tfrac{2\pi}{3}=\tfrac{7\pi}{6}\). Então
+    \[\mathrm{Arg}\!\left(z_1^{\,2}\times z_2\right)=2\cdot\frac{\pi}{2}+\frac{7\pi}{6}=\pi+\frac{7\pi}{6}=\frac{13\pi}{6}\equiv\frac{13\pi}{6}-2\pi=\frac{\pi}{6},\]
+    que pertence ao 1.º quadrante. <span class="chave">Resposta: (A).</span>
+  </div>
+
+  <!-- G -->
+  <div class="ex-head"><h3>Exercício G — Raízes cúbicas num triângulo: determinar \(w\) <span class="tag">EM</span> <span class="tag essencial">essencial</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2024 · 1.ª fase · item 11 · 12 pts</div></div>
+  <div class="callout"><strong>Porque é importante.</strong> Faz o caminho inverso das raízes n-ésimas: da configuração geométrica (polígono regular) recupera-se o número original por De Moivre. Liga a Secção B à Secção C.</div>
+  <div class="enunciado">
+    <p>Na Figura, está representado, no plano complexo, o triângulo \([ABC]\), cujos vértices pertencem à circunferência de raio \(2\) centrada na origem do referencial, sendo o ponto \(A\) pertencente ao semieixo imaginário negativo.</p>
+    <p>Os pontos \(A\), \(B\) e \(C\) são os afixos das raízes cúbicas de um certo número complexo, \(w\).</p>
+    <figure class="figura">
+      <img src="imagens/aula8_exc_g.png" alt="Figura 5 — triângulo ABC inscrito na circunferência de raio 2 centrada em O, A no semieixo imaginário negativo">
+      <figcaption>Figura 5 (2024 · 1.ª fase)</figcaption>
+    </figure>
+    <p>Em qual das seguintes opções se apresenta \(w\), escrito na forma trigonométrica?</p>
+    <div class="opcoes">
+      <span>(A) \(2e^{\,i\frac{\pi}{2}}\)</span><span>(B) \(2e^{\,i\frac{3\pi}{2}}\)</span>
+      <span>(C) \(8e^{\,i\frac{\pi}{2}}\)</span><span>(D) \(8e^{\,i\frac{3\pi}{2}}\)</span>
+    </div>
+  </div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> as raízes têm módulo \(2\), logo \(|w|=2^3=8\) (elimina já (A) e (B)). A raiz com afixo em \(A\) é \(2e^{\,i\frac{3\pi}{2}}\); por De Moivre,
+    \[w=\left(2e^{\,i\frac{3\pi}{2}}\right)^{3}=8\,e^{\,i\frac{9\pi}{2}}=8\,e^{\,i\left(\frac{9\pi}{2}-4\pi\right)}=8\,e^{\,i\frac{\pi}{2}}.\]
+    <span class="chave">Resposta: (C).</span> <em>(Erro típico: esquecer reduzir \(\tfrac{9\pi}{2}\) módulo \(2\pi\) e escolher (D).)</em>
+  </div>
+
+  <div class="page-foot">Números Complexos · Aula 8 · Preparação Mat A 12.º · 2026 · Página 5</div>
+</section>
+
+<!-- ============ SECÇÃO C ============ -->
+<section class="page">
+  <div class="page-head"><span>Aula 8 · SECÇÃO C · Raízes n-ésimas e equações</span><span>Exames 2022–2024 · sem calculadora</span></div>
+  <div class="secao"><span class="badge">C</span><div><h2>Raízes n-ésimas e equações — 3 exercícios</h2><div class="desc">Item de construção "sem recorrer à calculadora" (14 pontos)</div></div></div>
+
+  <!-- H -->
+  <div class="ex-head"><h3>Exercício H — Restantes raízes cúbicas de \(w\) <span class="tag essencial">essencial</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2022 · 2.ª fase · item 7 · 14 pts</div></div>
+  <div class="callout"><strong>Porque é importante.</strong> É o protótipo do item de raízes: simplificar \(z\) (divisão + potência de \(i\)), passar à forma trigonométrica e usar o facto de as raízes cúbicas diferirem de \(\tfrac{2\pi}{3}\) no argumento.</div>
+  <div class="enunciado">
+    <p>Resolva este item sem recorrer à calculadora.</p>
+    <p>Considere, em \(\mathbb C\), conjunto dos números complexos, o número complexo \(z=\dfrac{4}{1-i}+4i^{18}\).</p>
+    <p>O número complexo \(z\) é uma das raízes cúbicas de um número complexo \(w\).</p>
+    <p>Determine as restantes raízes cúbicas de \(w\) e apresente-as na forma trigonométrica.</p>
+  </div>
+  <div class="resolucao">Resolução:</div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> \(\dfrac{4}{1-i}=\dfrac{4(1+i)}{2}=2+2i\) e \(i^{18}=i^{2}=-1\), logo \(z=2+2i-4=-2+2i=2\sqrt2\,e^{\,i\frac{3\pi}{4}}\). As três raízes cúbicas de \(w\) têm o mesmo módulo e argumentos que diferem de \(\tfrac{2\pi}{3}\):
+    \[2\sqrt2\,e^{\,i\left(\frac{3\pi}{4}+\frac{2\pi}{3}\right)}=2\sqrt2\,e^{\,i\frac{17\pi}{12}}
+    \qquad\text{e}\qquad
+    2\sqrt2\,e^{\,i\left(\frac{3\pi}{4}-\frac{2\pi}{3}\right)}=2\sqrt2\,e^{\,i\frac{\pi}{12}}.\]
+    <span class="chave">Restantes raízes: \(2\sqrt2\,e^{\,i\frac{\pi}{12}}\) e \(2\sqrt2\,e^{\,i\frac{17\pi}{12}}\).</span>
+  </div>
+
+  <!-- I -->
+  <div class="ex-head"><h3>Exercício I — Soluções da equação \(z^2=w\)</h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2023 · 1.ª fase · item 11 · 14 pts</div></div>
+  <div class="enunciado">
+    <p>Resolva este item sem recorrer à calculadora.</p>
+    <p>Considere, em \(\mathbb C\), conjunto dos números complexos, o número \(w=\dfrac{e^{\,i\frac{5\pi}{6}}-i^{17}}{i}\).</p>
+    <p>Determine, em \(\mathbb C\), as soluções da equação \(z^2=w\).</p>
+    <p>Apresente os valores pedidos na forma \(a+bi\), com \(a,b\in\mathbb R\).</p>
+  </div>
+  <div class="resolucao">Resolução:</div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> \(i^{17}=i\) e \(e^{\,i\frac{5\pi}{6}}=-\tfrac{\sqrt3}{2}+\tfrac12 i\), logo o numerador é \(-\tfrac{\sqrt3}{2}-\tfrac12 i=e^{\,i\frac{7\pi}{6}}\) (módulo 1). Dividir por \(i\) subtrai \(\tfrac{\pi}{2}\): \(w=e^{\,i\left(\frac{7\pi}{6}-\frac{\pi}{2}\right)}=e^{\,i\frac{2\pi}{3}}\). As raízes quadradas têm módulo \(1\) e argumentos \(\tfrac{\pi}{3}\) e \(\tfrac{\pi}{3}+\pi\):
+    \[z=e^{\,i\frac{\pi}{3}}=\frac12+\frac{\sqrt3}{2}i
+    \qquad\text{ou}\qquad
+    z=e^{\,i\frac{4\pi}{3}}=-\frac12-\frac{\sqrt3}{2}i.\]
+    <span class="chave">Soluções: \(\tfrac12+\tfrac{\sqrt3}{2}i\) e \(-\tfrac12-\tfrac{\sqrt3}{2}i\).</span>
+  </div>
+
+  <!-- J -->
+  <div class="ex-head"><h3>Exercício J — \(w\) é raiz sexta de \(z\): determinar \(iz\)</h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2024 · 2.ª fase · item 13 · 14 pts</div></div>
+  <div class="enunciado">
+    <p>Resolva este item sem recorrer à calculadora.</p>
+    <p>Considere, em \(\mathbb C\), conjunto dos números complexos, o número \(w=\dfrac{-1-\sqrt3\,i}{e^{\,i\left(-\frac{3\pi}{4}\right)}}\).</p>
+    <p>O número complexo \(w\) é uma das raízes sextas de um certo número complexo \(z\).</p>
+    <p>Determine \(iz\).</p>
+  </div>
+  <div class="resolucao">Resolução:</div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> \(-1-\sqrt3\,i=2e^{\,i\left(-\frac{2\pi}{3}\right)}\). Dividir por \(e^{\,i\left(-\frac{3\pi}{4}\right)}\) subtrai esse argumento:
+    \[w=2\,e^{\,i\left(-\frac{2\pi}{3}+\frac{3\pi}{4}\right)}=2\,e^{\,i\frac{\pi}{12}}
+    \;\Rightarrow\;
+    z=w^{6}=2^{6}e^{\,i\frac{6\pi}{12}}=64\,e^{\,i\frac{\pi}{2}}=64\,i.\]
+    Logo \(iz=i\times 64i=\) <span class="chave">\(-64\)</span>.
+  </div>
+
+  <div class="page-foot">Números Complexos · Aula 8 · Preparação Mat A 12.º · 2026 · Página 6</div>
+</section>
+
+<!-- ============ SECÇÃO D ============ -->
+<section class="page">
+  <div class="page-head"><span>Aula 8 · SECÇÃO D · Condições sobre módulo, argumento e afixos</span><span>Exames 2023–2025 · sem calculadora</span></div>
+  <div class="secao"><span class="badge">D</span><div><h2>Condições sobre módulo, argumento e afixos — 3 exercícios</h2><div class="desc">Item de construção: traduzir condições geométricas em equações (14 pontos)</div></div></div>
+
+  <!-- K -->
+  <div class="ex-head"><h3>Exercício K — Menor \(n\) para que \(w\) seja imaginário puro</h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2023 · época especial · item 13 · 14 pts</div></div>
+  <div class="enunciado">
+    <p>Considere, em \(\mathbb C\), conjunto dos números complexos, os números
+    \[z_1=-5i \qquad\text{e}\qquad z_2=-1-\sqrt3\,i\,.\]</p>
+    <p>Determine o menor número natural \(n\) para o qual o número complexo \(w=\dfrac{z_1+i^{23}}{z_2^{\,n}}\) é um imaginário puro.</p>
+  </div>
+  <div class="resolucao">Resolução:</div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> \(i^{23}=-i\), logo \(z_1+i^{23}=-6i=6\,e^{\,i\frac{3\pi}{2}}\). E \(z_2=2\,e^{\,i\frac{4\pi}{3}}\), pelo que
+    \[w=\frac{6}{2^{\,n}}\;e^{\,i\left(\frac{3\pi}{2}-n\frac{4\pi}{3}\right)}.\]
+    \(w\) é imaginário puro quando o argumento é \(\tfrac{\pi}{2}+k\pi\): \(\;\tfrac{3\pi}{2}-\tfrac{4n\pi}{3}=\tfrac{\pi}{2}+k\pi \Leftrightarrow \tfrac{4n}{3}=1-k\), ou seja, \(\tfrac{4n}{3}\) inteiro \(\Leftrightarrow n\) múltiplo de \(3\). O menor natural é <span class="chave">\(n=3\)</span> (verificação: \(\tfrac{3\pi}{2}-4\pi=-\tfrac{5\pi}{2}\equiv-\tfrac{\pi}{2}\) ✓).
+  </div>
+
+  <!-- L -->
+  <div class="ex-head"><h3>Exercício L — \(z\times w\) com módulo \(5\sqrt2\) e afixo na bissetriz do 3.º quadrante <span class="tag essencial">essencial</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2024 · 1.ª fase · item 12 · 14 pts</div></div>
+  <div class="callout"><strong>Porque é importante.</strong> Obriga a traduzir duas condições (módulo + lugar geométrico do afixo) num único complexo \(z\times w\), e a terminar com uma divisão na forma algébrica. É o item de construção mais completo dos últimos anos.</div>
+  <div class="enunciado">
+    <p>Resolva este item sem recorrer à calculadora.</p>
+    <p>Em \(\mathbb C\), conjunto dos números complexos, considere o número complexo \(z=\dfrac{4}{1+i}-\dfrac{2}{i^{7}}\).</p>
+    <p>Determine o número complexo \(w\) tal que o número complexo \(z\times w\) tenha módulo \(5\sqrt2\) e afixo pertencente à bissetriz do terceiro quadrante.</p>
+    <p>Apresente \(w\) na forma \(a+bi\), com \(a,b\in\mathbb R\).</p>
+  </div>
+  <div class="resolucao">Resolução:</div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> \(\dfrac{4}{1+i}=2-2i\) e \(i^{7}=-i\), donde \(\dfrac{2}{i^{7}}=\dfrac{2}{-i}=2i\) e \(z=2-2i-2i=2-4i\). As condições dão
+    \[z\times w=5\sqrt2\,e^{\,i\frac{5\pi}{4}}=5\sqrt2\left(-\tfrac{\sqrt2}{2}-\tfrac{\sqrt2}{2}i\right)=-5-5i.\]
+    Logo \(w=\dfrac{-5-5i}{2-4i}=\dfrac{(-5-5i)(2+4i)}{20}=\dfrac{10-30i}{20}=\) <span class="chave">\(\dfrac12-\dfrac32 i\)</span>.
+  </div>
+
+  <!-- M -->
+  <div class="reservado" style="border-radius:6px;padding:6px 10px 2px;margin-top:16px">
+  <div class="ex-head"><h3>Exercício M — Afixo de \(w\) equidistante de dois afixos <span class="tag essencial">essencial</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2025 · 1.ª fase · item 9 · 14 pts</div>
+    <div class="nota-reserva">Item de 2025 · 1.ª fase — reserve a 2.ª fase de 2025 para a simulação (Aula 10)</div></div>
+  <div class="enunciado">
+    <p>Resolva este item sem recorrer à calculadora.</p>
+    <p>Considere, em \(\mathbb C\), conjunto dos números complexos, os números \(z_1=2i^{19}\) e \(z_2=\dfrac{-3+i}{1+i}\).</p>
+    <p>Seja \(w=-\sqrt2\,k\,e^{\,i\frac{3\pi}{4}}\), com \(k\in\mathbb R\).</p>
+    <p>Determine o valor de \(k\) para o qual o afixo de \(w\) é equidistante do afixo de \(z_1\) e do afixo de \(z_2\).</p>
+  </div>
+  <div class="resolucao">Resolução:</div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> \(i^{19}=-i\Rightarrow z_1=-2i\) (afixo \((0,-2)\)); \(z_2=\dfrac{(-3+i)(1-i)}{2}=\dfrac{-2+4i}{2}=-1+2i\) (afixo \((-1,2)\)). Como \(e^{\,i\frac{3\pi}{4}}=-\tfrac{\sqrt2}{2}+\tfrac{\sqrt2}{2}i\),
+    \[w=-\sqrt2\,k\left(-\tfrac{\sqrt2}{2}+\tfrac{\sqrt2}{2}i\right)=k-ki \;\Rightarrow\; \text{afixo } (k,-k).\]
+    Equidistância: \(k^2+(-k+2)^2=(k+1)^2+(-k-2)^2 \Leftrightarrow 2k^2-4k+4=2k^2+6k+5 \Leftrightarrow -10k=1\).
+    <span class="chave">\(k=-\dfrac{1}{10}\).</span>
+  </div>
+  </div>
+
+  <div class="page-foot">Números Complexos · Aula 8 · Preparação Mat A 12.º · 2026 · Página 7</div>
+</section>
+
+<!-- ============ SÍNTESE ============ -->
+<section class="page">
+  <div class="page-head"><span>Aula 8 · Síntese</span><span>Números Complexos</span></div>
+  <h2 style="color:var(--azul-escuro)">Síntese da Aula 8 (Números Complexos)</h2>
+
+  <table>
+    <tr><th>Ex.</th><th>Origem</th><th>Tipo</th><th>Chave / resultado</th></tr>
+    <tr><th colspan="4" style="background:var(--azul-escuro);color:#fff">SECÇÃO A — Argumento e transformações</th></tr>
+    <tr><td>A</td><td>2023 · ép. especial · 12</td><td>Arg de \(2iz\) (EM)</td><td class="chave">(B) \(\tfrac{9\pi}{14}\)</td></tr>
+    <tr><td>B</td><td>2024 · 2.ª fase · 12</td><td>Rotação de \(\tfrac{\pi}{3}\) (EM)</td><td class="chave">(A) \(\sqrt3-i\)</td></tr>
+    <tr><td>C</td><td>2023 · 1.ª fase · 10</td><td>Arg de \(w\times z\), figura (EM)</td><td class="chave">(C) \(\tfrac{9\pi}{8}\)</td></tr>
+    <tr><td>D</td><td>2025 · 1.ª fase · 8</td><td>Afixo de \(i\,w^3\), figura (EM)</td><td class="chave">(C) Ponto C</td></tr>
+    <tr><th colspan="4" style="background:var(--azul-escuro);color:#fff">SECÇÃO B — Regiões e configurações</th></tr>
+    <tr><td>E</td><td>2022 · 2.ª fase · 6</td><td>\(z\times\bar z=4\) (EM)</td><td class="chave">(A) circunf. raio 2</td></tr>
+    <tr><td>F</td><td>2023 · 2.ª fase · 11</td><td>Quadrante de \(z_1^{\,2}\times z_2\) (EM)</td><td class="chave">(D) 4.º quadrante</td></tr>
+    <tr><td>G</td><td>2024 · 1.ª fase · 11</td><td>Raízes cúbicas → \(w\) (EM)</td><td class="chave">(C) \(8e^{\,i\pi/2}\)</td></tr>
+    <tr><th colspan="4" style="background:var(--azul-escuro);color:#fff">SECÇÃO C — Raízes n-ésimas e equações</th></tr>
+    <tr><td>H</td><td>2022 · 2.ª fase · 7</td><td>Restantes raízes cúbicas</td><td class="chave">\(2\sqrt2\,e^{i\pi/12}\), \(2\sqrt2\,e^{i17\pi/12}\)</td></tr>
+    <tr><td>I</td><td>2023 · 1.ª fase · 11</td><td>\(z^2=w\), forma \(a+bi\)</td><td class="chave">\(\pm\!\left(\tfrac12+\tfrac{\sqrt3}{2}i\right)\)</td></tr>
+    <tr><td>J</td><td>2024 · 2.ª fase · 13</td><td>Raiz sexta → \(iz\)</td><td class="chave">\(-64\)</td></tr>
+    <tr><th colspan="4" style="background:var(--azul-escuro);color:#fff">SECÇÃO D — Condições sobre módulo, argumento e afixos</th></tr>
+    <tr><td>K</td><td>2023 · ép. especial · 13</td><td>Menor \(n\): imaginário puro</td><td class="chave">\(n=3\)</td></tr>
+    <tr><td>L</td><td>2024 · 1.ª fase · 12</td><td>Módulo + bissetriz 3.º Q</td><td class="chave">\(w=\tfrac12-\tfrac32 i\)</td></tr>
+    <tr><td>M</td><td>2025 · 1.ª fase · 9</td><td>Equidistância de afixos</td><td class="chave">\(k=-\tfrac{1}{10}\)</td></tr>
+  </table>
+
+  <h4 style="color:var(--azul-escuro);margin-top:18px">Guia rápido — que ferramenta usar</h4>
+  <table>
+    <tr><th>Situação</th><th>O que fazer</th><th>Exercícios</th></tr>
+    <tr><td>Multiplicar por \(i\), \(i^k\), \(e^{i\alpha}\)</td><td>Somar \(\tfrac{\pi}{2}\), \(k\tfrac{\pi}{2}\), \(\alpha\) ao argumento (rotação)</td><td>A, B, D</td></tr>
+    <tr><td>Produto/potência de complexos</td><td>Somar argumentos; De Moivre para potências</td><td>C, F, G, J</td></tr>
+    <tr><td>Condição \(z\times\bar z=r^2\)</td><td>Reconhecer \(|z|^2\) → circunferência de raio \(r\)</td><td>E</td></tr>
+    <tr><td>Raízes n-ésimas</td><td>Mesmo módulo \(\rho^{1/n}\); argumentos de \(\tfrac{2\pi}{n}\) em \(\tfrac{2\pi}{n}\)</td><td>G, H, I, J</td></tr>
+    <tr><td>"Imaginário puro" / "real"</td><td>Impor argumento \(\tfrac{\pi}{2}+k\pi\) / \(k\pi\)</td><td>K</td></tr>
+    <tr><td>Condições sobre o afixo</td><td>Traduzir em coordenadas \((\mathrm{Re},\mathrm{Im})\) e equacionar</td><td>L, M</td></tr>
+    <tr><td>Antes de tudo</td><td>Reduzir potências de \(i\) (mód. 4) e simplificar divisões pelo conjugado</td><td>H–M</td></tr>
+  </table>
+
+  <div class="dica" style="margin-top:16px">
+    <span class="rot">Itens de 2025 · 1.ª fase usados nesta aula:</span> D e M. Se preferir manter a 1.ª fase de 2025 intacta para simulação, substitua por: <strong>D →</strong> 2022 · 1.ª fase · item 10 (afixo de \(-i\,w^2\), figura análoga) ou 2025 · ép. especial · item 12.1 (argumento de \(i^{23}w^2\times\dots\)); <strong>M →</strong> 2021 · 2.ª fase · item 8 (reta no plano complexo: complexo de menor módulo) ou 2024 · ép. especial · item 13 (\(z=2e^{i\theta}\): determinar \(\theta\)).
+    <br><br>
+    <span class="rot">Restante arquivo (não usado nesta aula):</span> 2019 (F1: 6, 10 · F2: 7, 8 · esp.: 5, 10), 2020 (F1: 4.1 — clássico \(z^2=\bar z\), perímetro do polígono — e 4.2 · F2: 8.1, 8.2 · esp.: 7.1, 7.2), 2021 (F1: 8, 9 · F2: 7, 8 · esp.: 8, 9), 2022 (F1: 10, 11 · esp.: 8, 9), 2023 F2: 12, 2024 esp.: 12, 2025 esp.: 12.1, 12.2 — bom material para fichas extra. A <strong>2.ª fase de 2025</strong> (itens 7 e 8) fica integralmente reservada para a simulação da Aula 10.
+  </div>
+
+  <div class="page-foot">Números Complexos · Aula 8 · Preparação Mat A 12.º · 2026 · Página 8 · Compilado dos enunciados oficiais IAVE</div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aula 9 — Sucessões e Estatística · Preparação Mat A 12.º · 2026</title>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+  };
+</script>
+<script id="MathJax-script" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+  :root{
+    --azul-escuro:#1F4E79; --azul-medio:#2E6CA4; --azul-claro:#D6E4F0;
+    --azul-callout:#EAF1FB; --creme:#FFF8E7; --amarelo:#E0A800;
+    --cinza-texto:#222; --cinza-claro:#666; --linha:#cfd8e3;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    color:var(--cinza-texto); line-height:1.5; margin:0; background:#f0f2f5;
+    font-size:15px;
+  }
+  .page{
+    width:210mm; min-height:297mm; background:#fff; margin:14px auto;
+    padding:20mm 18mm 16mm 18mm; position:relative;
+    box-shadow:0 1px 6px rgba(0,0,0,.18);
+  }
+  .page-head{
+    display:flex; justify-content:space-between; font-size:11px;
+    color:var(--cinza-claro); border-bottom:1px solid var(--linha);
+    padding-bottom:6px; margin-bottom:16px;
+  }
+  .page-foot{
+    position:absolute; bottom:10mm; left:18mm; right:18mm; text-align:center;
+    font-size:10.5px; color:var(--cinza-claro); border-top:1px solid var(--linha);
+    padding-top:6px;
+  }
+  /* Capa */
+  .capa h1{font-size:30px; color:var(--azul-escuro); margin:0 0 4px}
+  .capa .sub{font-size:16px; color:var(--azul-medio); font-weight:600; margin-bottom:26px}
+  .bloco-info{
+    background:var(--azul-callout); border-left:4px solid var(--azul-medio);
+    padding:12px 16px; border-radius:4px; font-size:13.5px; margin-bottom:22px;
+  }
+  /* Secções e exercícios */
+  .secao{
+    background:var(--azul-escuro); color:#fff; padding:10px 14px; border-radius:5px;
+    margin:26px 0 14px; display:flex; align-items:center; gap:12px;
+  }
+  .secao .badge{
+    background:#fff; color:var(--azul-escuro); width:30px; height:30px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-weight:700; flex:0 0 30px;
+  }
+  .secao h2{margin:0; font-size:17px}
+  .secao .desc{font-size:11.5px; opacity:.9; margin-top:2px}
+  .ex-head{
+    background:var(--azul-claro); border-radius:5px; padding:9px 13px; margin:18px 0 8px;
+  }
+  .ex-head h3{margin:0; font-size:15.5px; color:var(--azul-escuro)}
+  .ex-head .origem{font-size:11.5px; color:#3a536b; margin-top:2px}
+  .tag{
+    font-size:10.5px; background:var(--azul-medio); color:#fff; padding:1px 8px;
+    border-radius:10px; vertical-align:middle; margin-left:6px;
+  }
+  .tag.alt{background:#7a5c00}
+  .tag.essencial{background:#0a7a3b}
+  .callout{
+    background:var(--azul-callout); border-left:4px solid var(--azul-medio);
+    padding:9px 13px; border-radius:4px; font-size:13px; margin:10px 0;
+  }
+  .enunciado{margin:10px 0}
+  .resolucao{
+    border:1.5px dashed #b9c4d2; border-radius:5px; min-height:120px;
+    padding:10px 12px; color:#9aa6b4; font-style:italic; font-size:12.5px; margin:8px 0;
+  }
+  .dica{
+    background:var(--creme); border-left:4px solid var(--amarelo);
+    padding:11px 14px; border-radius:4px; font-size:13.5px; margin-top:10px;
+  }
+  .dica .rot{font-weight:700; color:#8a6d00}
+  .reservado{border:1.5px dashed #c98b00; background:#fffaf0}
+  .reservado .ex-head{background:#ffe9bf}
+  .nota-reserva{font-size:11.5px;color:#8a6d00;background:#fff3d6;border-radius:4px;padding:4px 9px;display:inline-block;margin-top:4px}
+  table{border-collapse:collapse; width:100%; font-size:13px; margin:10px 0}
+  th,td{border:1px solid var(--linha); padding:6px 8px; text-align:left}
+  th{background:var(--azul-claro); color:var(--azul-escuro)}
+  .chave{font-weight:600; color:#0a7a3b}
+  ol.indice{margin:6px 0 0 18px; padding:0}
+  ol.indice li{margin:3px 0; font-size:13.5px}
+  .rever h4{color:var(--azul-escuro); margin:16px 0 4px; font-size:14.5px; border-bottom:1px solid var(--linha); padding-bottom:3px}
+  .rever ul{margin:4px 0 4px 18px}
+  .rever li{margin:3px 0; font-size:13.5px}
+  .opcoes{margin:6px 0 0 6px}
+  .opcoes span{display:inline-block; min-width:120px; margin:2px 0}
+  .data-tab td{text-align:center}
+  @media print{
+    body{background:#fff}
+    .page{box-shadow:none; margin:0; width:auto; min-height:auto; padding:14mm}
+    .page{page-break-after:always}
+    .no-print{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ CAPA ============ -->
+<section class="page capa">
+  <div class="page-head"><span>Aula 9 · Sucessões e Estatística</span><span>Preparação Exame Nacional · Mat A 635 · 2026</span></div>
+  <h1>Sucessões e Estatística</h1>
+  <div class="sub">Aula 9 — Preparação para o Exame Nacional · Matemática A · 12.º ano · 2026</div>
+
+  <div class="bloco-info">
+    <strong>Estrutura desta aula.</strong> As sucessões valem cerca de <strong>24 pontos</strong> em cada exame (1 item de escolha múltipla de limite/convergência + 1 item de construção de progressão em contexto) e a estatística cerca de <strong>12–14 pontos</strong> (item de 4 espaços, presente em todos os exames a partir de 2024). A monotonia e a limitação de sucessões constituem um dos <strong>conteúdos específicos dos itens alternativos AE 2018</strong>.
+    <br><br>
+    Os 12 exercícios foram <strong>retirados diretamente dos enunciados oficiais</strong> das 1.ª e 2.ª fases e épocas especiais de 2020 a 2025. Três itens (marcados a tracejado e a cor de âmbar) provêm da <strong>1.ª fase de 2025</strong>: por isso, reserve a <strong>2.ª fase de 2025</strong> para a simulação completa da Aula 10.
+  </div>
+
+  <div class="secao"><span class="badge">A</span><div><h2>Limite notável e convergência</h2><div class="desc">3 exercícios · escolha múltipla</div></div></div>
+  <ol class="indice">
+    <li>A — Identificar sucessão convergente <span class="tag">EM</span> (2022 · 1.ª fase · item 1)</li>
+    <li>B — Limite notável \(\left(1+\tfrac1n\right)^{2n}\to e^2\) <span class="tag">EM</span> (2023 · 1.ª fase · item 1)</li>
+    <li>C — Limite notável \(\left(1+\tfrac1n\right)^{3n}\to e^3\) <span class="tag">EM</span> <span class="tag alt">2025 F1</span> (2025 · 1.ª fase · item 1)</li>
+  </ol>
+
+  <div class="secao"><span class="badge">B</span><div><h2>Progressões em contexto aplicado</h2><div class="desc">4 exercícios · construção</div></div></div>
+  <ol class="indice" start="4">
+    <li>D — P.G.: soma dos 5 primeiros termos (2022 · 1.ª fase · item 2)</li>
+    <li>E — P.A.: linha poligonal de 100 segmentos (2023 · 1.ª fase · item 2)</li>
+    <li>F — P.A.: treino da Constança (2024 · 1.ª fase · item 2.3)</li>
+    <li>G — P.G.: composições com semicírculos <span class="tag alt">2025 F1</span> (2025 · 1.ª fase · item 14)</li>
+  </ol>
+
+  <div class="secao"><span class="badge">C</span><div><h2>Monotonia e limitação de sucessões</h2><div class="desc">2 exercícios · item alternativo AE 2018</div></div></div>
+  <ol class="indice" start="8">
+    <li>H — Estudo da monotonia (2020 · 1.ª fase · item 1.1)</li>
+    <li>I — Mostrar que a sucessão é limitada (2022 · 2.ª fase · item 12)</li>
+  </ol>
+
+  <div class="secao"><span class="badge">D</span><div><h2>Estatística com calculadora</h2><div class="desc">3 exercícios · item de 4 espaços</div></div></div>
+  <ol class="indice" start="10">
+    <li>J — Mediana, média e desvio padrão (2024 · 1.ª fase · item 6)</li>
+    <li>K — Mediana, amplitude interquartil e correlação (2024 · 2.ª fase · item 4)</li>
+    <li>L — Mediana, amplitude, correlação e regressão <span class="tag alt">2025 F1</span> (2025 · 1.ª fase · item 5)</li>
+  </ol>
+
+  <div class="page-foot">Sucessões e Estatística · Aula 9 · Preparação Mat A 12.º · 2026 · Página 1</div>
+</section>
+
+<!-- ============ CONTEÚDOS A REVER ============ -->
+<section class="page rever">
+  <div class="page-head"><span>Aula 9 · Conteúdos a rever</span><span>Programa de Matemática A · Ensino Secundário</span></div>
+  <h2 style="color:var(--azul-escuro)">Conteúdos a rever antes dos exercícios</h2>
+  <p style="font-size:13px;color:var(--cinza-claro)">Síntese alinhada com o Programa / Aprendizagens Essenciais de Matemática A (Sucessões — 11.º ano; Estatística — características amostrais e regressão).</p>
+
+  <h4>1. Limite notável e convergência</h4>
+  <ul>
+    <li>Limite notável do formulário: \(\displaystyle\lim_{n\to\infty}\left(1+\tfrac1n\right)^{n}=e\).</li>
+    <li>Variante que sai no exame: \(\displaystyle\lim_{n\to\infty}\left(1+\tfrac1n\right)^{bn}=\left[\lim\left(1+\tfrac1n\right)^{n}\right]^{b}=e^{b}\). Reconhecer o expoente \(bn\) e separar a base.</li>
+    <li>Uma sucessão é <strong>convergente</strong> se tem limite <em>finito</em>. \(\big((-1)^n\big)\) não converge (oscila); \(\big(\tfrac{(-1)^n}{n}\big)\to 0\) (produto de limitada por infinitésimo).</li>
+    <li>Termo geral racional em \(n\): o limite é o <strong>quociente dos coeficientes dos termos de maior grau</strong> (ex.: \(\tfrac{3n+2}{5n-4}\to\tfrac35\)).</li>
+  </ul>
+
+  <h4>2. Progressões (no formulário do exame)</h4>
+  <ul>
+    <li><strong>P.A.</strong>: \(u_n=u_1+(n-1)d\) ; soma \(S_n=\dfrac{n\,(u_1+u_n)}{2}\).</li>
+    <li><strong>P.G.</strong>: \(u_n=u_1\cdot r^{\,n-1}\) ; soma \(S_n=u_1\cdot\dfrac{1-r^{\,n}}{1-r}\ (r\neq1)\).</li>
+    <li>Modelar contexto: identificar se é P.A. (acréscimo constante) ou P.G. (fator constante), <strong>traduzir</strong> os dados em \(u_1\), \(d\) ou \(r\) e \(n\), e <strong>usar a fórmula adequada</strong>.</li>
+  </ul>
+
+  <h4>3. Monotonia e limitação (AE 2018 — item alternativo)</h4>
+  <ul>
+    <li><strong>Monotonia</strong>: estudar o sinal de \(u_{n+1}-u_n\). Se \(>0\) para todo o \(n\) ⇒ crescente; se \(<0\) ⇒ decrescente. (Numa P.G. de termos positivos: comparar \(\tfrac{u_{n+1}}{u_n}=r\) com 1.)</li>
+    <li><strong>Limitação</strong>: encontrar um minorante \(m\) e um majorante \(M\) tais que \(m\le u_n\le M\) para todo o \(n\).</li>
+    <li>Teorema: toda a sucessão <strong>monótona e limitada é convergente</strong>.</li>
+  </ul>
+
+  <h4>4. Estatística com calculadora</h4>
+  <ul>
+    <li><strong>Mediana</strong>: posição \(\tfrac{n+1}{2}\) no conjunto ordenado; se \(n\) é par, média dos dois valores centrais.</li>
+    <li><strong>Quartis</strong>: \(Q_1\) = mediana da metade inferior; \(Q_3\) = mediana da metade superior. <strong>Amplitude interquartil</strong> \(=Q_3-Q_1\). <strong>Amplitude total</strong> \(=x_{\max}-x_{\min}\).</li>
+    <li><strong>Desvio padrão</strong> \(\sigma\): introduzir a lista no menu estatístico da calculadora e ler \(\sigma\) (desvio padrão populacional).</li>
+    <li><strong>Correlação e regressão</strong>: menu de regressão linear → coeficiente de correlação \(r\) e reta \(\hat y=ax+b\). <strong>Estimativa</strong>: substituir o \(x\) dado em \(\hat y=ax+b\) (arredondar \(a,b\) às milésimas, como pede o enunciado).</li>
+  </ul>
+
+  <div class="dica" style="margin-top:18px">
+    <span class="rot">Erros mais frequentes.</span> (1) No limite notável, "distribuir" mal o expoente — \(\left(1+\tfrac1n\right)^{3n}\) dá \(e^3\), <em>não</em> \(3e\) nem \(e+3\). (2) Confundir <em>convergente</em> com <em>limitada</em>: \((-1)^n\) é limitada mas <em>não</em> convergente. (3) Nas progressões, esquecer que \(u_1\) e \(d\)/\(r\) têm de ser determinados a partir do contexto <em>antes</em> de aplicar a fórmula. (4) Em estatística, usar \(\sigma\) (populacional) e não \(s\) (amostral), e arredondar só no fim.
+  </div>
+
+  <div class="page-foot">Sucessões e Estatística · Aula 9 · Preparação Mat A 12.º · 2026 · Página 2</div>
+</section>
+
+<!-- ============ SECÇÃO A ============ -->
+<section class="page">
+  <div class="page-head"><span>Aula 9 · SECÇÃO A · Limite notável e convergência</span><span>Exames 2022–2025</span></div>
+  <div class="secao"><span class="badge">A</span><div><h2>Limite notável e convergência — 3 exercícios</h2><div class="desc">Item de escolha múltipla presente em quase todos os exames (tipicamente o item 1)</div></div></div>
+
+  <!-- A -->
+  <div class="ex-head"><h3>Exercício A — Identificar uma sucessão convergente <span class="tag">EM</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2022 · 1.ª fase · item 1</div></div>
+  <div class="enunciado">
+    <p>Qual das expressões seguintes é termo geral de uma sucessão convergente?</p>
+    <div class="opcoes">
+      <span>(A) \((-1)^n\times n\)</span><span>(B) \(\dfrac{(-1)^n}{n}\)</span>
+      <span>(C) \((-1)^n+n\)</span><span>(D) \((-1)^n-n\)</span>
+    </div>
+  </div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> uma sucessão é convergente se tem limite finito. Em (A), (C) e (D) o módulo dos termos tende para \(+\infty\) (ou os termos oscilam sem estabilizar), logo divergem. Em (B), \(\left|\tfrac{(-1)^n}{n}\right|=\tfrac1n\to0\), portanto \(\tfrac{(-1)^n}{n}\to0\) (limitada \(\times\) infinitésimo). <span class="chave">Resposta: (B).</span>
+  </div>
+
+  <!-- B -->
+  <div class="ex-head"><h3>Exercício B — Limite notável \(\left(1+\tfrac1n\right)^{2n}\) <span class="tag">EM</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2023 · 1.ª fase · item 1</div></div>
+  <div class="enunciado">
+    <p>Qual é o limite da sucessão de termo geral \(\left(1+\dfrac1n\right)^{2n}\) ?</p>
+    <div class="opcoes">
+      <span>(A) \(1\)</span><span>(B) \(2e\)</span><span>(C) \(e^2\)</span><span>(D) \(+\infty\)</span>
+    </div>
+  </div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> escrever o expoente \(2n\) como produto e separar a base:
+    \[\lim_{n\to\infty}\left(1+\tfrac1n\right)^{2n}=\lim_{n\to\infty}\left[\left(1+\tfrac1n\right)^{n}\right]^{2}=e^{2}.\]
+    <span class="chave">Resposta: (C).</span>
+  </div>
+
+  <!-- C -->
+  <div class="reservado" style="border-radius:6px;padding:6px 10px 2px;margin-top:16px">
+  <div class="ex-head"><h3>Exercício C — Limite notável \(\left(1+\tfrac1n\right)^{3n}\) <span class="tag">EM</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2025 · 1.ª fase · item 1</div>
+    <div class="nota-reserva">Item de 2025 · 1.ª fase — reserve a 2.ª fase de 2025 para a simulação (Aula 10)</div></div>
+  <div class="enunciado">
+    <p>Qual é o limite da sucessão de termo geral \(u_n=\left(1+\dfrac1n\right)^{3n}\) ?</p>
+    <div class="opcoes">
+      <span>(A) \(e+3\)</span><span>(B) \(3e\)</span><span>(C) \(e^3\)</span><span>(D) \(\dfrac e3\)</span>
+    </div>
+  </div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> mesma técnica do exercício B, com expoente \(3n\):
+    \[\lim_{n\to\infty}\left(1+\tfrac1n\right)^{3n}=\left[\lim_{n\to\infty}\left(1+\tfrac1n\right)^{n}\right]^{3}=e^{3}.\]
+    <span class="chave">Resposta: (C).</span> &nbsp;<em>(Atenção: o erro típico é responder \(3e\) ou \(e+3\).)</em>
+  </div>
+  </div>
+
+  <div class="page-foot">Sucessões e Estatística · Aula 9 · Preparação Mat A 12.º · 2026 · Página 3</div>
+</section>
+
+<!-- ============ SECÇÃO B ============ -->
+<section class="page">
+  <div class="page-head"><span>Aula 9 · SECÇÃO B · Progressões em contexto</span><span>Exames 2022–2025</span></div>
+  <div class="secao"><span class="badge">B</span><div><h2>Progressões em contexto aplicado — 4 exercícios</h2><div class="desc">Modelar com P.A./P.G., determinar parâmetros e somar (fórmulas no formulário)</div></div></div>
+
+  <!-- D -->
+  <div class="ex-head"><h3>Exercício D — P.G.: soma dos cinco primeiros termos <span class="tag essencial">essencial</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2022 · 1.ª fase · item 2 · 14 pts</div></div>
+  <div class="callout"><strong>Porque é importante.</strong> É o modelo mais direto de "dada a soma, determinar um termo": obriga a usar a fórmula da soma da P.G. <em>para encontrar \(u_1\)</em> e só depois calcular o termo pedido. Domine esta sequência.</div>
+  <div class="enunciado">
+    <p>A soma dos cinco primeiros termos de uma progressão geométrica de razão \(\dfrac23\) é \(211\).</p>
+    <p>Determine o quinto termo desta progressão.</p>
+  </div>
+  <div class="resolucao">Resolução:</div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> com \(r=\tfrac23\) e \(S_5=u_1\cdot\dfrac{1-r^{5}}{1-r}=211\):
+    \[\dfrac{1-r^{5}}{1-r}=\dfrac{1-\frac{32}{243}}{1-\frac23}=\dfrac{\frac{211}{243}}{\frac13}=\dfrac{211}{81}
+    \;\Rightarrow\; u_1\cdot\dfrac{211}{81}=211 \;\Rightarrow\; u_1=81.\]
+    Então \(u_5=u_1\cdot r^{4}=81\cdot\left(\tfrac23\right)^{4}=81\cdot\dfrac{16}{81}=\) <span class="chave">16</span>.
+  </div>
+
+  <!-- E -->
+  <div class="ex-head"><h3>Exercício E — P.A.: linha poligonal de 100 segmentos</h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2023 · 1.ª fase · item 2 · 14 pts</div></div>
+  <div class="enunciado">
+    <p>Uma linha poligonal é construída a partir do segmento \([AB]\). O segundo segmento tem mais \(2\,\text{cm}\) do que o primeiro, o terceiro mais \(2\,\text{cm}\) do que o segundo, e assim sucessivamente (cada segmento tem sempre mais \(2\,\text{cm}\) do que o anterior). Continuando até ao \(100.^{\text o}\) segmento, obtém-se uma linha de comprimento total \(104\) metros.</p>
+    <p>Determine o comprimento do segmento \([AB]\). Apresente o valor em centímetros.</p>
+  </div>
+  <div class="resolucao">Resolução:</div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> os comprimentos formam uma P.A. com \(u_1=|AB|\) e \(d=2\,\text{cm}\). O total é \(104\,\text{m}=10\,400\,\text{cm}\):
+    \[S_{100}=\dfrac{100\,(2u_1+99\cdot 2)}{2}=10\,400 \;\Rightarrow\; 50\,(2u_1+198)=10\,400 \;\Rightarrow\; 2u_1+198=208.\]
+    Logo \(2u_1=10\) e <span class="chave">\(|AB|=5\,\text{cm}\)</span>.
+  </div>
+
+  <div class="page-foot">Sucessões e Estatística · Aula 9 · Preparação Mat A 12.º · 2026 · Página 4</div>
+</section>
+
+<section class="page">
+  <div class="page-head"><span>Aula 9 · SECÇÃO B · Progressões em contexto</span><span>Exames 2022–2025</span></div>
+
+  <!-- F -->
+  <div class="ex-head"><h3>Exercício F — P.A.: o treino da Constança</h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2024 · 1.ª fase · item 2.3 · 14 pts</div></div>
+  <div class="enunciado">
+    <p>Para se preparar para a audição de violino, a Constança praticou durante \(m\) dias. Sabe-se que praticou:</p>
+    <ul style="margin:4px 0 4px 18px">
+      <li>em cada dia, exceto no primeiro, sempre mais \(10\) minutos do que no dia anterior;</li>
+      <li>\(60\) minutos no quarto dia;</li>
+      <li>\(2970\) minutos no total dos \(m\) dias.</li>
+    </ul>
+    <p>Determine o valor de \(m\).</p>
+  </div>
+  <div class="resolucao">Resolução:</div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> P.A. com \(d=10\). De \(u_4=60\): \(u_1=u_4-3d=60-30=30\). Termo geral: \(u_m=30+(m-1)\cdot10=20+10m\). Soma:
+    \[S_m=\dfrac{m\,(u_1+u_m)}{2}=\dfrac{m\,(30+20+10m)}{2}=m\,(25+5m)=2970.\]
+    Daqui \(5m^2+25m-2970=0 \Leftrightarrow m^2+5m-594=0 \Rightarrow m=\dfrac{-5+\sqrt{2401}}{2}=\dfrac{-5+49}{2}=22\) (rejeita-se a raiz negativa). <span class="chave">\(m=22\) dias.</span>
+  </div>
+
+  <!-- G -->
+  <div class="reservado" style="border-radius:6px;padding:6px 10px 2px;margin-top:16px">
+  <div class="ex-head"><h3>Exercício G — P.G.: composições com semicírculos <span class="tag essencial">essencial</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2025 · 1.ª fase · item 14 · 14 pts</div>
+    <div class="nota-reserva">Item de 2025 · 1.ª fase — reserve a 2.ª fase de 2025 para a simulação (Aula 10)</div></div>
+  <div class="callout"><strong>Porque é importante.</strong> Articula geometria, soma de P.G. e arredondamento. O passo decisivo é <em>decompor o perímetro</em> em três parcelas (arco grande fixo + arcos retirados + base reta restante) e reconhecer a P.G. nos arcos retirados.</div>
+  <div class="enunciado">
+    <p>Considere uma sucessão de composições geométricas construídas a partir de um semicírculo de raio \(1\). Em cada composição retira-se um semicírculo contido na composição anterior, com <strong>metade do raio</strong> do anterior (raios \(\tfrac12,\tfrac14,\tfrac18,\dots\)), de modo que os diâmetros sejam colineares com o diâmetro do semicírculo inicial.</p>
+    <p>Determine o perímetro da \(20.^{\text a}\) composição geométrica desta sucessão. Apresente o resultado arredondado às centésimas.</p>
+  </div>
+  <div class="resolucao">Resolução:</div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> o perímetro da \(n.^{\text a}\) composição tem três parcelas.
+    <br>• <strong>Arco grande</strong> (raio 1, fixo): \(\pi\).
+    <br>• <strong>Arcos retirados</strong> (semicírculos de raios \(\tfrac12,\dots,\left(\tfrac12\right)^{n}\)), cada arco \(=\pi r\):
+    \(\displaystyle\sum_{k=1}^{n}\pi\left(\tfrac12\right)^{k}=\pi\!\left(1-\left(\tfrac12\right)^{n}\right).\)
+    <br>• <strong>Base reta restante</strong>: a base mede \(2\); os diâmetros retirados somam \(2-\left(\tfrac12\right)^{n-1}\), logo sobra \(\left(\tfrac12\right)^{n-1}\).
+    \[P_n=\pi+\pi\!\left(1-\left(\tfrac12\right)^{n}\right)+\left(\tfrac12\right)^{n-1}=\pi\!\left(2-\left(\tfrac12\right)^{n}\right)+\left(\tfrac12\right)^{n-1}.\]
+    Para \(n=20\): \(\left(\tfrac12\right)^{20}\) e \(\left(\tfrac12\right)^{19}\) são desprezáveis, pelo que \(P_{20}\approx 2\pi\approx\) <span class="chave">6,28</span>.
+  </div>
+  </div>
+
+  <div class="page-foot">Sucessões e Estatística · Aula 9 · Preparação Mat A 12.º · 2026 · Página 5</div>
+</section>
+
+<!-- ============ SECÇÃO C ============ -->
+<section class="page">
+  <div class="page-head"><span>Aula 9 · SECÇÃO C · Monotonia e limitação</span><span>Item alternativo AE 2018</span></div>
+  <div class="secao"><span class="badge">C</span><div><h2>Monotonia e limitação de sucessões — 2 exercícios</h2><div class="desc">Conteúdo específico dos pares de itens alternativos AE 2018</div></div></div>
+
+  <!-- H -->
+  <div class="ex-head"><h3>Exercício H — Estudo da monotonia <span class="tag alt">AE 2018</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2020 · 1.ª fase · item 1.1 · 14 pts</div></div>
+  <div class="enunciado">
+    <p>Considere a sucessão \((u_n)\) de termo geral \(u_n=\dfrac{8n-4}{n+1}\).</p>
+    <p>Estude a sucessão \((u_n)\) quanto à monotonia.</p>
+  </div>
+  <div class="resolucao">Resolução:</div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span> estudar o sinal de \(u_{n+1}-u_n\).
+    \[u_{n+1}-u_n=\dfrac{8(n+1)-4}{(n+1)+1}-\dfrac{8n-4}{n+1}=\dfrac{8n+4}{n+2}-\dfrac{8n-4}{n+1}.\]
+    Reduzindo ao mesmo denominador, o numerador é \((8n+4)(n+1)-(8n-4)(n+2)=12\), logo
+    \[u_{n+1}-u_n=\dfrac{12}{(n+1)(n+2)}>0,\quad \forall n\in\mathbb{N}.\]
+    Como a diferença é sempre positiva, \((u_n)\) é <span class="chave">(estritamente) crescente</span>.
+    <br><em>Nota: como \(u_n\to8\) e é crescente e limitada, é convergente — liga ao Exercício I.</em>
+  </div>
+
+  <!-- I -->
+  <div class="ex-head"><h3>Exercício I — Mostrar que a sucessão é limitada <span class="tag alt">AE 2018</span> <span class="tag essencial">essencial</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2022 · 2.ª fase · item 12 · 14 pts</div></div>
+  <div class="callout"><strong>Porque é importante.</strong> Sucessão definida <em>por ramos</em>: tem de tratar separadamente os primeiros termos e o ramo geral, e depois reunir tudo num único par minorante/majorante. É o protótipo do item de limitação.</div>
+  <div class="enunciado">
+    <p>Seja \((u_n)\) a sucessão definida por
+    \[u_n=\begin{cases}(-1)^n & \text{se } n\le 3\\[4pt]\dfrac{4n-1}{n+3} & \text{se } n>3\end{cases}\]
+    Mostre que a sucessão \((u_n)\) é limitada.</p>
+  </div>
+  <div class="resolucao">Resolução:</div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span>
+    <br>• <strong>Para \(n\le3\)</strong>: \(u_1=-1,\;u_2=1,\;u_3=-1\). Logo \(-1\le u_n\le 1\).
+    <br>• <strong>Para \(n>3\)</strong>: \(\dfrac{4n-1}{n+3}=\dfrac{4(n+3)-13}{n+3}=4-\dfrac{13}{n+3}\). Como \(\dfrac{13}{n+3}\) decresce e é positivo, estes termos crescem de \(u_4=\tfrac{15}{7}\) (inclusive) até menos de \(4\); ou seja \(\dfrac{15}{7}\le u_n<4\).
+    <br>Reunindo os dois casos, para todo o \(n\): \(\;-1\le u_n<4\). Existe minorante (\(-1\)) e majorante (\(4\)), portanto <span class="chave">\((u_n)\) é limitada.</span>
+  </div>
+
+  <div class="page-foot">Sucessões e Estatística · Aula 9 · Preparação Mat A 12.º · 2026 · Página 6</div>
+</section>
+
+<!-- ============ SECÇÃO D ============ -->
+<section class="page">
+  <div class="page-head"><span>Aula 9 · SECÇÃO D · Estatística com calculadora</span><span>Exames 2024–2025</span></div>
+  <div class="secao"><span class="badge">D</span><div><h2>Estatística com calculadora — 3 exercícios</h2><div class="desc">Item de 4 espaços (I, II, III, IV); cada espaço com opção a), b) ou c)</div></div></div>
+
+  <!-- J -->
+  <div class="ex-head"><h3>Exercício J — Mediana, média e desvio padrão (sem correlação)</h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2024 · 1.ª fase · item 6 · 12 pts</div></div>
+  <div class="enunciado">
+    <p>O gráfico de barras apresenta a distribuição das classificações finais (em valores) de \(20\) alunos, em frequências relativas:</p>
+    <table class="data-tab">
+      <tr><th>Classificação</th><td>8</td><td>10</td><td>12</td><td>13</td><td>14</td><td>17</td><td>20</td></tr>
+      <tr><th>Freq. relativa</th><td>5%</td><td>15%</td><td>10%</td><td>20%</td><td>25%</td><td>20%</td><td>5%</td></tr>
+      <tr><th>N.º de alunos</th><td>1</td><td>3</td><td>2</td><td>4</td><td>5</td><td>4</td><td>1</td></tr>
+    </table>
+    <p>Complete: I — n.º de alunos com classificação inferior a 13; II — mediana; III — média; IV — desvio padrão (às décimas).</p>
+    <div class="opcoes">
+      <span>I: a) 4 &nbsp; b) 6 &nbsp; c) 10</span>
+      <span>II: a) 12,5 &nbsp; b) 13 &nbsp; c) 13,5</span>
+      <span>III: a) 13,4 &nbsp; b) 13,6 &nbsp; c) 13,8</span>
+      <span>IV: a) 2,9 &nbsp; b) 3,8 &nbsp; c) 4,1</span>
+    </div>
+  </div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span>
+    <br>I — alunos com nota &lt;13: \(1+3+2=6\). <span class="chave">→ I = b) 6</span>
+    <br>II — com 20 dados, a mediana é a média do \(10.^{\text o}\) e \(11.^{\text o}\) valores ordenados: \(\tfrac{13+14}{2}=13,5\). <span class="chave">→ II = c) 13,5</span>
+    <br>III — média \(=\dfrac{8\cdot1+10\cdot3+12\cdot2+13\cdot4+14\cdot5+17\cdot4+20\cdot1}{20}=\dfrac{272}{20}=13,6\). <span class="chave">→ III = b) 13,6</span>
+    <br>IV — introduzindo a lista na calculadora, \(\sigma\approx2,87\approx2,9\). <span class="chave">→ IV = a) 2,9</span>
+  </div>
+
+  <div class="page-foot">Sucessões e Estatística · Aula 9 · Preparação Mat A 12.º · 2026 · Página 7</div>
+</section>
+
+<section class="page">
+  <div class="page-head"><span>Aula 9 · SECÇÃO D · Estatística com calculadora</span><span>Exames 2024–2025</span></div>
+
+  <!-- K -->
+  <div class="ex-head"><h3>Exercício K — Mediana, amplitude interquartil, variação % e correlação</h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2024 · 2.ª fase · item 4 · 12 pts</div></div>
+  <div class="enunciado">
+    <p>Remuneração base média mensal (€) por sexo, em seis anos (1995–2020):</p>
+    <table class="data-tab">
+      <tr><th>Ano</th><td>1995</td><td>2000</td><td>2005</td><td>2010</td><td>2015</td><td>2020</td></tr>
+      <tr><th>Homens \(x\)</th><td>542,8</td><td>674,7</td><td>832,5</td><td>976,7</td><td>990,1</td><td>1109,2</td></tr>
+      <tr><th>Mulheres \(y\)</th><td>416,8</td><td>523,6</td><td>672,0</td><td>800,8</td><td>825,0</td><td>960,3</td></tr>
+    </table>
+    <p>Complete: I — mediana dos homens; II — amplitude interquartil dos homens; III — aumento percentual da remuneração das mulheres de 2015 para 2020; IV — coeficiente de correlação linear de \(x\) e \(y\) (às milésimas).</p>
+    <div class="opcoes">
+      <span>I: a) 832,5 &nbsp; b) 854,3 &nbsp; c) 904,6</span>
+      <span>II: a) 315,4 &nbsp; b) 440,9 &nbsp; c) 566,4</span>
+      <span>III: a) 14,1% &nbsp; b) 16,4% &nbsp; c) 17,2%</span>
+      <span>IV: a) 0,874 &nbsp; b) 0,913 &nbsp; c) 0,998</span>
+    </div>
+  </div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span>
+    <br>I — mediana dos homens (\(n=6\)): \(\tfrac{832,5+976,7}{2}=904,6\). <span class="chave">→ I = c)</span>
+    <br>II — \(Q_1=674,7\) (mediana da metade inferior) e \(Q_3=990,1\); IQR \(=990,1-674,7=315,4\). <span class="chave">→ II = a)</span>
+    <br>III — \(\dfrac{960,3-825,0}{825,0}\approx0,164=16,4\%\). <span class="chave">→ III = b)</span>
+    <br>IV — regressão linear na calculadora: \(r\approx0,998\). <span class="chave">→ IV = c)</span>
+  </div>
+
+  <!-- L -->
+  <div class="reservado" style="border-radius:6px;padding:6px 10px 2px;margin-top:16px">
+  <div class="ex-head"><h3>Exercício L — Mediana, amplitude, correlação e estimativa por regressão <span class="tag essencial">essencial</span></h3>
+    <div class="origem">Exame Final Nacional · Mat A 635 · 2025 · 1.ª fase · item 5 · 12 pts</div>
+    <div class="nota-reserva">Item de 2025 · 1.ª fase — reserve a 2.ª fase de 2025 para a simulação (Aula 10)</div></div>
+  <div class="callout"><strong>Porque é importante.</strong> É o item de estatística <em>completo</em>: cobre os quatro tipos de espaço (mediana vs média, amplitude total, correlação e estimativa por regressão). Treine aqui o fluxo completo na calculadora.</div>
+  <div class="enunciado">
+    <p>Diâmetro biparietal \(x\) (cm, 34.ª semana de gravidez) e perímetro cefálico \(y\) (cm, à nascença), numa amostra de oito recém-nascidos:</p>
+    <table class="data-tab">
+      <tr><th>\(x\)</th><td>7,49</td><td>7,81</td><td>8,21</td><td>8,30</td><td>8,66</td><td>8,76</td><td>9,04</td><td>9,24</td></tr>
+      <tr><th>\(y\)</th><td>30,36</td><td>31,99</td><td>33,66</td><td>35,26</td><td>35,51</td><td>34,86</td><td>35,30</td><td>37,63</td></tr>
+    </table>
+    <p>Complete: I — quanto a mediana dos \(x\) excede a respetiva média (às centésimas); II — amplitude da amostra dos \(y\); III — coeficiente de correlação (às centésimas); IV — estimativa do perímetro cefálico para \(x=8,50\) (parâmetros às milésimas).</p>
+    <div class="opcoes">
+      <span>I: a) 0,04 &nbsp; b) 0,7 &nbsp; c) 1,75</span>
+      <span>II: a) 2,58 &nbsp; b) 3,64 &nbsp; c) 7,27</span>
+      <span>III: a) 0,87 &nbsp; b) 0,94 &nbsp; c) 3,54</span>
+      <span>IV: a) 34,54 &nbsp; b) 36,11 &nbsp; c) 41,62</span>
+    </div>
+  </div>
+  <div class="dica">
+    <span class="rot">Dica de resolução:</span>
+    <br>I — mediana dos \(x=\tfrac{8,30+8,66}{2}=8,48\); média \(\approx8,44\); diferença \(=0,04\). <span class="chave">→ I = a)</span>
+    <br>II — amplitude dos \(y=37,63-30,36=7,27\). <span class="chave">→ II = c)</span>
+    <br>III — regressão linear: \(r\approx0,94\). <span class="chave">→ III = b)</span>
+    <br>IV — reta \(\hat y=3,536\,x+4,480\); para \(x=8,50\): \(\hat y\approx34,54\) cm. <span class="chave">→ IV = a)</span>
+  </div>
+  </div>
+
+  <div class="page-foot">Sucessões e Estatística · Aula 9 · Preparação Mat A 12.º · 2026 · Página 8</div>
+</section>
+
+<!-- ============ SÍNTESE ============ -->
+<section class="page">
+  <div class="page-head"><span>Aula 9 · Síntese</span><span>Sucessões e Estatística</span></div>
+  <h2 style="color:var(--azul-escuro)">Síntese da Aula 9</h2>
+
+  <table>
+    <tr><th>Ex.</th><th>Origem</th><th>Tipo</th><th>Chave / resultado</th></tr>
+    <tr><th colspan="4" style="background:var(--azul-escuro);color:#fff">SECÇÃO A — Limite notável e convergência</th></tr>
+    <tr><td>A</td><td>2022 · 1.ª fase · 1</td><td>Sucessão convergente (EM)</td><td class="chave">(B)</td></tr>
+    <tr><td>B</td><td>2023 · 1.ª fase · 1</td><td>\(\left(1+\tfrac1n\right)^{2n}\) (EM)</td><td class="chave">(C) \(e^2\)</td></tr>
+    <tr><td>C</td><td>2025 · 1.ª fase · 1</td><td>\(\left(1+\tfrac1n\right)^{3n}\) (EM)</td><td class="chave">(C) \(e^3\)</td></tr>
+    <tr><th colspan="4" style="background:var(--azul-escuro);color:#fff">SECÇÃO B — Progressões em contexto</th></tr>
+    <tr><td>D</td><td>2022 · 1.ª fase · 2</td><td>P.G. — soma → termo</td><td class="chave">\(u_5=16\)</td></tr>
+    <tr><td>E</td><td>2023 · 1.ª fase · 2</td><td>P.A. — linha poligonal</td><td class="chave">\(|AB|=5\) cm</td></tr>
+    <tr><td>F</td><td>2024 · 1.ª fase · 2.3</td><td>P.A. — treino (contexto)</td><td class="chave">\(m=22\)</td></tr>
+    <tr><td>G</td><td>2025 · 1.ª fase · 14</td><td>P.G. — semicírculos</td><td class="chave">\(P_{20}\approx6,28\)</td></tr>
+    <tr><th colspan="4" style="background:var(--azul-escuro);color:#fff">SECÇÃO C — Monotonia e limitação (AE 2018)</th></tr>
+    <tr><td>H</td><td>2020 · 1.ª fase · 1.1</td><td>Monotonia</td><td class="chave">crescente</td></tr>
+    <tr><td>I</td><td>2022 · 2.ª fase · 12</td><td>Limitação (por ramos)</td><td class="chave">\(-1\le u_n<4\)</td></tr>
+    <tr><th colspan="4" style="background:var(--azul-escuro);color:#fff">SECÇÃO D — Estatística com calculadora</th></tr>
+    <tr><td>J</td><td>2024 · 1.ª fase · 6</td><td>Mediana, média, \(\sigma\)</td><td class="chave">I b · II c · III b · IV a</td></tr>
+    <tr><td>K</td><td>2024 · 2.ª fase · 4</td><td>Mediana, IQR, var %, \(r\)</td><td class="chave">I c · II a · III b · IV c</td></tr>
+    <tr><td>L</td><td>2025 · 1.ª fase · 5</td><td>Mediana, amplitude, \(r\), reg.</td><td class="chave">I a · II c · III b · IV a</td></tr>
+  </table>
+
+  <h4 style="color:var(--azul-escuro);margin-top:18px">Guia rápido — que ferramenta usar</h4>
+  <table>
+    <tr><th>Situação</th><th>O que fazer</th><th>Exercícios</th></tr>
+    <tr><td>Limite com expoente \(bn\)</td><td>\(\left(1+\tfrac1n\right)^{bn}=\left[\left(1+\tfrac1n\right)^{n}\right]^{b}\to e^{b}\)</td><td>B, C</td></tr>
+    <tr><td>"Dada a soma, achar termo"</td><td>Usar \(S_n\) para obter \(u_1\) e depois o termo</td><td>D, E, F</td></tr>
+    <tr><td>P.G. geométrica em figura</td><td>Decompor perímetro/área e somar P.G.</td><td>G</td></tr>
+    <tr><td>Monotonia</td><td>Sinal de \(u_{n+1}-u_n\)</td><td>H</td></tr>
+    <tr><td>Limitação</td><td>Encontrar minorante e majorante (tratar ramos)</td><td>I</td></tr>
+    <tr><td>Estatística (4 espaços)</td><td>Calculadora: lista → \(\sigma\); regressão → \(r\), \(\hat y=ax+b\)</td><td>J, K, L</td></tr>
+  </table>
+
+  <div class="dica" style="margin-top:16px">
+    <span class="rot">Itens de 2025 · 1.ª fase usados nesta aula:</span> C, G e L. Se preferir manter a 1.ª fase de 2025 intacta para simulação, substitua por: <strong>C →</strong> 2025 · época especial · item 1 (sucessão com \(\lim u_n=0\)); <strong>G →</strong> 2023 · 2.ª fase · item 2 (triângulos inscritos, P.G. — mostrar que a soma dos perímetros é menor que 6); <strong>L →</strong> 2024 · época especial (vencimentos: mediana, desvio padrão) ou 2025 · época especial (quilocalorias: regressão, correlação, estimativa).
+  </div>
+
+  <div class="page-foot">Sucessões e Estatística · Aula 9 · Preparação Mat A 12.º · 2026 · Página 9 · Compilado dos enunciados oficiais IAVE</div>
+</section>
+
+</body>
+</html>

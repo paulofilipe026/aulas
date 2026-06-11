@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<title>Aulas 5 e 6 — Cálculo Diferencial — Preparação Mat A 12.º · 2026</title>
+
+<!-- MathJax para renderização de LaTeX -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+
+<style>
+  /* ============================================================
+     CSS pensado para impressão / gravação em A4
+     ============================================================ */
+  @page {
+    size: A4 portrait;
+    margin: 18mm 16mm 18mm 16mm;
+  }
+  @media print {
+    body { background: white !important; }
+    .pagina { box-shadow: none !important; margin: 0 !important; }
+    .no-print { display: none !important; }
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: #2C2C2A;
+    font-size: 11pt;
+    line-height: 1.45;
+    background: #f3f3ef;
+  }
+
+  /* Container A4 — para visualização em ecrã */
+  .pagina {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 18mm 16mm;
+    margin: 0 auto 6mm auto;
+    background: white;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+    page-break-after: always;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pagina:last-child { page-break-after: auto; }
+
+  /* Cabeçalho de página */
+  .header-pagina {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 6pt;
+    border-bottom: 0.5pt solid #999;
+    font-size: 9pt;
+    color: #666;
+    margin-bottom: 14pt;
+  }
+  .header-pagina .esquerda { font-weight: 500; }
+  .header-pagina .direita { letter-spacing: 0.3pt; }
+
+  /* Capa */
+  .capa {
+    text-align: center;
+    padding-top: 5mm;
+  }
+  .capa h1 {
+    font-size: 24pt;
+    font-weight: 500;
+    color: #1F4E79;
+    margin: 0 0 8pt;
+    letter-spacing: -0.3pt;
+  }
+  .capa .subt {
+    font-size: 14pt;
+    color: #5F5E5A;
+    margin: 0 0 6pt;
+    font-weight: 400;
+  }
+  .capa .info-prova {
+    margin-top: 14mm;
+    padding: 14pt 18pt;
+    background: #F1EFE8;
+    border-radius: 4pt;
+    text-align: left;
+    font-size: 10pt;
+    line-height: 1.7;
+  }
+  .capa .info-prova strong { color: #1F4E79; }
+  .capa .indice {
+    margin-top: 12pt;
+    padding: 12pt 18pt;
+    border: 0.5pt solid #ccc;
+    border-radius: 4pt;
+    text-align: left;
+    font-size: 9.5pt;
+  }
+  .capa .indice h3 {
+    margin: 0 0 6pt;
+    font-size: 11pt;
+    color: #1F4E79;
+    font-weight: 500;
+  }
+  .capa .indice ol {
+    margin: 0;
+    padding-left: 20pt;
+    line-height: 1.6;
+  }
+  .capa .rodape-capa {
+    margin-top: 10mm;
+    font-size: 9pt;
+    color: #888;
+    font-style: italic;
+  }
+
+  /* Estrutura de exercício */
+  h2.titulo-aula {
+    font-size: 16pt;
+    color: #1F4E79;
+    margin: 0 0 4pt;
+    font-weight: 500;
+    border-bottom: 1pt solid #1F4E79;
+    padding-bottom: 4pt;
+  }
+  h2.titulo-aula .subtitulo {
+    font-size: 11pt;
+    color: #5F5E5A;
+    font-weight: 400;
+    display: block;
+    margin-top: 2pt;
+  }
+
+  /* Separador de secção */
+  .secao-sep {
+    background: #1F4E79;
+    color: white;
+    padding: 10pt 14pt;
+    border-radius: 4pt;
+    margin: 0 0 14pt;
+    font-size: 12pt;
+    font-weight: 500;
+  }
+  .secao-sep .num {
+    background: white;
+    color: #1F4E79;
+    border-radius: 50%;
+    width: 22pt;
+    height: 22pt;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-right: 10pt;
+    font-size: 11pt;
+  }
+  .secao-sep .desc {
+    display: block;
+    font-size: 9.5pt;
+    font-weight: 400;
+    margin-top: 4pt;
+    opacity: 0.9;
+  }
+
+  /* Separador de Aula (cor distinta para Aula 6) */
+  .aula-sep {
+    background: #6B4886;
+    color: white;
+    padding: 14pt 18pt;
+    border-radius: 4pt;
+    margin: 0 0 14pt;
+    text-align: center;
+  }
+  .aula-sep h3 {
+    margin: 0 0 4pt;
+    font-size: 18pt;
+    font-weight: 500;
+  }
+  .aula-sep p {
+    margin: 0;
+    font-size: 11pt;
+    opacity: 0.95;
+  }
+
+  .ex {
+    margin-bottom: 12pt;
+    page-break-inside: avoid;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .ex-cabec {
+    background: #E6F1FB;
+    padding: 6pt 10pt;
+    border-left: 3pt solid #1F4E79;
+    margin-bottom: 8pt;
+    page-break-after: avoid;
+  }
+  .ex-cabec.aula6 {
+    background: #EFE7F4;
+    border-left-color: #6B4886;
+  }
+  .ex-cabec .ex-num {
+    font-size: 13pt;
+    font-weight: 500;
+    color: #0C447C;
+    margin: 0;
+  }
+  .ex-cabec.aula6 .ex-num {
+    color: #4A2D63;
+  }
+  .ex-cabec .ex-meta {
+    font-size: 9pt;
+    color: #5F5E5A;
+    margin: 2pt 0 0;
+  }
+  .ex-cabec .ex-cot {
+    background: #1F4E79;
+    color: white;
+    padding: 2pt 8pt;
+    border-radius: 10pt;
+    font-size: 9pt;
+    font-weight: 500;
+  }
+  .ex-cabec.aula6 .ex-cot {
+    background: #6B4886;
+  }
+
+  .ex-enunciado {
+    font-size: 11pt;
+    line-height: 1.6;
+    margin: 0 0 8pt;
+  }
+  .ex-enunciado p { margin: 0 0 6pt; }
+  .ex-enunciado ul {
+    margin: 4pt 0 6pt 0;
+    padding-left: 20pt;
+  }
+  .ex-enunciado li { margin-bottom: 2pt; }
+
+  /* Espaço de resolução */
+  .resolucao {
+    margin-top: 8pt;
+    padding: 6pt 10pt;
+    background: #FBFAF6;
+    border: 0.5pt dashed #ccc;
+    border-radius: 3pt;
+    flex-grow: 1;
+  }
+
+  .resolucao.curta { min-height: 35mm; }
+  .resolucao.media { min-height: 60mm; }
+  .resolucao.longa { min-height: 85mm; }
+  .resolucao.muitolonga { min-height: 110mm; }
+
+  .resolucao .lab {
+    font-size: 9pt;
+    color: #888;
+    font-style: italic;
+    margin: 0 0 4pt;
+  }
+
+  /* Caixa de avisos / nota */
+  .nota {
+    background: #FAEEDA;
+    border-left: 3pt solid #BA7517;
+    padding: 6pt 10pt;
+    font-size: 9.5pt;
+    color: #633806;
+    margin: 8pt 0;
+    border-radius: 0 3pt 3pt 0;
+    line-height: 1.55;
+  }
+  .nota strong { color: #412402; }
+  .nota.essencial {
+    background: #E6F1FB;
+    border-left-color: #1F4E79;
+    color: #0C447C;
+  }
+  .nota.essencial strong { color: #0C447C; }
+
+  /* Caixa de conteúdos a rever */
+  .conteudos {
+    background: #FBFAF6;
+    border: 0.5pt solid #ccc;
+    border-radius: 3pt;
+    padding: 10pt 14pt;
+    margin: 8pt 0 14pt;
+    page-break-inside: avoid;
+  }
+  .conteudos h3 {
+    margin: 0 0 6pt;
+    font-size: 11pt;
+    color: #1F4E79;
+    font-weight: 500;
+  }
+  .conteudos h4 {
+    margin: 8pt 0 3pt;
+    font-size: 10pt;
+    color: #2C2C2A;
+    font-weight: 500;
+  }
+  .conteudos ul {
+    margin: 0 0 4pt;
+    padding-left: 18pt;
+    font-size: 10pt;
+    line-height: 1.65;
+  }
+  .conteudos li { margin-bottom: 2pt; }
+
+  /* Tabela de derivadas */
+  .tab-derivadas {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+    margin: 4pt 0;
+  }
+  .tab-derivadas th, .tab-derivadas td {
+    border: 0.5pt solid #ccc;
+    padding: 3pt 6pt;
+    text-align: left;
+  }
+  .tab-derivadas th {
+    background: #E6F1FB;
+    color: #0C447C;
+    font-weight: 500;
+  }
+  .tab-derivadas tr:nth-child(even) td { background: #FBFAF6; }
+
+  /* Bloco de função por ramos */
+  .ramos-display {
+    margin: 8pt 0 8pt 14pt;
+  }
+
+  /* Notas finais */
+  .rodape-pagina {
+    position: absolute;
+    bottom: 12mm;
+    left: 16mm;
+    right: 16mm;
+    font-size: 8pt;
+    color: #888;
+    text-align: center;
+    border-top: 0.5pt solid #ddd;
+    padding-top: 4pt;
+  }
+
+  /* Botão de impressão (não imprime) */
+  .toolbar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 100;
+  }
+  .toolbar button {
+    background: #1F4E79;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+  }
+  .toolbar button:hover { background: #143a5c; }
+
+  /* Quebras de página utilitárias */
+  .quebra-pagina { page-break-before: always; }
+  .sem-quebra { page-break-inside: avoid; }
+
+  /* MathJax ajustes */
+  mjx-container { font-size: 105% !important; }
+  mjx-container[display="true"] { margin: 8pt 0 !important; }
+</style>
+</head>
+<body>
+
+
+<!-- ===========================================================
+     PÁGINA 1 — CAPA
+     =========================================================== -->
+<div class="pagina">
+  <div class="capa">
+    <h1>Cálculo Diferencial</h1>
+    <p class="subt">Monotonia, Extremos, Concavidades, Assíntotas e Demonstrações</p>
+    <p class="subt" style="font-size:12pt;">Aulas 5 e 6 — Preparação para o Exame Nacional</p>
+    <p class="subt" style="font-size:12pt;">Matemática A · 12.º ano · 2026</p>
+
+    <div class="info-prova">
+      <strong>Estrutura destas duas aulas.</strong> O cálculo diferencial é o tema com maior peso na prova (~60 pts, ~30%). Em todos os exames há um item obrigatório de monotonia/extremos ou de concavidades (14 pts), tipicamente outro de assíntotas (12–14 pts) e, desde 2022, um item de demonstração formal (14 pts) — proposições falsas, reta tangente em relação a P.G., ou definição de derivada.<br><br>
+
+      <strong>Os 18 exercícios deste documento</strong> foram selecionados das 1.ª fases, 2.ª fases e épocas especiais dos exames de 2019 a 2024, mais a Época Especial de 2025. Os exames de 1.ª e 2.ª fases de 2025 ficam reservados para as simulações finais.<br><br>
+
+      <strong>Distribuição:</strong><br>
+      • <strong>Aula 5 (mecânica do estudo de funções)</strong> — 9 exercícios: monotonia/extremos, concavidades/pontos de inflexão, assíntotas (verticais, horizontais e oblíquas).<br>
+      • <strong>Aula 6 (demonstrações)</strong> — 9 exercícios: reta tangente, derivada da composta, proposições falsas, abcissas em P.G., paridade e definição de derivada.
+    </div>
+
+    <div class="indice">
+      <h3>Índice de exercícios</h3>
+      <p style="font-weight:500; color:#0C447C; margin: 0 0 4pt;">AULA 5 — SECÇÃO A — Monotonia e extremos relativos (3 ex.)</p>
+      <ol style="margin: 0 0 4pt; padding-left:20pt;">
+        <li><strong>A</strong> — Estudo de $g(x)=e^{-x}/x$ (2019 · 1.ª fase · 14.1 e 14.2)</li>
+        <li><strong>B</strong> — Função por ramos em $]-\infty,-2]$ (2022 · 1.ª fase · 8.2)</li>
+        <li><strong>C</strong> — Função $g(x)=e^x\cos x$ (2023 · Ép. Especial · 9.1)</li>
+      </ol>
+      <p style="font-weight:500; color:#0C447C; margin: 4pt 0 4pt;">AULA 5 — SECÇÃO B — Concavidades e pontos de inflexão (3 ex.)</p>
+      <ol style="margin: 0 0 4pt; padding-left:20pt;" start="4">
+        <li><strong>D</strong> — $f'(x)=-2xe^{1-x^2}$ (2023 · 1.ª fase · 3)</li>
+        <li><strong>E</strong> — Derivada por ramos em $]0,\pi[$ (2022 · 2.ª fase · 9.1)</li>
+        <li><strong>F</strong> — $g'(x)=(x-e^{3x})/x$ em $\mathbb{R}^+$ (2022 · Ép. Especial · 13)</li>
+      </ol>
+      <p style="font-weight:500; color:#0C447C; margin: 4pt 0 4pt;">AULA 5 — SECÇÃO C — Assíntotas (3 ex.)</p>
+      <ol style="margin: 0 0 4pt; padding-left:20pt;" start="7">
+        <li><strong>G</strong> — Assíntota vertical com $\frac{1-\cos x}{x^4}$ (2024 · 1.ª fase · 7)</li>
+        <li><strong>H</strong> — Assíntotas verticais e oblíquas (2022 · 1.ª fase · 13)</li>
+        <li><strong>I</strong> — Oblíqua $-\infty$ + horizontal $+\infty$ (2022 · Ép. Especial · 11.1)</li>
+      </ol>
+      <p style="font-weight:500; color:#4A2D63; margin: 6pt 0 4pt;">AULA 6 — SECÇÃO D — Reta tangente e cálculo de derivadas (3 ex.)</p>
+      <ol style="margin: 0 0 4pt; padding-left:20pt;" start="10">
+        <li><strong>J</strong> — Equação reduzida da tangente (2019 · 1.ª fase · 13.1)</li>
+        <li><strong>K</strong> — Tangente em $x=0$ + reta paralela (2024 · 2.ª fase · 11.1)</li>
+        <li><strong>L</strong> — Tangente + área $(\ln 2)^2$ (2022 · Ép. Especial · 11.2)</li>
+      </ol>
+      <p style="font-weight:500; color:#4A2D63; margin: 4pt 0 4pt;">AULA 6 — SECÇÃO E — Demonstrações formais (6 ex.)</p>
+      <ol style="margin: 0 0 0 0; padding-left:20pt;" start="13">
+        <li><strong>M</strong> — Polinómio sem extremos $\forall a$ (2022 · 2.ª fase · 13)</li>
+        <li><strong>N</strong> — Proposições falsas: concavidade + extremo (2024 · 2.ª fase · 10)</li>
+        <li><strong>O</strong> — Proposições falsas: pontos de inflexão + declives (2025 · Ép. Especial · 11)</li>
+        <li><strong>P</strong> — Função par + gráficos impossíveis (2023 · 2.ª fase · 10)</li>
+        <li><strong>Q</strong> — Abcissas em P.G. — $f(x)=k/x$ (2022 · 1.ª fase · 15)</li>
+        <li><strong>R</strong> — Definição de derivada + paridade (2024 · 2.ª fase · 14)</li>
+      </ol>
+    </div>
+
+    <p class="rodape-capa">
+      Documento de preparação para o exame · 23 de junho de 2026<br>
+      Compilado a partir dos enunciados oficiais do IAVE / EduQA
+    </p>
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 2 — CONTEÚDOS A REVER — AULA 5
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 5 · Estudo de funções</span>
+    <span class="direita">Conteúdos a rever</span>
+  </div>
+
+  <h2 class="titulo-aula">Aula 5 — Monotonia, Concavidades e Assíntotas
+    <span class="subtitulo">Conteúdos a rever antes dos exercícios</span>
+  </h2>
+
+  <div class="conteudos">
+    <h4>1. Regras de derivação — tabela do formulário</h4>
+    <table class="tab-derivadas">
+      <thead>
+        <tr>
+          <th style="width:33%;">Função</th>
+          <th style="width:33%;">Derivada</th>
+          <th>Forma composta (com $u=u(x)$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>$x^n$</td><td>$n\,x^{n-1}$</td><td>$(u^n)' = n\,u^{n-1}\cdot u'$</td></tr>
+        <tr><td>$\sqrt{x}$</td><td>$\dfrac{1}{2\sqrt{x}}$</td><td>$(\sqrt{u})' = \dfrac{u'}{2\sqrt{u}}$</td></tr>
+        <tr><td>$e^x$</td><td>$e^x$</td><td>$(e^u)' = e^u \cdot u'$</td></tr>
+        <tr><td>$a^x$ ($a>0$)</td><td>$a^x \ln a$</td><td>$(a^u)' = a^u \ln a \cdot u'$</td></tr>
+        <tr><td>$\ln x$</td><td>$\dfrac{1}{x}$</td><td>$(\ln u)' = \dfrac{u'}{u}$</td></tr>
+        <tr><td>$\sin x$</td><td>$\cos x$</td><td>$(\sin u)' = \cos u \cdot u'$</td></tr>
+        <tr><td>$\cos x$</td><td>$-\sin x$</td><td>$(\cos u)' = -\sin u \cdot u'$</td></tr>
+        <tr><td>$\tan x$</td><td>$\dfrac{1}{\cos^2 x} = \sec^2 x$</td><td>$(\tan u)' = \dfrac{u'}{\cos^2 u}$</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:9.5pt; margin: 6pt 0 0;">
+      <strong>Operações:</strong>
+      $(f \pm g)' = f' \pm g'$ &nbsp;·&nbsp;
+      $(f \cdot g)' = f'g + fg'$ &nbsp;·&nbsp;
+      $\left(\dfrac{f}{g}\right)' = \dfrac{f'g - fg'}{g^2}$ &nbsp;·&nbsp;
+      $(f \circ g)' = f'(g) \cdot g'$ (<strong>regra da cadeia</strong>)
+    </p>
+
+    <h4>2. Monotonia e extremos relativos — análise por $f'$</h4>
+    <ul>
+      <li>Calcular $f'(x)$; determinar os zeros de $f'$ no domínio</li>
+      <li>Construir tabela de sinal de $f'$, considerando também pontos onde $f'$ não existe</li>
+      <li>$f' > 0$ em $I$ $\Rightarrow$ $f$ é estritamente <strong>crescente</strong> em $I$</li>
+      <li>$f' < 0$ em $I$ $\Rightarrow$ $f$ é estritamente <strong>decrescente</strong> em $I$</li>
+      <li>$f'$ muda de sinal $+\to-$ em $x=a$ $\Rightarrow$ <strong>máximo relativo</strong> $f(a)$</li>
+      <li>$f'$ muda de sinal $-\to+$ em $x=a$ $\Rightarrow$ <strong>mínimo relativo</strong> $f(a)$</li>
+      <li><strong>Apresentar:</strong> intervalos de monotonia e <em>valores</em> dos extremos (calcular $f(a)$)</li>
+    </ul>
+
+    <h4>3. Concavidades e pontos de inflexão — análise por $f''$</h4>
+    <ul>
+      <li>Calcular $f''(x)$; determinar os zeros de $f''$ no domínio</li>
+      <li>$f'' > 0$ em $I$ $\Rightarrow$ concavidade voltada para <strong>cima</strong> em $I$</li>
+      <li>$f'' < 0$ em $I$ $\Rightarrow$ concavidade voltada para <strong>baixo</strong> em $I$</li>
+      <li>$f''$ <strong>muda de sinal</strong> em $x=a$ $\Rightarrow$ ponto de inflexão de abcissa $a$</li>
+      <li>$f''(a)=0$ <strong>não basta</strong> — tem de mudar de sinal (ex.: $f(x)=x^4$ em $x=0$)</li>
+    </ul>
+
+    <h4>4. Assíntotas — verticais, horizontais e oblíquas</h4>
+    <ul>
+      <li><strong>Vertical $x=a$:</strong> $\displaystyle\lim_{x\to a^\pm} f(x) = \pm\infty$. Procurar em pontos onde $f$ não está definida (denominador zero, log de zero) <em>e</em> nos extremos finitos abertos do domínio</li>
+      <li><strong>Horizontal $y=b$:</strong> $\displaystyle\lim_{x\to \pm\infty} f(x) = b$ (finito)</li>
+      <li><strong>Oblíqua $y=mx+b$ (com $m \neq 0$):</strong>
+        $$m = \lim_{x\to\pm\infty} \frac{f(x)}{x}, \quad b = \lim_{x\to\pm\infty} \big[f(x) - mx\big]$$
+        Os dois limites têm de existir e ser finitos. Se $m=0$, há assíntota horizontal (não oblíqua)
+      </li>
+      <li><strong>"Mostre que $y=mx+b$ é assíntota":</strong> provar que $\displaystyle\lim_{x\to\pm\infty} \big[f(x)-(mx+b)\big] = 0$</li>
+      <li><strong>Limites notáveis úteis:</strong> $\;\displaystyle\lim_{x\to 0}\dfrac{e^x - 1}{x}=1$, $\;\displaystyle\lim_{x\to 0}\dfrac{\sin x}{x}=1$, $\;\displaystyle\lim_{x\to+\infty}\dfrac{\ln x}{x}=0$, $\;\displaystyle\lim_{x\to+\infty}\dfrac{e^x}{x^p}=+\infty$</li>
+    </ul>
+
+    <h4>5. Erros mais frequentes</h4>
+    <ul>
+      <li>Apresentar apenas os <em>zeros</em> da derivada em vez dos <em>intervalos</em> de monotonia</li>
+      <li>Não calcular os <em>valores</em> dos extremos (só dizer "tem máximo em $x=a$" não chega)</li>
+      <li>Confundir "$f''(a)=0$" com "ponto de inflexão" — exige <em>mudança de sinal</em></li>
+      <li>Esquecer pontos de não-derivabilidade ao construir a tabela de sinal</li>
+      <li>Em assíntotas oblíquas: calcular $b$ sem ter primeiro garantido que $m$ é finito e não nulo</li>
+    </ul>
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 2
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     SECÇÃO A — MONOTONIA E EXTREMOS RELATIVOS
+     =========================================================== -->
+
+<!-- PÁGINA 3 — Separador secção A + EXERCÍCIO A -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 5 · SECÇÃO A · Monotonia e Extremos</span>
+    <span class="direita">Exame 2019 · 1.ª fase · item 14.1</span>
+  </div>
+
+  <div class="secao-sep">
+    <span class="num">A</span>Monotonia e Extremos Relativos — 3 exercícios
+    <span class="desc">Sinal de $f'$ → intervalos de monotonia → valores dos extremos relativos. Tabela de sinal obrigatória.</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício A — Estudo de $g(x)=e^{-x}/x$ <span class="ex-cot">essencial</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2019 · 1.ª fase · item 14 (14.1 e 14.2)</p>
+    </div>
+
+    <div class="nota essencial">
+      <strong>Por que é o exercício mais importante desta secção.</strong> É o modelo "limpo" de estudo de monotonia. Função quociente, derivada com regra do quociente, zero de $g'$ óbvio. O item 14.1 (14 pts, construção) treina a estrutura formal completa; o item 14.2 (escolha múltipla) liga monotonia a assíntotas — articulando assim com a Secção C. Dominar este tipo é condição necessária para abordar os exercícios B e C, que envolvem ramos ou produtos.
+    </div>
+
+    <div class="ex-enunciado">
+      <p><strong>14.</strong> Seja $g$ a função, de domínio $\mathbb{R}\setminus\{0\}$, definida por</p>
+      <p style="text-align:center; margin:8pt 0;">$$g(x) = \frac{e^{-x}}{x}$$</p>
+      <p><strong>14.1.</strong> Estude a função $g$ quanto à monotonia e determine, caso existam, os extremos relativos.</p>
+      <p style="margin-top:8pt;"><strong>14.2.</strong> Seja $h$ a função, de domínio $\mathbb{R}^+$, definida por</p>
+      <p style="text-align:center; margin:6pt 0;">$$h(x) = g(x) + 2x - \frac{1}{\sqrt{x}}$$</p>
+      <p>Sabe-se que o gráfico da função $h$ tem uma assíntota oblíqua.</p>
+      <p>Qual é o declive dessa assíntota?</p>
+      <p style="margin: 4pt 0 0 14pt;">
+        (A) $\;1$ &nbsp;&nbsp;&nbsp;&nbsp; (B) $\;2$ &nbsp;&nbsp;&nbsp;&nbsp; (C) $\;e$ &nbsp;&nbsp;&nbsp;&nbsp; (D) $\;e^2$
+      </p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução — 14.1 (monotonia e extremos):</strong>
+    <br>(1) Domínio: $\mathbb{R}\setminus\{0\}$.
+    <br>(2) Derivar com regra do quociente (atenção: $(e^{-x})' = -e^{-x}$):
+    $$g'(x) = \frac{(-e^{-x})\cdot x - e^{-x}\cdot 1}{x^2} = \frac{-e^{-x}(x+1)}{x^2}$$
+    (3) Zeros e sinal: $-e^{-x} < 0\;\forall x$ e $x^2 > 0\;\forall x \neq 0$. Logo o sinal de $g'$ é o sinal contrário de $(x+1)$. Zero único: $x=-1$.
+    <br>(4) Tabela de sinal (atender ao ponto $x=0$ <em>fora do domínio</em>):
+    <br>$g'(x): +\!+\!+ \;0\; -\!-\!- \mid -\!-\!-$ &nbsp; nos intervalos &nbsp; $]-\infty,-1[$, $]-1,0[$, $]0,+\infty[$
+    <br>(5) Monotonia: $g$ é crescente em $]-\infty,-1[$; decrescente em $]-1,0[$ e em $]0,+\infty[$.
+    <br>(6) Extremo: em $x=-1$ há mudança $+\to-$, logo <strong>máximo relativo</strong> $\;g(-1) = \dfrac{e^{-(-1)}}{-1} = \dfrac{e}{-1} = -e$.
+    <br><em>(Em $x=0$ não há extremo porque $0 \notin D_g$; apresentar os intervalos de monotonia separados.)</em>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução — 14.2 (declive da assíntota oblíqua):</strong> &nbsp;<strong>Resposta: (B) $\;2$</strong>
+    <br>O declive da assíntota oblíqua em $+\infty$ é $\;m = \displaystyle\lim_{x\to+\infty}\dfrac{h(x)}{x}$:
+    $$m = \lim_{x\to+\infty}\frac{1}{x}\left(\frac{e^{-x}}{x} + 2x - \frac{1}{\sqrt{x}}\right) = \lim_{x\to+\infty}\left(\frac{e^{-x}}{x^2} + 2 - \frac{1}{x\sqrt{x}}\right)$$
+    Quando $x\to+\infty$: $\;\dfrac{e^{-x}}{x^2}\to 0$ (pois $e^{-x}\to 0$), $\;\dfrac{1}{x\sqrt{x}}\to 0$. Logo $m = 0 + 2 - 0 = 2$.
+    <br><em>(Curiosidade: calculando $b = \displaystyle\lim_{x\to+\infty}[h(x)-2x] = 0$, a assíntota completa é $y = 2x$. Mas a EM só pede o declive.)</em>
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 3
+  </div>
+</div>
+
+
+<!-- PÁGINA 4 — EXERCÍCIO B (2022 F1 · 8.2) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 5 · SECÇÃO A · Monotonia e Extremos</span>
+    <span class="direita">Exame 2022 · 1.ª fase · item 8.2</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício B — Função por ramos em $]-\infty,-2[$ <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · 1.ª fase · item 8.2</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p><strong>8.</strong> Seja $f$ a função, de domínio $\mathbb{R} \setminus \{-2\}$, definida por</p>
+      <p class="ramos-display" style="text-align:center;">
+        $$f(x) = \begin{cases} \dfrac{e^{2-x}}{x+2}, & \text{se } x < -2 \;\vee\; x \geq 2 \\[8pt] \dfrac{\operatorname{sen}(x-2)}{x^2-4}, & \text{se } -2 < x < 2 \end{cases}$$
+      </p>
+      <p>Resolva este item sem recorrer à calculadora.</p>
+      <p><strong>8.2.</strong> Estude a função $f$ quanto à monotonia e quanto à existência de extremos relativos, no intervalo $\;]-\infty, -2[$, e determine esses extremos, caso existam.</p>
+      <p>Na sua resposta, apresente o(s) intervalo(s) de monotonia.</p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong> No intervalo $]-\infty,-2[$ usa-se o ramo $f(x) = \dfrac{e^{2-x}}{x+2}$.
+    <br>(1) Derivar (regra do quociente, com $(e^{2-x})' = -e^{2-x}$):
+    $$f'(x) = \frac{(-e^{2-x})(x+2) - e^{2-x}\cdot 1}{(x+2)^2} = \frac{-e^{2-x}\big[(x+2)+1\big]}{(x+2)^2} = \frac{-e^{2-x}(x+3)}{(x+2)^2}$$
+    (2) Zeros e sinal: $-e^{2-x} < 0\;\forall x$ e $(x+2)^2 > 0\;\forall x \neq -2$. Logo o sinal de $f'$ é o sinal contrário de $(x+3)$. Zero único: $x=-3$.
+    <br>(3) Tabela de sinal em $]-\infty,-2[$:
+    <br>&nbsp;&nbsp;• Em $]-\infty,-3[$: $x+3 < 0$, logo $f'(x) > 0$ (crescente);
+    <br>&nbsp;&nbsp;• Em $]-3,-2[$: $x+3 > 0$, logo $f'(x) < 0$ (decrescente).
+    <br>(4) Monotonia: $f$ é crescente em $]-\infty,-3[$ e decrescente em $]-3,-2[$.
+    <br>(5) Extremo: em $x=-3$ há mudança $+\to-$, logo <strong>máximo relativo</strong>
+    $$f(-3) = \frac{e^{2-(-3)}}{-3+2} = \frac{e^{5}}{-1} = -e^{5}$$
+    <br><br>
+    <strong>Atenção:</strong> o ramo $\dfrac{e^{2-x}}{x+2}$ vale para $x<-2$ <em>e</em> para $x\geq 2$, mas o item 8.2 pede apenas o estudo em $]-\infty,-2[$. O zero $x=-3$ pertence a esse intervalo, pelo que o máximo relativo $-e^5$ é válido.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 4
+  </div>
+</div>
+
+
+<!-- PÁGINA 5 — EXERCÍCIO C (2023 EE · 9.1) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 5 · SECÇÃO A · Monotonia e Extremos</span>
+    <span class="direita">Exame 2023 · Ép. Especial · item 9.1</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício C — Função $g(x) = e^x \cos x$ <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2023 · Época Especial · item 9.1</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Considere a função $g$, de domínio $[0,\, \pi]$, definida por</p>
+      <p style="text-align:center; margin:8pt 0;">$$g(x) = e^x \cos x$$</p>
+      <p>Resolva este item sem recorrer à calculadora.</p>
+      <p><strong>Estude a função $g$ quanto à monotonia e quanto à existência de extremos relativos, e determine esses extremos, caso existam.</strong></p>
+      <p>Na sua resposta, apresente o(s) intervalo(s) de monotonia da função $g$.</p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong>
+    <br>(1) Derivar (regra do produto):
+    $$g'(x) = e^x \cos x + e^x(-\sin x) = e^x(\cos x - \sin x)$$
+    (2) Zeros de $g'$: como $e^x > 0$, vem $\cos x - \sin x = 0 \;\Leftrightarrow\; \cos x = \sin x \;\Leftrightarrow\; \tan x = 1$. No intervalo $[0,\pi]$, único zero: $x = \dfrac{\pi}{4}$.
+    <br>(3) Sinal: em $x=0$, $\cos 0 - \sin 0 = 1 > 0$; em $x = \dfrac{\pi}{2}$, $\cos\dfrac{\pi}{2} - \sin\dfrac{\pi}{2} = -1 < 0$.
+    <br>(4) Tabela: $g'(x) > 0$ em $[0, \dfrac{\pi}{4}[$; $g'(x) < 0$ em $]\dfrac{\pi}{4}, \pi]$.
+    <br>(5) Monotonia: $g$ é estritamente crescente em $[0, \dfrac{\pi}{4}]$ e estritamente decrescente em $[\dfrac{\pi}{4}, \pi]$.
+    <br>(6) Extremo: em $x = \dfrac{\pi}{4}$ há mudança $+\to-$, logo <strong>máximo relativo</strong> (na verdade absoluto, mas o exame só pede relativos):
+    $$g\!\left(\tfrac{\pi}{4}\right) = e^{\pi/4}\cos\tfrac{\pi}{4} = e^{\pi/4}\cdot\tfrac{\sqrt{2}}{2} = \tfrac{\sqrt{2}}{2}\,e^{\pi/4}$$
+    Nos extremos do domínio: $g(0) = 1$ (mínimo no extremo) e $g(\pi) = -e^\pi$ (mínimo absoluto no extremo). Mas como o item pede só relativos, basta o máximo em $\dfrac{\pi}{4}$.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 5
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     SECÇÃO B — CONCAVIDADES E PONTOS DE INFLEXÃO
+     =========================================================== -->
+
+<!-- PÁGINA 6 — Separador secção B + EXERCÍCIO D -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 5 · SECÇÃO B · Concavidades</span>
+    <span class="direita">Exame 2023 · 1.ª fase · item 3</span>
+  </div>
+
+  <div class="secao-sep">
+    <span class="num">B</span>Concavidades e Pontos de Inflexão — 3 exercícios
+    <span class="desc">Sinal de $f''$ → concavidades. Mudança de sinal de $f''$ → ponto de inflexão. Quando a derivada $f'$ é dada, deriva-se uma só vez.</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício D — Estudo com $f'(x) = -2xe^{1-x^2}$ <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2023 · 1.ª fase · item 3</p>
+    </div>
+
+    <div class="nota essencial">
+      <strong>Caso típico: a derivada $f'$ é dada.</strong> O enunciado dá diretamente $f'(x)$, pelo que basta derivar uma vez para obter $f''(x)$. Atenção: este é o padrão mais frequente nos exames mais recentes (2022, 2023, 2024).
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Resolva este item sem recorrer à calculadora.</p>
+      <p>Seja $f$ uma função diferenciável, de domínio $\mathbb{R}$, cuja derivada, $f'$, é dada por</p>
+      <p style="text-align:center; margin:8pt 0;">$$f'(x) = -2x\,e^{1-x^2}$$</p>
+      <p><strong>Estude a função $f$ quanto ao sentido das concavidades do seu gráfico e quanto à existência de pontos de inflexão.</strong></p>
+      <p>Na sua resposta, apresente:</p>
+      <ul>
+        <li>o(s) intervalo(s) em que o gráfico de $f$ tem concavidade voltada para baixo;</li>
+        <li>o(s) intervalo(s) em que o gráfico de $f$ tem concavidade voltada para cima;</li>
+        <li>a(s) abcissa(s) do(s) ponto(s) de inflexão do gráfico de $f$, caso este(s) exista(m).</li>
+      </ul>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong>
+    <br>(1) Derivar $f'$ (regra do produto, com $u = -2x$ e $v = e^{1-x^2}$, $v' = -2x\,e^{1-x^2}$):
+    $$f''(x) = -2\cdot e^{1-x^2} + (-2x)\cdot(-2x)e^{1-x^2} = e^{1-x^2}(-2 + 4x^2) = 2e^{1-x^2}(2x^2-1)$$
+    (2) Zeros de $f''$: como $e^{1-x^2} > 0\;\forall x$, o sinal é dado por $2x^2-1$. Zeros: $x = \pm\dfrac{1}{\sqrt{2}} = \pm\dfrac{\sqrt{2}}{2}$.
+    <br>(3) Sinal de $2x^2-1$: parábola virada para cima com zeros em $\pm\dfrac{\sqrt{2}}{2}$. Negativa entre os zeros, positiva fora.
+    <br>(4) <strong>Concavidades:</strong>
+    <br>&nbsp;&nbsp;• voltada para <strong>cima</strong> em $\left]-\infty,-\dfrac{\sqrt{2}}{2}\right[$ e em $\left]\dfrac{\sqrt{2}}{2},+\infty\right[$;
+    <br>&nbsp;&nbsp;• voltada para <strong>baixo</strong> em $\left]-\dfrac{\sqrt{2}}{2},\dfrac{\sqrt{2}}{2}\right[$.
+    <br>(5) <strong>Pontos de inflexão:</strong> abcissas $-\dfrac{\sqrt{2}}{2}$ e $\dfrac{\sqrt{2}}{2}$ (há mudança de sinal de $f''$ em ambos).
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 6
+  </div>
+</div>
+
+
+<!-- PÁGINA 7 — EXERCÍCIO E (2022 F2 · 9.1) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 5 · SECÇÃO B · Concavidades</span>
+    <span class="direita">Exame 2022 · 2.ª fase · item 9.1</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício E — Derivada por ramos em $]0,\pi[$ <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · 2.ª fase · item 9.1</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p><strong>9.</strong> Seja $g$ uma função derivável, de domínio $]-\infty, \pi[ \setminus \{0\}$, cuja derivada, $g'$, é dada por</p>
+      <p class="ramos-display" style="text-align:center;">
+        $$g'(x) = \begin{cases} 3e^{2x} - 7e^x, & \text{se } x < 0 \\[6pt] x + 2\cos^2 x, & \text{se } 0 < x < \pi \end{cases}$$
+      </p>
+      <p>Resolva este item sem recorrer à calculadora.</p>
+      <p><strong>9.1.</strong> Estude a função $g$ quanto ao sentido das concavidades do seu gráfico e quanto à existência de pontos de inflexão, no intervalo $\;]0,\pi[$.</p>
+      <p>Na sua resposta, apresente:</p>
+      <ul>
+        <li>o(s) intervalo(s) em que o gráfico de $g$ tem concavidade voltada para baixo;</li>
+        <li>o(s) intervalo(s) em que o gráfico de $g$ tem concavidade voltada para cima;</li>
+        <li>a(s) abcissa(s) do(s) ponto(s) de inflexão do gráfico de $g$.</li>
+      </ul>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong> No intervalo $]0,\pi[$, $g'(x) = x + 2\cos^2 x$.
+    <br>(1) Derivar (usar $(\cos^2 x)' = 2\cos x\cdot(-\sin x) = -2\sin x\cos x = -\sin(2x)$):
+    $$g''(x) = 1 + 2\cdot\big(-\sin(2x)\big) = 1 - 2\sin(2x)$$
+    (2) Zeros: $1 - 2\sin(2x) = 0 \;\Leftrightarrow\; \sin(2x) = \dfrac{1}{2}$. Em $]0,\pi[$, $2x \in \,]0,2\pi[$, pelo que $2x = \dfrac{\pi}{6}$ ou $2x = \dfrac{5\pi}{6}$, ou seja, $x = \dfrac{\pi}{12}$ e $x = \dfrac{5\pi}{12}$.
+    <br>(3) Sinal de $g''(x) = 1 - 2\sin(2x)$ (testar pontos):
+    <br>&nbsp;&nbsp;• Em $]0, \tfrac{\pi}{12}[$: $g'' > 0$ (concavidade para <strong>cima</strong>);
+    <br>&nbsp;&nbsp;• Em $]\tfrac{\pi}{12}, \tfrac{5\pi}{12}[$: $g'' < 0$ (concavidade para <strong>baixo</strong>);
+    <br>&nbsp;&nbsp;• Em $]\tfrac{5\pi}{12}, \pi[$: $g'' > 0$ (concavidade para <strong>cima</strong>).
+    <br>(4) <strong>Pontos de inflexão:</strong> abcissas $\dfrac{\pi}{12}$ e $\dfrac{5\pi}{12}$ (há mudança de sinal de $g''$ em ambos).
+    <br><br>
+    <strong>Atenção:</strong> usar a fórmula do ângulo duplo $\sin(2x) = 2\sin x\cos x$ simplifica muito o cálculo da segunda derivada e a resolução da equação trigonométrica.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 7
+  </div>
+</div>
+
+
+<!-- PÁGINA 8 — EXERCÍCIO F (2022 EE · 13) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 5 · SECÇÃO B · Concavidades</span>
+    <span class="direita">Exame 2022 · Ép. Especial · item 13</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício F — Derivada com $e^{3x}$ em $\mathbb{R}^+$ <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · Época Especial · item 13</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p><strong>13.</strong> Seja $g$ uma função, de domínio $\mathbb{R}^+$, cuja derivada, de domínio $\mathbb{R}^+$, é definida por</p>
+      <p style="text-align:center; margin:8pt 0;">$$g'(x) = \frac{x - e^{3x}}{x}$$</p>
+      <p><strong>Estude, sem recorrer à calculadora, a função $g$ quanto ao sentido das concavidades do seu gráfico e quanto à existência de pontos de inflexão.</strong></p>
+      <p>Na sua resposta, apresente:</p>
+      <ul>
+        <li>o(s) intervalo(s) em que o gráfico de $g$ tem concavidade voltada para baixo;</li>
+        <li>o(s) intervalo(s) em que o gráfico de $g$ tem concavidade voltada para cima;</li>
+        <li>a(s) abcissa(s) do(s) ponto(s) de inflexão do gráfico de $g$.</li>
+      </ul>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong>
+    <br>(1) Reescrever $g'$ para facilitar a derivação: $g'(x) = \dfrac{x-e^{3x}}{x} = 1 - \dfrac{e^{3x}}{x}$.
+    <br>(2) Derivar (regra do quociente em $\dfrac{e^{3x}}{x}$, com $(e^{3x})' = 3e^{3x}$):
+    $$g''(x) = -\frac{3e^{3x}\cdot x - e^{3x}\cdot 1}{x^2} = -\frac{e^{3x}(3x-1)}{x^2}$$
+    (3) Sinal: em $\mathbb{R}^+$, $e^{3x} > 0$ e $x^2 > 0$. O sinal de $g''(x)$ é o sinal contrário de $(3x-1)$.
+    <br>(4) Zero: $3x-1 = 0 \Leftrightarrow x = \dfrac{1}{3}$. Tabela em $\mathbb{R}^+$:
+    <br>&nbsp;&nbsp;• Em $]0,\tfrac{1}{3}[$: $3x-1 < 0$, logo $g''(x) > 0$ (concavidade voltada para <strong>cima</strong>);
+    <br>&nbsp;&nbsp;• Em $]\tfrac{1}{3},+\infty[$: $3x-1 > 0$, logo $g''(x) < 0$ (concavidade voltada para <strong>baixo</strong>).
+    <br>(5) <strong>Ponto de inflexão:</strong> abcissa $x = \dfrac{1}{3}$ (mudança de sinal de $g''$).
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 8
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     SECÇÃO C — ASSÍNTOTAS
+     =========================================================== -->
+
+<!-- PÁGINA 9 — Separador secção C + EXERCÍCIO G -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 5 · SECÇÃO C · Assíntotas</span>
+    <span class="direita">Exame 2024 · 1.ª fase · item 7</span>
+  </div>
+
+  <div class="secao-sep">
+    <span class="num">C</span>Assíntotas — verticais, horizontais e oblíquas — 3 exercícios
+    <span class="desc">Vertical: $\lim = \pm\infty$. Horizontal: $\lim$ finito. Oblíqua: $m = \lim f(x)/x$, $b = \lim[f(x)-mx]$. Cuidar dos limites laterais.</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício G — Assíntota vertical com $\dfrac{1-\cos x}{x^4}$ <span class="ex-cot">12 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2024 · 1.ª fase · item 7</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Resolva este item sem recorrer à calculadora.</p>
+      <p>Considere a função $f$, de domínio $\mathbb{R} \setminus \{0\}$, definida por</p>
+      <p style="text-align:center; margin:8pt 0;">$$f(x) = \frac{1 - \cos x}{x^4}$$</p>
+      <p><strong>Estude a função $f$ quanto à existência de assíntotas verticais ao seu gráfico e, caso existam, escreva as respetivas equações.</strong></p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong> Candidato a assíntota vertical: $x = 0$ (único ponto fora do domínio).
+    <br>(1) Calcular $\displaystyle\lim_{x\to 0} \frac{1-\cos x}{x^4}$. Indeterminação $\dfrac{0}{0}$.
+    <br>(2) <strong>Decompor</strong> usando o limite notável $\displaystyle\lim_{x\to 0}\dfrac{1-\cos x}{x^2} = \dfrac{1}{2}$:
+    $$\frac{1-\cos x}{x^4} = \frac{1-\cos x}{x^2}\cdot\frac{1}{x^2}$$
+    (3) Calcular o limite:
+    $$\lim_{x\to 0} \frac{1-\cos x}{x^4} = \underbrace{\lim_{x\to 0}\frac{1-\cos x}{x^2}}_{=\,1/2} \cdot \underbrace{\lim_{x\to 0}\frac{1}{x^2}}_{=\,+\infty} = \frac{1}{2}\cdot(+\infty) = +\infty$$
+    (4) O limite é $+\infty$ <strong>bilateralmente</strong> (pois $x^2 > 0$ tanto à esquerda como à direita, e $1-\cos x \geq 0$).
+    <br>(5) <strong>Conclusão:</strong> a reta de equação $x = 0$ (eixo $Oy$) é assíntota vertical ao gráfico de $f$.
+    <br><br>
+    <strong>Limite notável essencial:</strong> $\displaystyle\lim_{x\to 0}\dfrac{1-\cos x}{x^2} = \dfrac{1}{2}$. Pode obter-se multiplicando pelo conjugado: $\dfrac{1-\cos x}{x^2}\cdot\dfrac{1+\cos x}{1+\cos x} = \dfrac{\sin^2 x}{x^2(1+\cos x)} = \left(\dfrac{\sin x}{x}\right)^2\cdot\dfrac{1}{1+\cos x} \to 1\cdot\dfrac{1}{2} = \dfrac{1}{2}$.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 9
+  </div>
+</div>
+
+
+<!-- PÁGINA 10 — EXERCÍCIO H (2022 F1 · 13) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 5 · SECÇÃO C · Assíntotas</span>
+    <span class="direita">Exame 2022 · 1.ª fase · item 13</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício H — Assíntotas verticais e oblíquas <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · 1.ª fase · item 13</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p><strong>13.</strong> Resolva este item sem recorrer à calculadora.</p>
+      <p>Seja $g$ a função, de domínio $]1, +\infty[$, definida por</p>
+      <p style="text-align:center; margin:8pt 0;">$$g(x) = 5x - 3\ln(x - 1)$$</p>
+      <p><strong>Estude a função $g$ quanto à existência de assíntotas verticais e de assíntotas oblíquas ao seu gráfico e, caso existam, escreva as respetivas equações.</strong></p>
+    </div>
+
+    <div class="resolucao muitolonga">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong>
+    <br>(1) <strong>Vertical:</strong> candidato $x = 1$ (extremo aberto do domínio).
+    $$\lim_{x \to 1^+} g(x) = 5(1) - 3\lim_{x \to 1^+}\ln(x-1) = 5 - 3\cdot(-\infty) = +\infty$$
+    Logo $x = 1$ é assíntota vertical.
+    <br>(2) <strong>Oblíqua em $+\infty$:</strong> ($-\infty$ está fora do domínio)
+    $$m = \lim_{x \to +\infty} \frac{g(x)}{x} = \lim_{x\to+\infty} \left(5 - \frac{3\ln(x-1)}{x}\right) = 5 - 0 = 5$$
+    Aqui usou-se $\displaystyle\lim_{x\to+\infty}\dfrac{\ln(x-1)}{x} = 0$ (do formulário, generalizado por mudança de variável).
+    <br>(3) $\displaystyle b = \lim_{x\to+\infty}\big[g(x) - 5x\big] = \lim_{x\to+\infty}\big[-3\ln(x-1)\big] = -3\cdot(+\infty) = -\infty$.
+    <br>(4) Como $b$ <strong>não é finito</strong>, <em>não existe</em> assíntota oblíqua em $+\infty$.
+    <br><br>
+    <strong>Conclusão:</strong> existe apenas a assíntota vertical $x = 1$; <strong>não existem</strong> assíntotas oblíquas.
+    <br><strong>Atenção:</strong> calcular $m$ não chega — tem de se verificar que $b$ é finito. Se $b = \pm\infty$, não há oblíqua.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 10
+  </div>
+</div>
+
+
+<!-- PÁGINA 11 — EXERCÍCIO I (2022 EE · 11.1) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 5 · SECÇÃO C · Assíntotas</span>
+    <span class="direita">Exame 2022 · Ép. Especial · item 11.1</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício I — Oblíqua em $-\infty$ + Horizontal em $+\infty$ <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · Época Especial · item 11.1</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Seja $g$ a função, de domínio $\mathbb{R}$, definida por</p>
+      <p style="text-align:center; margin:8pt 0;">$$g(x) = \ln(1 + e^x) - x$$</p>
+      <p>Resolva este item sem recorrer à calculadora.</p>
+      <p>O gráfico de $g$ tem uma assíntota oblíqua, quando $x$ tende para $-\infty$, e tem uma assíntota horizontal, quando $x$ tende para $+\infty$.</p>
+      <p><strong>Determine uma equação de cada uma dessas assíntotas.</strong></p>
+    </div>
+
+    <div class="resolucao muitolonga">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong>
+    <br><strong>Horizontal em $+\infty$:</strong>
+    Quando $x\to+\infty$: $1+e^x \to +\infty$. Reescrever para resolver a indeterminação $\infty-\infty$:
+    $$g(x) = \ln(1+e^x) - x = \ln(1+e^x) - \ln(e^x) = \ln\!\frac{1+e^x}{e^x} = \ln\!\left(\frac{1}{e^x} + 1\right) = \ln(e^{-x}+1)$$
+    Quando $x\to+\infty$, $e^{-x} \to 0$, logo $\ln(e^{-x}+1) \to \ln 1 = 0$.
+    <br>$\Rightarrow$ <strong>Assíntota horizontal em $+\infty$:</strong> $\;y = 0\;$ (o eixo $Ox$).
+    <br><br>
+    <strong>Oblíqua em $-\infty$:</strong>
+    $$m = \lim_{x\to-\infty} \frac{g(x)}{x} = \lim_{x\to-\infty} \frac{\ln(1+e^x) - x}{x} = \lim_{x\to-\infty} \frac{\ln(1+e^x)}{x} - 1$$
+    Quando $x\to-\infty$: $e^x \to 0$, logo $\ln(1+e^x) \to \ln 1 = 0$ (numerador limitado) e o denominador $x \to -\infty$. Logo $\dfrac{\ln(1+e^x)}{x} \to 0$ e $m = 0 - 1 = -1$.
+    <br><br>
+    $$b = \lim_{x\to-\infty}\big[g(x) - mx\big] = \lim_{x\to-\infty}\big[\ln(1+e^x) - x - (-1)x\big] = \lim_{x\to-\infty}\ln(1+e^x) = \ln 1 = 0$$
+    <br>$\Rightarrow$ <strong>Assíntota oblíqua em $-\infty$:</strong> $\;y = -x\;$ (ou equivalente $y = -x + 0$).
+    <br><br>
+    <strong>Truque essencial:</strong> reescrever $\ln(1+e^x) - x = \ln\!\dfrac{1+e^x}{e^x}$ para resolver indeterminações deste tipo. Surge frequentemente em assíntotas de funções logaritmo-exponencial.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 11
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 12 — SEPARADOR AULA 6 + CONTEÚDOS A REVER
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 6 · Demonstrações com funções</span>
+    <span class="direita">Conteúdos a rever</span>
+  </div>
+
+  <div class="aula-sep">
+    <h3>Aula 6 — Demonstrações com Funções</h3>
+    <p>Reta tangente · Proposições falsas · Paridade · Definição de derivada · Argumentação formal</p>
+  </div>
+
+  <h2 class="titulo-aula" style="border-bottom-color:#6B4886; color:#4A2D63;">Conteúdos a rever antes dos exercícios da Aula 6
+    <span class="subtitulo">Pré-requisitos: tudo da Aula 5 (monotonia, concavidades, assíntotas)</span>
+  </h2>
+
+  <div class="conteudos">
+    <h4>1. Reta tangente ao gráfico no ponto de abcissa $a$</h4>
+    <ul>
+      <li>Equação: $\;y - f(a) = f'(a)\cdot(x-a)\;$ ou equivalentemente $\;y = f'(a)\,x + \big[f(a) - a\,f'(a)\big]$</li>
+      <li><strong>Declive</strong> da tangente em $x=a$: $\;m = f'(a)$</li>
+      <li>Reta <strong>paralela</strong>: mesmo declive $m$, ordenada na origem diferente</li>
+      <li>Reta <strong>perpendicular</strong>: declive $-\dfrac{1}{m}$ (se $m \neq 0$)</li>
+    </ul>
+
+    <h4>2. Definição de derivada num ponto</h4>
+    <ul>
+      <li>$f'(a) = \displaystyle\lim_{x\to a} \frac{f(x) - f(a)}{x - a}$ &nbsp;(forma direta)</li>
+      <li>$f'(a) = \displaystyle\lim_{h\to 0} \frac{f(a+h) - f(a)}{h}$ &nbsp;(forma com incremento)</li>
+      <li><strong>Reconhecer a definição em limites disfarçados:</strong> se aparecer um limite da forma $\displaystyle\lim_{x\to a}\dfrac{f(\text{algo}) - f(a)}{x-a}$, reescrevê-lo como $f'(a)$ multiplicado por um fator</li>
+      <li>Exemplo: $\displaystyle\lim_{x\to 0}\dfrac{f(\pi-x) - f(\pi)}{x}$. Mudança $u = \pi-x$, com $u\to\pi$ quando $x\to 0$: o limite vira $\displaystyle\lim_{u\to\pi}\dfrac{f(u)-f(\pi)}{\pi-u} = -f'(\pi)$</li>
+    </ul>
+
+    <h4>3. Paridade de funções (AE 2018 — item alternativo)</h4>
+    <ul>
+      <li><strong>Função par:</strong> $f(-x) = f(x)$ &nbsp;$\forall x \in D_f$ (simétrica relativamente ao eixo $Oy$)</li>
+      <li><strong>Função ímpar:</strong> $f(-x) = -f(x)$ &nbsp;$\forall x \in D_f$ (simétrica relativamente à origem)</li>
+      <li><strong>Propriedades essenciais:</strong>
+        <ul>
+          <li>$f$ par e diferenciável $\Rightarrow$ $f'$ é <strong>ímpar</strong> (derivando $f(-x)=f(x)$ vem $-f'(-x) = f'(x)$, ou seja, $f'(-x) = -f'(x)$)</li>
+          <li>$f$ ímpar e diferenciável $\Rightarrow$ $f'$ é <strong>par</strong></li>
+          <li>$f$ par e diferenciável em $0$ $\Rightarrow$ $f'(0) = 0$</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h4>4. Tipos de demonstração no exame (todas valem 14 pts)</h4>
+    <ul>
+      <li><strong>Justificar que reta é assíntota:</strong> calcular $\displaystyle\lim_{x\to\pm\infty}\big[f(x) - (mx+b)\big] = 0$</li>
+      <li><strong>Função polinomial sem extremos:</strong> mostrar que $f'$ não muda de sinal (ex.: discriminante de $f'$ negativo)</li>
+      <li><strong>Proposições I e II falsas:</strong> para cada uma, dar uma <em>razão</em> que a torne falsa (contraexemplo ou argumento lógico). Usar Bolzano só quando todas as hipóteses estão verificadas</li>
+      <li><strong>Abcissas em P.G.:</strong> calcular as três abcissas $x_1, x_2, x_3$ em função de parâmetros e mostrar que $\dfrac{x_2}{x_1} = \dfrac{x_3}{x_2}$ ou que $x_2^2 = x_1\cdot x_3$</li>
+      <li><strong>Definição de derivada:</strong> manipular o limite até obter a forma $\dfrac{f(x)-f(a)}{x-a}$ e identificar $f'(a)$</li>
+    </ul>
+
+    <h4>5. Estrutura formal mínima de uma demonstração</h4>
+    <ul>
+      <li><strong>(1)</strong> Identificar o que se quer mostrar e o que se assume (hipóteses)</li>
+      <li><strong>(2)</strong> Calcular o que for necessário (derivadas, limites, valores)</li>
+      <li><strong>(3)</strong> Aplicar o teorema/propriedade adequado, <strong>citando-o pelo nome</strong></li>
+      <li><strong>(4)</strong> Concluir com a tese: "logo, ..."</li>
+    </ul>
+  </div>
+
+  <div class="nota">
+    <strong>Aviso:</strong> nas demonstrações, a clareza e a estrutura valem tanto como os cálculos. Nas proposições falsas, basta <em>uma</em> razão por proposição, mas tem de ser <em>suficiente</em>. Em demonstrações com definição de derivada, é obrigatório <em>citar</em> que se está a usar a definição.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 12
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     SECÇÃO D — RETA TANGENTE E CÁLCULO DE DERIVADAS
+     =========================================================== -->
+
+<!-- PÁGINA 13 — Separador secção D + EXERCÍCIO J -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 6 · SECÇÃO D · Reta tangente</span>
+    <span class="direita">Exame 2019 · 1.ª fase · item 13.1</span>
+  </div>
+
+  <div class="secao-sep" style="background:#6B4886;">
+    <span class="num" style="color:#4A2D63;">D</span>Reta tangente e cálculo de derivadas — 3 exercícios
+    <span class="desc">Equação $y - f(a) = f'(a)(x-a)$. Reta paralela: mesmo declive. Perpendicular: declive $-1/m$.</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec aula6">
+      <p class="ex-num">Exercício J — Equação reduzida da tangente <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2019 · 1.ª fase · item 13.1</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p><strong>13.</strong> Seja $f$ a função, de domínio $\mathbb{R}$, definida por</p>
+      <p class="ramos-display" style="text-align:center;">
+        $$f(x) = \begin{cases} \dfrac{1-\cos x}{x}, & \text{se } x < 0 \\[6pt] 0, & \text{se } x = 0 \\[6pt] \dfrac{x}{x-\ln x}, & \text{se } x > 0 \end{cases}$$
+      </p>
+      <p><strong>13.1.</strong> Determine a equação reduzida da reta tangente ao gráfico da função $f$ no ponto de abcissa $1$.</p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong> Como $1 > 0$, usa-se o ramo $f(x) = \dfrac{x}{x-\ln x}$.
+    <br>(1) <strong>Ponto:</strong> $f(1) = \dfrac{1}{1-\ln 1} = \dfrac{1}{1-0} = 1$. O ponto de tangência é $(1, 1)$.
+    <br>(2) <strong>Declive:</strong> derivar com a regra do quociente. Com $u = x$ ($u'=1$) e $v = x - \ln x$ ($v' = 1 - \dfrac{1}{x}$):
+    $$f'(x) = \frac{1\cdot(x-\ln x) - x\left(1-\frac{1}{x}\right)}{(x-\ln x)^2} = \frac{x - \ln x - x + 1}{(x-\ln x)^2} = \frac{1-\ln x}{(x-\ln x)^2}$$
+    Em $x=1$: $\;f'(1) = \dfrac{1-\ln 1}{(1-\ln 1)^2} = \dfrac{1-0}{(1-0)^2} = \dfrac{1}{1} = 1$.
+    <br>(3) <strong>Equação:</strong> $y - 1 = 1\cdot(x-1) \;\Leftrightarrow\; y = x$.
+    <br><br>
+    <strong>Comentário didático:</strong> ao contrário do que a aparência sugere, este cálculo é direto — não exige limites notáveis nem expansões. A simplificação $\ln 1 = 0$ torna tudo limpo. Bom exemplo de que, escolhendo o ramo certo e simplificando, um item de tangente pode resolver-se em poucos passos.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 13
+  </div>
+</div>
+
+
+<!-- PÁGINA 14 — EXERCÍCIO K (2024 F2 · 11.1) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 6 · SECÇÃO D · Reta tangente</span>
+    <span class="direita">Exame 2024 · 2.ª fase · item 11.1</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec aula6">
+      <p class="ex-num">Exercício K — Tangente em $x=0$ + reta paralela <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2024 · 2.ª fase · item 11.1</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Seja $g$ uma função diferenciável, de domínio $\left]-\dfrac{\pi}{2},\, \dfrac{\pi}{2}\right[$, cuja derivada, $g'$, é dada por</p>
+      <p style="text-align:center; margin:8pt 0;">$$g'(x) = \cos(2x) + 2\sin x$$</p>
+      <p>Resolva este item sem recorrer à calculadora.</p>
+      <p>Seja $r$ a reta tangente ao gráfico de $g$ no ponto de abcissa $0$, e seja $s$ a reta <strong>paralela</strong> à reta $r$ que intersecta o eixo $Ox$ no ponto de abcissa $4$.</p>
+      <p><strong>Determine a equação reduzida da reta $s$.</strong></p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong>
+    <br>(1) <strong>Declive de $r$ (tangente em $x=0$):</strong>
+    $$m = g'(0) = \cos 0 + 2\sin 0 = 1 + 0 = 1$$
+    (2) <strong>Reta $s$:</strong> paralela a $r$ $\Rightarrow$ mesmo declive $m = 1$. Passa em $(4, 0)$ (intersecta o eixo $Ox$ em $x=4$):
+    $$y - 0 = 1\cdot(x - 4) \;\Leftrightarrow\; y = x - 4$$
+    <br><strong>Conclusão:</strong> equação reduzida de $s$: $\;y = x - 4$.
+    <br><br>
+    <strong>Observação inteligente:</strong> Este item <em>não pede</em> nem $g(0)$ nem a equação de $r$ propriamente dita — apenas o declive (para impor o paralelismo) e o ponto $(4,0)$ (dado). É um item rápido (5 minutos) e dá 14 pontos. Reconhecer estes "atalhos" é parte da estratégia de exame.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 14
+  </div>
+</div>
+
+
+<!-- PÁGINA 15 — EXERCÍCIO L (2022 EE · 11.2) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 6 · SECÇÃO D · Reta tangente</span>
+    <span class="direita">Exame 2022 · Ép. Especial · item 11.2</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec aula6">
+      <p class="ex-num">Exercício L — Tangente + área $(\ln 2)^2$ <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · Época Especial · item 11.2</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Seja $g$ a função, de domínio $\mathbb{R}$, definida por $\;g(x) = \ln(1 + e^x) - x$.&nbsp;<em>(mesma função do exercício I)</em></p>
+      <p>Resolva este item sem recorrer à calculadora.</p>
+      <p>Num referencial o.n. $Oxy$, seja $r$ a reta tangente ao gráfico de $g$ no ponto de abcissa $0$.</p>
+      <p>Sejam $A$ e $B$ os pontos de intersecção da reta $r$ com os eixos coordenados.</p>
+      <p><strong>Mostre que a área do triângulo $[OAB]$ é igual a $(\ln 2)^2$.</strong></p>
+    </div>
+
+    <div class="resolucao muitolonga">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong>
+    <br>(1) <strong>Ponto:</strong> $g(0) = \ln(1+e^0) - 0 = \ln 2$. Logo o ponto de tangência é $(0, \ln 2)$.
+    <br>(2) <strong>Declive:</strong> $g'(x) = \dfrac{e^x}{1+e^x} - 1 = \dfrac{e^x - 1 - e^x}{1+e^x} = -\dfrac{1}{1+e^x}$. Em $x=0$: $g'(0) = -\dfrac{1}{2}$.
+    <br>(3) <strong>Equação de $r$:</strong> $y - \ln 2 = -\dfrac{1}{2}(x - 0) \;\Leftrightarrow\; y = -\dfrac{1}{2}x + \ln 2$.
+    <br>(4) <strong>Intersecções com os eixos:</strong>
+    <br>&nbsp;&nbsp;• Com $Oy$ ($x=0$): $y = \ln 2$. Ponto $B = (0, \ln 2)$ <em>(que é o próprio ponto de tangência)</em>.
+    <br>&nbsp;&nbsp;• Com $Ox$ ($y=0$): $0 = -\dfrac{1}{2}x + \ln 2 \;\Rightarrow\; x = 2\ln 2$. Ponto $A = (2\ln 2, 0)$.
+    <br>(5) <strong>Área do triângulo $[OAB]$</strong> (retângulo em $O$, com catetos sobre os eixos):
+    $$\text{Área} = \frac{1}{2} \cdot OA \cdot OB = \frac{1}{2} \cdot 2\ln 2 \cdot \ln 2 = (\ln 2)^2 \quad \blacksquare$$
+    <br><br>
+    <strong>Articulação com exercício I:</strong> aqui usamos a mesma função, mas agora interessa a derivada e a tangente (não as assíntotas). Boa oportunidade para mostrar que uma única função pode "dar" vários tipos de itens no exame.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 15
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     SECÇÃO E — DEMONSTRAÇÕES FORMAIS
+     =========================================================== -->
+
+<!-- PÁGINA 16 — Separador secção E + EXERCÍCIO M -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 6 · SECÇÃO E · Demonstrações</span>
+    <span class="direita">Exame 2022 · 2.ª fase · item 13</span>
+  </div>
+
+  <div class="secao-sep" style="background:#6B4886;">
+    <span class="num" style="color:#4A2D63;">E</span>Demonstrações formais com funções — 6 exercícios
+    <span class="desc">Polinómio sem extremos · Proposições falsas · Paridade · Abcissas em P.G. · Definição de derivada</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec aula6">
+      <p class="ex-num">Exercício M — Função polinomial sem extremos $\forall a$ <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · 2.ª fase · item 13</p>
+    </div>
+
+    <div class="nota essencial">
+      <strong>Tipo "função sem extremos para qualquer parâmetro".</strong> Aparece tipicamente como exercício isolado de 14 pts. A estratégia padrão é: derivar, mostrar que $f'(x) \geq 0$ (ou $\leq 0$) sempre, e que $f'$ não muda de sinal (discriminante negativo ou nulo na equação $f'(x)=0$).
+    </div>
+
+    <div class="ex-enunciado">
+      <p><strong>13.</strong> Seja $a$ um número real.</p>
+      <p>Considere a função polinomial definida, em $\mathbb{R}$, por</p>
+      <p style="text-align:center; margin:8pt 0;">$$f(x) = \frac{1}{3}x^3 + ax^2 + a^2 x + \sqrt{2}$$</p>
+      <p><strong>Mostre que, para qualquer valor de $a$, a função não tem extremos.</strong></p>
+    </div>
+
+    <div class="resolucao muitolonga">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução (estrutura formal):</strong>
+    <br>(1) Calcular $f'(x)$:
+    $$f'(x) = x^2 + 2ax + a^2 = (x+a)^2$$
+    (2) Observar que $(x+a)^2 \geq 0$ para qualquer $x \in \mathbb{R}$ e qualquer $a \in \mathbb{R}$.
+    <br>(3) Mais ainda: $(x+a)^2 = 0$ apenas para $x = -a$ (zero único).
+    <br>(4) Em todos os outros pontos, $f'(x) > 0$.
+    <br>(5) <strong>Conclusão:</strong> $f$ é estritamente crescente em $\mathbb{R}$ (a derivada não muda de sinal — apenas se anula num ponto isolado). Logo, $f$ não tem extremos relativos, qualquer que seja $a$. $\;\blacksquare$
+    <br><br>
+    <strong>Ponto técnico crucial:</strong> mostrar que $f'(x) \geq 0$ <em>não basta</em>; é preciso que não mude de sinal. Aqui isso é automático porque $f'$ é um quadrado perfeito. Se $f'$ se anulasse em <em>dois</em> pontos com mudança de sinal, haveria extremo.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 16
+  </div>
+</div>
+
+
+<!-- PÁGINA 17 — EXERCÍCIO N (2024 F2 · 10) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 6 · SECÇÃO E · Demonstrações</span>
+    <span class="direita">Exame 2024 · 2.ª fase · item 10</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec aula6">
+      <p class="ex-num">Exercício N — Proposições falsas: concavidade + extremo <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2024 · 2.ª fase · item 10</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Seja $f$ uma função, de domínio $\mathbb{R}^+$, duas vezes diferenciável.</p>
+      <p>Relativamente à função $f$, sabe-se que:</p>
+      <ul>
+        <li>a função $f'$, derivada da função $f$, é estritamente crescente no intervalo $]0, +\infty[$;</li>
+        <li>$f'(1) = 2$.</li>
+      </ul>
+      <p>Considere as proposições seguintes:</p>
+      <ul>
+        <li><strong>I.</strong> O gráfico da função $f$ pode ter concavidade voltada para baixo em $\mathbb{R}^+$.</li>
+        <li><strong>II.</strong> No intervalo $]1, 5[$, a função $f$ tem, pelo menos, um extremo.</li>
+      </ul>
+      <p><strong>Justifique que as proposições I e II são falsas.</strong></p>
+      <p>Na sua resposta, apresente, para cada uma das proposições, uma razão que justifique a sua falsidade.</p>
+    </div>
+
+    <div class="resolucao muitolonga">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong>
+    <br><strong>Proposição I (falsa):</strong>
+    <br>$f'$ é estritamente crescente em $]0,+\infty[$ $\Rightarrow$ $f''(x) > 0$ (ou $f'' \geq 0$ com derivada estrita) em todo $\mathbb{R}^+$.
+    <br>$f''(x) > 0$ $\Rightarrow$ a concavidade do gráfico de $f$ está voltada para <strong>cima</strong>, não para baixo.
+    <br>$\Rightarrow$ Proposição I é falsa. $\;\blacksquare$
+    <br><br>
+    <strong>Proposição II (falsa):</strong>
+    <br>Como $f'$ é estritamente crescente em $]0,+\infty[$ e $f'(1) = 2 > 0$, então para todo $x > 1$, $f'(x) > f'(1) = 2 > 0$.
+    <br>$\Rightarrow$ $f'(x) > 0$ em todo $]1, 5[$ (na verdade em todo $]1,+\infty[$).
+    <br>$\Rightarrow$ $f$ é estritamente crescente em $]1, 5[$ (a derivada não muda de sinal, não se anula).
+    <br>$\Rightarrow$ $f$ não tem extremos relativos no interior de $]1, 5[$.
+    <br>$\Rightarrow$ Proposição II é falsa. $\;\blacksquare$
+    <br><br>
+    <strong>Atenção:</strong> em ambas as proposições, a chave é traduzir "$f'$ estritamente crescente" → "$f'' > 0$" → "concavidade para cima" (proposição I); e "$f'(1) = 2$ + crescente" → "$f'(x) > 2$ em $]1,5[$" → "sem extremo" (proposição II).
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 17
+  </div>
+</div>
+
+
+<!-- PÁGINA 18 — EXERCÍCIO O (2025 EE · 11) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 6 · SECÇÃO E · Demonstrações</span>
+    <span class="direita">Exame 2025 · Ép. Especial · item 11</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec aula6">
+      <p class="ex-num">Exercício O — Proposições falsas: inflexão + declives <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2025 · Época Especial · item 11</p>
+    </div>
+
+    <div class="nota essencial">
+      <strong>Mais recente exercício deste tipo (2025).</strong> Exige interpretação fina das condições dadas — em particular, perceber que $f''(x) \geq 0 \Leftrightarrow x \geq \tfrac{3}{4}$ <em>não</em> implica que $f''$ tem dois zeros distintos com mudança de sinal, e que o declive da tangente é $f'$.
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Considere uma função $f$, de domínio $\mathbb{R}$, duas vezes diferenciável, e a função $f''$, segunda derivada da função $f$.</p>
+      <p>Sabe-se que:</p>
+      <ul>
+        <li>$f''(x) \geq 0 \;\Leftrightarrow\; x \geq \dfrac{3}{4}$;</li>
+        <li>a função $f''$ tem exatamente dois zeros: $\dfrac{3}{4}$ e $3$;</li>
+        <li>as retas $r$ e $s$ são tangentes ao gráfico da função $f$ nos pontos de abcissas $-2$ e $-1$, respetivamente.</li>
+      </ul>
+      <p>Considere as proposições seguintes:</p>
+      <ul>
+        <li><strong>I.</strong> O gráfico da função $f$ tem dois pontos de inflexão, de abcissas $\dfrac{3}{4}$ e $3$.</li>
+        <li><strong>II.</strong> O declive da reta $r$ é menor do que o declive da reta $s$.</li>
+      </ul>
+      <p><strong>Justifique que as proposições I e II são falsas.</strong></p>
+      <p>Na sua resposta, apresente, para cada uma das proposições, uma razão que justifique a sua falsidade.</p>
+    </div>
+
+    <div class="resolucao muitolonga">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong>
+    <br><strong>Proposição I (falsa):</strong>
+    <br>De $f''(x) \geq 0 \Leftrightarrow x \geq \tfrac{3}{4}$, deduz-se que $f''(x) < 0$ para $x < \tfrac{3}{4}$ e $f''(x) \geq 0$ para $x \geq \tfrac{3}{4}$. Logo $f''$ muda de sinal em $x = \tfrac{3}{4}$ ($\Rightarrow$ ponto de inflexão).
+    <br>Mas em $x = 3$: para $x$ um pouco antes de 3 (com $\tfrac{3}{4} < x < 3$), $f''(x) \geq 0$; para $x$ um pouco depois de 3, $f''(x) \geq 0$ também. Ou seja, $f''(3) = 0$ <strong>mas não há mudança de sinal</strong> em $x=3$.
+    <br>$\Rightarrow$ $x=3$ <em>não é</em> ponto de inflexão. Há apenas um ponto de inflexão, de abcissa $\tfrac{3}{4}$.
+    <br>$\Rightarrow$ Proposição I é falsa. $\;\blacksquare$
+    <br><br>
+    <strong>Proposição II (falsa):</strong>
+    <br>Declive de $r$: $m_r = f'(-2)$. Declive de $s$: $m_s = f'(-1)$.
+    <br>Em $x = -2$ e $x = -1$, ambos pertencem a $\left]-\infty, \tfrac{3}{4}\right[$, onde $f''(x) < 0$.
+    <br>$f'' < 0$ em $\left]-\infty, \tfrac{3}{4}\right[$ $\Rightarrow$ $f'$ é estritamente <strong>decrescente</strong> nesse intervalo.
+    <br>Como $-2 < -1$ e $f'$ decrescente: $f'(-2) > f'(-1)$, ou seja, $m_r > m_s$.
+    <br>$\Rightarrow$ o declive de $r$ é <strong>maior</strong> do que o de $s$, não menor.
+    <br>$\Rightarrow$ Proposição II é falsa. $\;\blacksquare$
+    <br><br>
+    <strong>Dificuldade reconhecida:</strong> os alunos tendem a assumir que se $f''$ se anula, há ponto de inflexão. A condição é $f''$ <strong>mudar de sinal</strong>. Aqui $f''(3) = 0$ mas é um zero "duplo" (sem mudança).
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 18
+  </div>
+</div>
+
+
+<!-- PÁGINA 19 — EXERCÍCIO P (2023 F2 · 10 — função par + gráficos impossíveis) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 6 · SECÇÃO E · Demonstrações</span>
+    <span class="direita">Exame 2023 · 2.ª fase · item 10</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec aula6">
+      <p class="ex-num">Exercício P — Função par + gráficos impossíveis <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2023 · 2.ª fase · item 10</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p><strong>10.</strong> Seja $g$ uma função <strong>par</strong>, diferenciável, de domínio $\mathbb{R}\setminus\{-1, 1\}$, tal que:</p>
+      <ul>
+        <li>$\displaystyle\lim_{x \to 1^-} g(x) = +\infty$;</li>
+        <li>$g(0) < 0$;</li>
+        <li>$g'(x) < 0$, &nbsp; $\forall\, x \in \;]-\infty, -1[$.</li>
+      </ul>
+      <p>Em cada um dos referenciais o.n. $Oxy$ seguintes, <strong>I, II e III</strong>, está representada parte do gráfico de uma função e a assíntota a esse gráfico, de equação $x = -1$.</p>
+      <p style="font-size:9.5pt; color:#555; margin: 6pt 0; padding: 6pt 10pt; background:#FBFAF6; border:0.5pt solid #ddd; border-radius:3pt;">
+        <strong>Descrição dos três referenciais</strong> (transcritos do exame original):<br>
+        <strong>(I)</strong> — ramo à esquerda de $-1$ é <em>decrescente</em>; junto à assíntota $x=-1$ sobe para $+\infty$; há um ramo perto de $O$ com bola aberta <em>acima</em> do eixo $Ox$ (sugerindo ordenada positiva em $0$).<br>
+        <strong>(II)</strong> — ramo à esquerda de $-1$ é <em>decrescente</em>; junto à assíntota tende para $+\infty$; perto de $O$ a bola aberta está <em>abaixo</em> do eixo $Ox$ (ordenada negativa).<br>
+        <strong>(III)</strong> — ramo à esquerda de $-1$ é decrescente, mas junto à assíntota $x=-1$ o gráfico tende para $-\infty$ (em vez de $+\infty$).
+      </p>
+      <p><strong>Justifique que em nenhum dos referenciais I, II e III pode estar representada parte do gráfico da função $g$ em $\;]-\infty, 0[\setminus\{-1\}$.</strong></p>
+      <p>Na sua resposta, apresente, para cada um dos referenciais, uma razão que justifique a impossibilidade.</p>
+    </div>
+
+    <div class="resolucao muitolonga">
+      <p class="lab">Resolução (análise gráfico por gráfico):</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução — articular as três condições:</strong>
+    <br><strong>Da paridade:</strong> como $g$ é par, $g(-x) = g(x)$. O ponto $-1$ é o simétrico de $1$, e $\displaystyle\lim_{x\to 1^-}g(x) = +\infty$, pelo que (pela simetria) $\displaystyle\lim_{x\to -1^+}g(x) = +\infty$. Junto à assíntota, pelo lado em estudo, $g$ tende para $+\infty$ (não para $-\infty$).
+    <br><strong>De $g(0) < 0$:</strong> o gráfico passa <em>abaixo</em> do eixo $Ox$ em $x=0$ (ordenada negativa).
+    <br><strong>De $g'(x) < 0$ em $]-\infty,-1[$:</strong> $g$ é estritamente <strong>decrescente</strong> nesse intervalo.
+    <br><br>
+    <strong>Análise de cada referencial — cada um viola uma condição:</strong>
+    <br><strong>(I):</strong> mostra a função com ordenada <em>positiva</em> perto de $0$ (bola aberta acima do eixo), o que contradiz $g(0) < 0$. <em>Impossível</em>.
+    <br><strong>(II):</strong> tem a tendência correta para $+\infty$ e $g(0)<0$, mas o ramo em $]-\infty,-1[$ não respeita a monotonia decrescente exigida por $g'(x)<0$. <em>Impossível</em>.
+    <br><strong>(III):</strong> junto à assíntota o gráfico tende para $-\infty$, contradizendo $\displaystyle\lim_{x\to -1^+}g(x) = +\infty$ (que decorre da paridade). <em>Impossível</em>.
+    <br><br>
+    <strong>Estratégia:</strong> as três condições do enunciado funcionam como "filtros". Para cada referencial basta identificar <em>uma</em> condição violada — sem cálculos, apenas leitura cuidada do gráfico.
+    <br><br>
+    <strong>Nota didática:</strong> em sala, projetar o enunciado original do IAVE (com as figuras exatas) para confirmar visualmente cada violação. A descrição acima reproduz fielmente o comportamento de cada gráfico.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 19
+  </div>
+</div>
+
+
+<!-- PÁGINA 20 — EXERCÍCIO Q (2022 F1 · 15 — abcissas em P.G. — JOIA) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 6 · SECÇÃO E · Demonstrações</span>
+    <span class="direita">Exame 2022 · 1.ª fase · item 15</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec aula6">
+      <p class="ex-num">Exercício Q — Abcissas em P.G. — $f(x) = k/x$ <span class="ex-cot">essencial</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · 1.ª fase · item 15 · 14 pts</p>
+    </div>
+
+    <div class="nota essencial">
+      <strong>Exercício "joia" — demonstração elegante.</strong> Articula derivada, reta secante, reta tangente e progressão geométrica. É o tipo de item que distingue alunos com domínio firme dos restantes. Vale 14 pts e exige raciocínio algébrico claro.
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Seja $k$ um número real não nulo, e seja $f$ a função definida, em $\mathbb{R}^+$, por</p>
+      <p style="text-align:center; margin:8pt 0;">$$f(x) = \frac{k}{x}$$</p>
+      <p>Considere dois pontos do gráfico de $f$, $A$ e $B$, sendo $A$ o de menor abcissa. Considere, também, o ponto desse gráfico em que a reta tangente ao gráfico é paralela à reta $AB$.</p>
+      <p><strong>Mostre que, para qualquer valor de $k$, as abcissas dos três pontos são termos consecutivos de uma progressão geométrica.</strong></p>
+    </div>
+
+    <div class="resolucao muitolonga">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução:</strong>
+    <br>(1) <strong>Designar as abcissas:</strong> seja $a$ a abcissa de $A$ e $b$ a abcissa de $B$, com $0 < a < b$. Então $A = (a,\,\tfrac{k}{a})$ e $B = (b,\,\tfrac{k}{b})$.
+    <br>(2) <strong>Declive da secante $AB$:</strong>
+    $$m_{AB} = \frac{\tfrac{k}{b} - \tfrac{k}{a}}{b - a} = \frac{\tfrac{ka - kb}{ab}}{b - a} = \frac{k(a-b)}{ab(b-a)} = -\frac{k}{ab}$$
+    (3) <strong>Declive da tangente em $x = c$:</strong> $f'(x) = -\dfrac{k}{x^2}$, logo $f'(c) = -\dfrac{k}{c^2}$.
+    <br>(4) <strong>Igualdade (paralelismo $\Leftrightarrow$ mesmo declive):</strong>
+    $$-\frac{k}{c^2} = -\frac{k}{ab} \;\Leftrightarrow\; c^2 = ab \;\Leftrightarrow\; c = \sqrt{ab} \;\;(c > 0)$$
+    (5) <strong>Conclusão:</strong> as três abcissas são $a$, $c = \sqrt{ab}$, $b$. Verificar que formam P.G.:
+    $$\frac{c}{a} = \frac{\sqrt{ab}}{a} = \sqrt{\frac{b}{a}}, \quad \frac{b}{c} = \frac{b}{\sqrt{ab}} = \sqrt{\frac{b}{a}}$$
+    As duas razões são iguais: $\dfrac{c}{a} = \dfrac{b}{c}$. Logo $a$, $c$, $b$ são termos consecutivos de uma progressão geométrica de razão $\sqrt{b/a}$. $\;\blacksquare$
+    <br><br>
+    <strong>Conexão com a geometria:</strong> $c = \sqrt{ab}$ é a <em>média geométrica</em> de $a$ e $b$. Em geral, três números formam P.G. $\Leftrightarrow$ o do meio é a média geométrica dos extremos.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 20
+  </div>
+</div>
+
+
+<!-- PÁGINA 21 — EXERCÍCIO R (2024 F2 · 14 — definição de derivada + paridade) -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 6 · SECÇÃO E · Demonstrações</span>
+    <span class="direita">Exame 2024 · 2.ª fase · item 14</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec aula6">
+      <p class="ex-num">Exercício R — Definição de derivada + paridade <span class="ex-cot">essencial</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2024 · 2.ª fase · item 14 · 14 pts</p>
+    </div>
+
+    <div class="nota essencial">
+      <strong>Único exercício recente com definição de derivada explícita.</strong> O exame sugere a estratégia ("poderá fazer uso da definição"). É o item mais difícil deste tema; exige manipular limites com cuidado e articular paridade com derivada. Tem aparecido pouco mas é altamente previsível para 2026 (tema "definição de derivada" está sub-representado).
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Considere uma função $f$, de domínio $\mathbb{R}$, <strong>par</strong> e diferenciável.</p>
+      <p>Seja $a$ um número real tal que $f'(a) = f(a)$, com $f(a) \neq 0$.</p>
+      <p><strong>Prove que</strong></p>
+      <p style="text-align:center; margin:8pt 0;">$$f'(-a)\cdot f'(a) = -\big[f(a)\big]^2$$</p>
+      <p style="font-size:9.5pt; color:#666;"><em>Sugestão: na sua resposta, poderá fazer uso da definição de derivada de uma função num ponto.</em></p>
+    </div>
+
+    <div class="resolucao muitolonga">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Dica de resolução (passo a passo):</strong>
+    <br>(1) <strong>Calcular $f'(-a)$ usando a definição:</strong>
+    $$f'(-a) = \lim_{x \to -a} \frac{f(x) - f(-a)}{x - (-a)} = \lim_{x \to -a} \frac{f(x) - f(-a)}{x + a}$$
+    (2) <strong>Usar a paridade:</strong> $f$ par $\Rightarrow$ $f(-a) = f(a)$ e $f(x) = f(-x)$. Mudança de variável: seja $u = -x$. Quando $x \to -a$, $u \to a$.
+    $$f'(-a) = \lim_{u \to a} \frac{f(-u) - f(a)}{-u + a} = \lim_{u \to a} \frac{f(u) - f(a)}{-(u - a)} = -\lim_{u \to a}\frac{f(u) - f(a)}{u-a} = -f'(a)$$
+    <em>(usámos $f(-u) = f(u)$ pela paridade e $f(-a) = f(a)$.)</em>
+    <br>(3) <strong>Conclusão parcial:</strong> $\;f'(-a) = -f'(a)$. <em>(A derivada de uma função par é uma função ímpar.)</em>
+    <br>(4) <strong>Substituir na expressão que queremos provar:</strong>
+    $$f'(-a)\cdot f'(a) = -f'(a)\cdot f'(a) = -\big[f'(a)\big]^2$$
+    (5) <strong>Usar a hipótese $f'(a) = f(a)$:</strong>
+    $$-\big[f'(a)\big]^2 = -\big[f(a)\big]^2 \quad\blacksquare$$
+    <br><br>
+    <strong>Estratégia geral para "use a definição de derivada":</strong>
+    <br>• escrever $f'(\text{ponto}) = \lim \dfrac{f(\text{algo}) - f(\text{algo}_0)}{\Delta}$
+    <br>• mudança de variável para reduzir ao limite da definição standard
+    <br>• <em>citar</em> que se está a usar a definição de derivada (vale pontos)
+    <br><br>
+    <strong>Resultado em si próprio:</strong> "a derivada de uma função par é ímpar". Vale a pena memorizar e ter a demonstração de cor.
+  </div>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 21
+  </div>
+</div>
+
+
+<!-- PÁGINA 22 — SÍNTESE FINAL -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Síntese final</span>
+    <span class="direita">Aulas 5 e 6 · Cálculo Diferencial</span>
+  </div>
+
+  <h2 class="titulo-aula">Síntese das Aulas 5 e 6 — Cálculo Diferencial</h2>
+
+  <div class="conteudos">
+    <h4>Tabela síntese dos 18 exercícios</h4>
+    <table style="width:100%; border-collapse:collapse; font-size:9pt; margin-top:6pt;">
+      <thead>
+        <tr style="background:#1F4E79; color:white;">
+          <th style="padding:4pt; text-align:left; width:5%;">Ex.</th>
+          <th style="padding:4pt; text-align:left; width:20%;">Origem</th>
+          <th style="padding:4pt; text-align:left;">Tipo</th>
+          <th style="padding:4pt; text-align:center; width:8%;">Cot.</th>
+          <th style="padding:4pt; text-align:left; width:32%;">Foco didático</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#E6F1FB;"><td colspan="5" style="padding:4pt; font-weight:500;">AULA 5 — SECÇÃO A — Monotonia e extremos</td></tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>A</strong></td>
+          <td style="padding:3pt;">2019 · 1.ª fase · 14.1 e 14.2</td>
+          <td style="padding:3pt;"><strong>Modelo "limpo"</strong></td>
+          <td style="padding:3pt; text-align:center;">14 + EM</td>
+          <td style="padding:3pt;">$g(x)=e^{-x}/x$ — regra do quociente</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>B</strong></td>
+          <td style="padding:3pt;">2022 · 1.ª fase · 8.2</td>
+          <td style="padding:3pt;">Máximo relativo num ramo</td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">Ramo $\frac{e^{2-x}}{x+2}$ em $]-\infty,-2[$ → máx. $-e^5$</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>C</strong></td>
+          <td style="padding:3pt;">2023 · Ép. Especial · 9.1</td>
+          <td style="padding:3pt;">Produto $e^x \cdot \cos x$</td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">Equação trigonométrica em derivada</td>
+        </tr>
+        <tr style="background:#E6F1FB;"><td colspan="5" style="padding:4pt; font-weight:500;">AULA 5 — SECÇÃO B — Concavidades</td></tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>D</strong></td>
+          <td style="padding:3pt;">2023 · 1.ª fase · 3</td>
+          <td style="padding:3pt;"><strong>Modelo "limpo"</strong></td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">$f'$ dada — derivar uma só vez</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>E</strong></td>
+          <td style="padding:3pt;">2022 · 2.ª fase · 9.1</td>
+          <td style="padding:3pt;">2 pontos de inflexão</td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">$g''=1-2\sin(2x)$; ângulo duplo</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>F</strong></td>
+          <td style="padding:3pt;">2022 · Ép. Especial · 13</td>
+          <td style="padding:3pt;">Concavidade + 1 inflexão</td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">$g'(x)=(x-e^{3x})/x$ em $\mathbb{R}^+$</td>
+        </tr>
+        <tr style="background:#E6F1FB;"><td colspan="5" style="padding:4pt; font-weight:500;">AULA 5 — SECÇÃO C — Assíntotas</td></tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>G</strong></td>
+          <td style="padding:3pt;">2024 · 1.ª fase · 7</td>
+          <td style="padding:3pt;">Vertical $x=0$</td>
+          <td style="padding:3pt; text-align:center;">12 pts</td>
+          <td style="padding:3pt;">Limite notável $\frac{1-\cos x}{x^2}=\frac12$</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>H</strong></td>
+          <td style="padding:3pt;">2022 · 1.ª fase · 13</td>
+          <td style="padding:3pt;">Vertical + (não-oblíqua)</td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">$b = \pm\infty$ → não há oblíqua</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>I</strong></td>
+          <td style="padding:3pt;">2022 · Ép. Especial · 11.1</td>
+          <td style="padding:3pt;"><strong>Oblíqua + Horizontal</strong></td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">Truque $\ln(1+e^x)-x = \ln\!\tfrac{1+e^x}{e^x}$</td>
+        </tr>
+        <tr style="background:#EFE7F4;"><td colspan="5" style="padding:4pt; font-weight:500; color:#4A2D63;">AULA 6 — SECÇÃO D — Reta tangente</td></tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>J</strong></td>
+          <td style="padding:3pt;">2019 · 1.ª fase · 13.1</td>
+          <td style="padding:3pt;">Tangente (ramo $x>0$)</td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">$f(x)=\frac{x}{x-\ln x}$; tangente $y=x$</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>K</strong></td>
+          <td style="padding:3pt;">2024 · 2.ª fase · 11.1</td>
+          <td style="padding:3pt;"><strong>Atalho fácil</strong></td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">Paralela à tangente — só precisa do declive</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>L</strong></td>
+          <td style="padding:3pt;">2022 · Ép. Especial · 11.2</td>
+          <td style="padding:3pt;">Área triângulo</td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">Tangente + cortes com eixos → área $(\ln 2)^2$</td>
+        </tr>
+        <tr style="background:#EFE7F4;"><td colspan="5" style="padding:4pt; font-weight:500; color:#4A2D63;">AULA 6 — SECÇÃO E — Demonstrações</td></tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>M</strong></td>
+          <td style="padding:3pt;">2022 · 2.ª fase · 13</td>
+          <td style="padding:3pt;">Polinómio sem extremos</td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">$f'(x) = (x-a)^2 \geq 0$</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>N</strong></td>
+          <td style="padding:3pt;">2024 · 2.ª fase · 10</td>
+          <td style="padding:3pt;">Proposições falsas</td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">$f'$ crescente → $f''>0$ → concavidade ↑</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>O</strong></td>
+          <td style="padding:3pt;">2025 · Ép. Especial · 11</td>
+          <td style="padding:3pt;">Proposições falsas</td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">Zero duplo de $f''$ (sem mudança de sinal)</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>P</strong></td>
+          <td style="padding:3pt;">2023 · 2.ª fase · 10</td>
+          <td style="padding:3pt;">Função par + 3 gráficos</td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">Paridade + monotonia + sinal → 3 impossibilidades</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:3pt;"><strong>Q</strong></td>
+          <td style="padding:3pt;">2022 · 1.ª fase · 15</td>
+          <td style="padding:3pt;"><strong>Abcissas em P.G. (joia)</strong></td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">$c = \sqrt{ab}$ — média geométrica</td>
+        </tr>
+        <tr style="background:#FBFAF6;">
+          <td style="padding:3pt;"><strong>R</strong></td>
+          <td style="padding:3pt;">2024 · 2.ª fase · 14</td>
+          <td style="padding:3pt;"><strong>Definição derivada</strong></td>
+          <td style="padding:3pt; text-align:center;">14 pts</td>
+          <td style="padding:3pt;">$f$ par → $f'$ ímpar → $f'(-a)=-f'(a)$</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="conteudos">
+    <h4>Sugestão de gestão de tempo (Aula 5 — 90 min)</h4>
+    <p style="margin:6pt 0; font-size:10pt;">
+      <strong>15 min</strong> — revisão (tabela de derivadas, sinais de $f'$ e $f''$, oblíqua $y=mx+b$)<br>
+      <strong>20 min</strong> — <strong>Exercício A</strong> (modelo limpo de monotonia, guiado pelo professor)<br>
+      <strong>15 min</strong> — Exercício D (modelo limpo de concavidades, autónomo)<br>
+      <strong>15 min</strong> — Exercício G ou H (assíntotas, em grupo)<br>
+      <strong>15 min</strong> — Exercício I (assíntotas — truque do logaritmo)<br>
+      <strong>10 min</strong> — síntese e dúvidas
+    </p>
+    <p style="margin:6pt 0; font-size:10pt;"><strong>Para casa (Aula 5):</strong> exercícios B, C (monotonia); E, F (concavidades).</p>
+  </div>
+
+  <div class="conteudos">
+    <h4>Sugestão de gestão de tempo (Aula 6 — 90 min)</h4>
+    <p style="margin:6pt 0; font-size:10pt;">
+      <strong>10 min</strong> — revisão (equação da tangente, definição de derivada, paridade)<br>
+      <strong>10 min</strong> — <strong>Exercício K</strong> (tangente — atalho rápido, aquecimento)<br>
+      <strong>15 min</strong> — Exercício M (polinómio sem extremos — modelo)<br>
+      <strong>15 min</strong> — Exercício N ou O (proposições falsas, em grupo)<br>
+      <strong>20 min</strong> — <strong>Exercício Q</strong> (abcissas em P.G. — guiado pelo professor)<br>
+      <strong>15 min</strong> — <strong>Exercício R</strong> (definição de derivada + paridade — guiado)<br>
+      <strong>5 min</strong> — síntese
+    </p>
+    <p style="margin:6pt 0; font-size:10pt;"><strong>Para casa (Aula 6):</strong> exercícios J, L (tangente); P (função par + gráficos).</p>
+  </div>
+
+  <div class="nota" style="background:#E1F5EE; border-left-color:#1D9E75; color:#085041;">
+    <strong>Recurso adicional muito recomendado:</strong> a compilação do Prof. José Carlos Pereira em <em>mat.absolutamente.net</em> tem categorias separadas para "estudo de funções", "demonstrações" e "definição de derivada" — excelente para treino adicional ou exercícios complementares.
+  </div>
+
+  <div class="nota" style="background:#FAEEDA; border-left-color:#BA7517; color:#633806;">
+    <strong>Reservado para simulações finais:</strong> Os exames de 1.ª e 2.ª fase de 2025 estão guardados para as simulações de exame integrais nas semanas finais. Os itens 2025 F2 · 11.1 e 11.2 (concavidades + tangente perpendicular) e 2025 F1 · 15 (polinómio cúbico com abcissas simétricas) são variantes muito interessantes para o treino final.
+  </div>
+
+  <div class="nota essencial">
+    <strong>Atenção pedagógica:</strong> os 18 exercícios estão pensados para 180 min efetivos (2×90 min). Se uma das aulas tiver de ser encurtada, priorizar: <strong>Aula 5</strong> — A, D, I; <strong>Aula 6</strong> — M, Q, R. Estes seis exercícios cobrem o mínimo viável dos temas obrigatórios em 2026.
+  </div>
+
+  <p style="margin-top:14pt; font-size:9pt; color:#888; text-align:center; font-style:italic;">
+    Documento elaborado para a preparação do Exame Nacional de Matemática A — 12.º ano — 1.ª fase, 23 de junho de 2026.<br>
+    Referencial AE 2018. Compilado dos exames originais do IAVE / EduQA (2019–2024 + EE 2025).
+  </p>
+
+  <div class="rodape-pagina">
+    Cálculo Diferencial · Aulas 5 e 6 · Preparação Mat A 12.º · 2026 · Página 22
+  </div>
+</div>
+
+</body>
+</html>

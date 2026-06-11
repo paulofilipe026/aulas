@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<title>Aulas 1 e 2 — Geometria — Preparação Mat A 12.º · 2026</title>
+<style>
+  /* ============================================================
+     CSS pensado para impressão / gravação em A4
+     ============================================================ */
+  @page {
+    size: A4 portrait;
+    margin: 18mm 16mm 18mm 16mm;
+  }
+  @media print {
+    body { background: white !important; }
+    .pagina { box-shadow: none !important; margin: 0 !important; }
+    .no-print { display: none !important; }
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: #2C2C2A;
+    font-size: 11pt;
+    line-height: 1.45;
+    background: #f3f3ef;
+  }
+
+  /* Container A4 — para visualização em ecrã */
+  .pagina {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 18mm 16mm;
+    margin: 0 auto 6mm auto;
+    background: white;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+    page-break-after: always;
+    position: relative;
+  }
+  .pagina:last-child { page-break-after: auto; }
+
+  /* Cabeçalho de página */
+  .header-pagina {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 6pt;
+    border-bottom: 0.5pt solid #999;
+    font-size: 9pt;
+    color: #666;
+    margin-bottom: 14pt;
+  }
+  .header-pagina .esquerda { font-weight: 500; }
+  .header-pagina .direita { letter-spacing: 0.3pt; }
+
+  /* Capa */
+  .capa {
+    text-align: center;
+    padding-top: 50mm;
+  }
+  .capa h1 {
+    font-size: 24pt;
+    font-weight: 500;
+    color: #1F4E79;
+    margin: 0 0 8pt;
+    letter-spacing: -0.3pt;
+  }
+  .capa .subt {
+    font-size: 14pt;
+    color: #5F5E5A;
+    margin: 0 0 6pt;
+    font-weight: 400;
+  }
+  .capa .info-prova {
+    margin-top: 30mm;
+    padding: 14pt 18pt;
+    background: #F1EFE8;
+    border-radius: 4pt;
+    text-align: left;
+    font-size: 10pt;
+    line-height: 1.7;
+  }
+  .capa .info-prova strong { color: #1F4E79; }
+  .capa .indice {
+    margin-top: 18pt;
+    padding: 14pt 18pt;
+    border: 0.5pt solid #ccc;
+    border-radius: 4pt;
+    text-align: left;
+    font-size: 10pt;
+  }
+  .capa .indice h3 {
+    margin: 0 0 8pt;
+    font-size: 11pt;
+    color: #1F4E79;
+    font-weight: 500;
+  }
+  .capa .indice ol {
+    margin: 0;
+    padding-left: 20pt;
+    line-height: 1.8;
+  }
+  .capa .rodape-capa {
+    margin-top: 30mm;
+    font-size: 9pt;
+    color: #888;
+    font-style: italic;
+  }
+
+  /* Estrutura de exercício */
+  h2.titulo-aula {
+    font-size: 16pt;
+    color: #1F4E79;
+    margin: 0 0 4pt;
+    font-weight: 500;
+    border-bottom: 1pt solid #1F4E79;
+    padding-bottom: 4pt;
+  }
+  h2.titulo-aula .subtitulo {
+    font-size: 11pt;
+    color: #5F5E5A;
+    font-weight: 400;
+    display: block;
+    margin-top: 2pt;
+  }
+
+  .ex {
+    margin-bottom: 12pt;
+    page-break-inside: avoid;
+  }
+  .ex-cabec {
+    background: #E6F1FB;
+    padding: 6pt 10pt;
+    border-left: 3pt solid #1F4E79;
+    margin-bottom: 8pt;
+    page-break-after: avoid;
+  }
+  .ex-cabec .ex-num {
+    font-size: 13pt;
+    font-weight: 500;
+    color: #0C447C;
+    margin: 0;
+  }
+  .ex-cabec .ex-meta {
+    font-size: 9pt;
+    color: #5F5E5A;
+    margin: 2pt 0 0;
+  }
+  .ex-cabec .ex-cot {
+    background: #1F4E79;
+    color: white;
+    padding: 2pt 8pt;
+    border-radius: 10pt;
+    font-size: 9pt;
+    font-weight: 500;
+  }
+
+  .ex-enunciado {
+    font-size: 11pt;
+    line-height: 1.55;
+    margin: 0 0 8pt;
+  }
+  .ex-enunciado p { margin: 0 0 6pt; }
+  .ex-enunciado ul {
+    margin: 4pt 0 6pt 0;
+    padding-left: 20pt;
+  }
+  .ex-enunciado li { margin-bottom: 2pt; }
+
+  .ex-fig {
+    text-align: center;
+    margin: 8pt 0;
+    page-break-inside: avoid;
+  }
+  .ex-fig svg {
+    max-width: 100%;
+    height: auto;
+  }
+  .ex-fig .legenda {
+    font-size: 9pt;
+    color: #5F5E5A;
+    font-style: italic;
+    margin-top: 4pt;
+  }
+
+  .ex-subitem {
+    margin: 6pt 0;
+    padding: 6pt 0 6pt 8pt;
+    border-left: 2pt solid #ccc;
+  }
+  .ex-subitem .subitem-num {
+    font-weight: 500;
+    color: #1F4E79;
+  }
+  .ex-subitem .subitem-cot {
+    float: right;
+    font-size: 9pt;
+    color: #5F5E5A;
+    background: #F1EFE8;
+    padding: 1pt 6pt;
+    border-radius: 8pt;
+  }
+
+  /* Espaço de resolução */
+  .resolucao {
+    margin-top: 8pt;
+    padding: 6pt 10pt;
+    background: #FBFAF6;
+    border: 0.5pt dashed #ccc;
+    border-radius: 3pt;
+    min-height: 60mm;
+  }
+  .resolucao .lab {
+    font-size: 9pt;
+    color: #888;
+    font-style: italic;
+    margin: 0 0 4pt;
+  }
+  .resolucao.curta { min-height: 35mm; }
+  .resolucao.media { min-height: 60mm; }
+  .resolucao.longa { min-height: 90mm; }
+
+  /* Caixa de avisos / nota */
+  .nota {
+    background: #FAEEDA;
+    border-left: 3pt solid #BA7517;
+    padding: 6pt 10pt;
+    font-size: 9.5pt;
+    color: #633806;
+    margin: 8pt 0;
+    border-radius: 0 3pt 3pt 0;
+  }
+  .nota strong { color: #412402; }
+
+  /* Caixa de conteúdos a rever */
+  .conteudos {
+    background: #FBFAF6;
+    border: 0.5pt solid #ccc;
+    border-radius: 3pt;
+    padding: 10pt 14pt;
+    margin: 8pt 0 14pt;
+    page-break-inside: avoid;
+  }
+  .conteudos h3 {
+    margin: 0 0 6pt;
+    font-size: 11pt;
+    color: #1F4E79;
+    font-weight: 500;
+  }
+  .conteudos h4 {
+    margin: 8pt 0 3pt;
+    font-size: 10pt;
+    color: #2C2C2A;
+    font-weight: 500;
+  }
+  .conteudos ul {
+    margin: 0 0 4pt;
+    padding-left: 18pt;
+    font-size: 10pt;
+    line-height: 1.55;
+  }
+  .conteudos li { margin-bottom: 1pt; }
+  .conteudos .formula {
+    font-family: "Cambria Math", "Times New Roman", serif;
+    font-style: italic;
+  }
+
+  /* Notas finais */
+  .rodape-pagina {
+    position: absolute;
+    bottom: 12mm;
+    left: 16mm;
+    right: 16mm;
+    font-size: 8pt;
+    color: #888;
+    text-align: center;
+    border-top: 0.5pt solid #ddd;
+    padding-top: 4pt;
+  }
+
+  /* Botão de impressão (não imprime) */
+  .toolbar {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 100;
+  }
+  .toolbar button {
+    background: #1F4E79;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+  }
+  .toolbar button:hover { background: #143a5c; }
+
+  /* Ajustes em SVG */
+  svg text {
+    font-family: "Segoe UI", Arial, sans-serif;
+    fill: #2C2C2A;
+  }
+  svg .eixo { stroke: #2C2C2A; stroke-width: 1.2; fill: none; }
+  svg .seta { fill: #2C2C2A; }
+  svg .aresta-vis { stroke: #2C2C2A; stroke-width: 1.4; fill: none; }
+  svg .aresta-ocu { stroke: #2C2C2A; stroke-width: 1; fill: none; stroke-dasharray: 4 2.5; }
+  svg .face-base { fill: #DCEAF6; stroke: #1F4E79; stroke-width: 1.2; }
+  svg .face-lat-frente { fill: #F0F6FC; stroke: #2C2C2A; stroke-width: 1.2; }
+  svg .face-lat-lado { fill: #E1EBF4; stroke: #2C2C2A; stroke-width: 1.2; }
+  svg .face-topo { fill: #C8DCED; stroke: #1F4E79; stroke-width: 1.2; }
+  svg .ponto { fill: #2C2C2A; }
+  svg .label { font-size: 11pt; font-weight: 500; }
+  svg .labelmenor { font-size: 9pt; }
+  svg .label-eixo { font-size: 10pt; font-style: italic; font-weight: 500; }
+
+  /* Quebras de página utilitárias */
+  .quebra-pagina { page-break-before: always; }
+  .sem-quebra { page-break-inside: avoid; }
+
+  /* Marker de seta para os eixos */
+</style>
+</head>
+<body>
+
+<!-- SVG defs reutilizáveis: marker para setas dos eixos -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <marker id="seta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2C2C2A"/>
+    </marker>
+  </defs>
+</svg>
+
+<div class="toolbar no-print">
+  <button onclick="window.print()">🖨 Imprimir / Guardar como PDF</button>
+</div>
+
+<!-- ===========================================================
+     PÁGINA 1 — CAPA
+     =========================================================== -->
+<div class="pagina">
+  <div class="capa">
+    <h1>Geometria</h1>
+    <p class="subt">Aulas 1 e 2 — Preparação para o Exame Nacional</p>
+    <p class="subt" style="font-size:12pt;">Matemática A · 12.º ano · 2026</p>
+
+    <div class="info-prova">
+      <strong>Estrutura destes blocos de exercícios.</strong> Os 9 exercícios que se seguem foram selecionados das 1.ª e 2.ª fases dos exames de 2020, 2022, 2023 e 2024 — todos do referencial AE 2018. <strong>Os exames de 2025 ficam reservados para as simulações de exame integrais nas semanas finais de preparação.</strong> A seleção privilegia a diversidade de sólidos, a articulação com geometria do plano e a presença de demonstrações.<br><br>
+
+      <strong>Aula 1 — Geometria 3D em referencial Oxyz.</strong> Sólidos diversos (prisma trapezoidal, cubo, prisma triangular reto, cone, cilindro), planos, retas, distâncias, ângulos, projeção ortogonal e probabilidade geométrica.<br><br>
+
+      <strong>Aula 2 — Geometria do plano + Demonstrações.</strong> Circunferência, sectores, produto escalar 2D, ângulos orientados e três demonstrações de natureza geométrica.<br><br>
+
+      <strong>Aviso importante (2026).</strong> Em 2026, segundo os critérios oficiais do EduQA, a aplicação direta da fórmula da distância de um ponto a um plano (ou entre dois planos paralelos) não é aceite sem dedução. Os exercícios devem ser resolvidos por projeção ortogonal — método que devem treinar prioritariamente.
+    </div>
+
+    <div class="indice">
+      <h3>Índice de exercícios</h3>
+      <ol>
+        <li><strong>Aula 1 — Geometria 3D:</strong> Exercícios A, B, E, G, I (5 sólidos diferentes)</li>
+        <li><strong>Aula 2 — Geometria do plano:</strong> Exercícios C, D, F, H (4 itens, com demonstrações)</li>
+      </ol>
+    </div>
+
+    <p class="rodape-capa">
+      Documento de preparação para o exame · 23 de junho de 2026<br>
+      Compilado a partir dos enunciados oficiais do IAVE / EduQA (1.ª e 2.ª fase, 2020–2024)
+    </p>
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 2 — CONTEÚDOS A REVER (AULA 1)
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 1 · Geometria 3D em referencial Oxyz</span>
+    <span class="direita">Conteúdos a rever</span>
+  </div>
+
+  <h2 class="titulo-aula">Aula 1 — Geometria 3D
+    <span class="subtitulo">Conteúdos a rever antes dos exercícios</span>
+  </h2>
+
+  <div class="conteudos">
+    <h4>1. Vetores no espaço</h4>
+    <ul>
+      <li>Coordenadas de vetor a partir de dois pontos: <span class="formula">AB = B − A</span></li>
+      <li>Norma de vetor: <span class="formula">|u| = √(u₁² + u₂² + u₃²)</span></li>
+      <li>Produto escalar: <span class="formula">u · v = u₁v₁ + u₂v₂ + u₃v₃</span></li>
+      <li>Ângulo entre vetores: <span class="formula">cos θ = (u · v) / (|u| · |v|)</span></li>
+      <li>Vetores perpendiculares: <span class="formula">u · v = 0</span></li>
+      <li>Vetores colineares (paralelos): existe k ∈ ℝ tal que u = k v</li>
+    </ul>
+
+    <h4>2. Plano</h4>
+    <ul>
+      <li>Equação cartesiana: <span class="formula">ax + by + cz = d</span> com vetor normal <span class="formula">n = (a, b, c)</span></li>
+      <li>Equação dado um ponto e o vetor normal: substituir o ponto e isolar d</li>
+      <li>Plano paralelo a outro: mesmo vetor normal (à parte do termo independente)</li>
+      <li>Plano perpendicular a uma reta: vetor normal = vetor diretor da reta</li>
+      <li>Plano mediador de [AB]: passa no ponto médio M de [AB] e tem AB como vetor normal</li>
+      <li>Dois planos perpendiculares: produto escalar dos vetores normais = 0</li>
+    </ul>
+
+    <h4>3. Reta</h4>
+    <ul>
+      <li>Equação vetorial: <span class="formula">(x, y, z) = (x₀, y₀, z₀) + k(a, b, c)</span>, k ∈ ℝ</li>
+      <li>Reta paralela a outra: vetor diretor colinear ao da reta dada</li>
+      <li>Reta perpendicular a um plano: vetor diretor = vetor normal do plano</li>
+      <li>Duas retas perpendiculares: produto escalar dos vetores diretores = 0</li>
+      <li>Verificar se um ponto pertence à reta: substituir e resolver em ordem a k</li>
+    </ul>
+
+    <h4>4. Distâncias — método da projeção ortogonal (obrigatório em 2026)</h4>
+    <ul>
+      <li>Distância de ponto P a plano α: (1) escrever a reta perpendicular a α que passa em P; (2) intersetar com α obtendo o pé da perpendicular P'; (3) calcular |PP'|</li>
+      <li>O ponto P' assim obtido é também o <strong>ponto do plano mais próximo de P</strong></li>
+      <li>Aviso: a fórmula direta <span class="formula">d = |ax₀+by₀+cz₀−d| / √(a²+b²+c²)</span> não é aceite sem dedução prévia</li>
+    </ul>
+
+    <h4>5. Sólidos: volumes, áreas e superfície esférica</h4>
+    <ul>
+      <li>Volume da pirâmide e do cone: <span class="formula">V = (1/3) · B · h</span></li>
+      <li>Volume do cilindro e do prisma: <span class="formula">V = B · h</span></li>
+      <li>Volume da esfera: <span class="formula">V = (4/3) π r³</span></li>
+      <li>Área lateral do cone: <span class="formula">A = π r g</span> (g = geratriz)</li>
+      <li>Área da superfície esférica: <span class="formula">A = 4 π r²</span></li>
+      <li>Equação da superfície esférica: <span class="formula">(x−a)² + (y−b)² + (z−c)² = r²</span></li>
+    </ul>
+  </div>
+
+  <div class="nota">
+    <strong>Lembrete sobre a calculadora.</strong> Em 2026, a calculadora gráfica deve ser colocada em modo de exame antes do início da prova, na presença do professor responsável. Os exercícios identificados como "sem recorrer à calculadora" exigem resolução exclusivamente analítica.
+  </div>
+
+  <div class="rodape-pagina">
+    Geometria · Aulas 1 e 2 · Preparação Mat A 12.º · 2026 · Página 2
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 3 — EXERCÍCIO A (parte 1) — Prisma trapezoidal 2024 F1
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 1 · Geometria 3D · Exercício A</span>
+    <span class="direita">Exame 2024 · 1.ª fase · item 3</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício A — Prisma reto trapezoidal <span class="ex-cot">38 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2024 · 1.ª fase · item 3 (3.1, 3.2 e 3.3)</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Na <strong>Figura 1</strong>, está representado, em referencial o.n. Oxyz, o prisma reto [ABCDEFGH], de bases [ABCD] e [EFGH].</p>
+      <p>Sabe-se que:</p>
+      <ul>
+        <li>as bases do prisma são trapézios retângulos</li>
+        <li>o ponto A tem coordenadas (4, −4, −3), e o ponto B tem ordenada igual ao dobro da abcissa</li>
+        <li>uma equação da reta BC é <span class="formula">(x, y, z) = (3, 5, 1) + k(2, 3, 6)</span>, k ∈ ℝ</li>
+      </ul>
+    </div>
+
+    <div class="ex-fig">
+      <img src="imagens/fig1.png" alt="Descrição da imagem" style="max-width: 100%; height: auto;">
+      <p class="legenda">Figura 1 — Prisma reto trapezoidal [ABCDEFGH]</p>
+    </div>
+
+    <div class="ex-subitem">
+      <p><span class="subitem-num">3.1.</span> <span class="subitem-cot">12 pts</span> Qual das equações seguintes é uma equação do plano ABF?</p>
+      <p style="margin-left:14pt; font-size:10.5pt;">
+        (A) 2x + 3y − 6z + 22 = 0 &nbsp;&nbsp;&nbsp; (B) 2x + 3y − 6z + 20 = 0<br>
+        (C) 3x − 2y − 20 = 0 &nbsp;&nbsp;&nbsp; (D) 3x − 2y − 22 = 0
+      </p>
+    </div>
+
+    <div class="resolucao curta">
+      <p class="lab">Resolução / opção:</p>
+    </div>
+
+    <div class="ex-subitem">
+      <p><span class="subitem-num">3.2.</span> <span class="subitem-cot">14 pts</span> Determine, sem recorrer à calculadora, a não ser para efetuar eventuais cálculos numéricos, a amplitude do ângulo convexo AOB. Apresente o resultado em graus, arredondado às unidades.</p>
+    </div>
+
+    <div class="resolucao media">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="rodape-pagina">
+    Geometria · Aulas 1 e 2 · Preparação Mat A 12.º · 2026 · Página 3
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 4 — EXERCÍCIO A (parte 2)
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 1 · Geometria 3D · Exercício A</span>
+    <span class="direita">Exame 2024 · 1.ª fase · item 3</span>
+  </div>
+
+  <div class="ex sem-quebra">
+    <div class="ex-subitem">
+      <p><span class="subitem-num">3.3.</span> <span class="subitem-cot">14 pts</span> Selecionam-se, ao acaso, dois vértices de cada uma das bases do prisma. Determine a probabilidade de os quatro vértices selecionados não pertencerem a uma mesma face lateral do prisma. Apresente o resultado na forma de fração irredutível.</p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota" style="margin-top:14pt">
+    <strong>Pista didática:</strong> O exercício 3.3 articula combinatória com geometria. O nº de casos possíveis é C(4,2) × C(4,2). Nº de casos contrários (vértices na mesma face lateral): há 4 faces laterais, cada face lateral é um quadrilátero com 2 vértices em cada base.
+  </div>
+
+  <div class="rodape-pagina">
+    Geometria · Aulas 1 e 2 · Preparação Mat A 12.º · 2026 · Página 4
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 5 — EXERCÍCIO B — CUBO 2022 F2 (substitui 2025)
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 1 · Geometria 3D · Exercício B</span>
+    <span class="direita">Exame 2022 · 2.ª fase · item 5</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício B — Cubo · produto escalar e ponto numa reta <span class="ex-cot">26 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · 2.ª fase · item 5 (5.1 e 5.2)</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Na <strong>Figura 2</strong>, está representado o cubo [ABCDEFGH].</p>
+      <p>Fixado um determinado referencial o.n. Oxyz, tem-se: A(−2, 5, 0), B(1, 1, −2) e C(3, 2, 8).</p>
+    </div>
+
+    <div class="ex-fig">
+      <img src="imagens/fig2.png" alt="Descrição da imagem" style="max-width: 100%; height: auto;">
+      <p class="legenda">Figura 2 — Cubo [ABCDEFGH]</p>
+    </div>
+
+    <div class="ex-subitem">
+      <p><span class="subitem-num">5.1.</span> <span class="subitem-cot">12 pts</span> Qual é o valor de <span class="formula">AB · HE</span>?</p>
+      <p style="margin-left:14pt; font-size:10.5pt;">
+        (A) −49 &nbsp;&nbsp;&nbsp; (B) 0 &nbsp;&nbsp;&nbsp; (C) 7 &nbsp;&nbsp;&nbsp; (D) 49
+      </p>
+    </div>
+
+    <div class="resolucao curta">
+      <p class="lab">Resolução / opção:</p>
+    </div>
+
+    <div class="ex-subitem">
+      <p><span class="subitem-num">5.2.</span> <span class="subitem-cot">14 pts</span> Resolva este item sem recorrer à calculadora. Sabe-se que o vértice E do cubo pertence à reta definida pela equação <span class="formula">(x, y, z) = (0, 0, 3) + k(1, 1, −1)</span>, k ∈ ℝ. Determine as coordenadas do vértice E.</p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="rodape-pagina">
+    Geometria · Aulas 1 e 2 · Preparação Mat A 12.º · 2026 · Página 5
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 6 — EXERCÍCIO E — Prisma triangular reto 2023 F1
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 1 · Geometria 3D · Exercício E</span>
+    <span class="direita">Exame 2023 · 1.ª fase · item 6</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício E — Prisma triangular reto inscrito em semicircunferência <span class="ex-cot">26 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2023 · 1.ª fase · item 6 (6.1 e 6.2)</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Na <strong>Figura 3</strong>, está representado, em referencial o.n. Oxyz, o prisma triangular reto [OABCDE], de bases [ABC] e [OED].</p>
+      <p>Sabe-se que:</p>
+      <ul>
+        <li>as bases do prisma estão inscritas em semicircunferências, respetivamente, de diâmetros [AB] e [OE]</li>
+        <li>os vértices A e E do prisma pertencem, respetivamente, aos semieixos positivos Ox e Oy</li>
+        <li><span class="formula">OE = 12,5</span></li>
+        <li>a reta AC é definida pela equação vetorial <span class="formula">(x, y, z) = (10, 0, 0) + k(0, 4, 3)</span>, k ∈ ℝ</li>
+      </ul>
+    </div>
+
+    <div class="ex-fig">
+      <img src="imagens/fig3.png" alt="Descrição da imagem" style="max-width: 100%; height: auto;">
+      <p class="legenda">Figura 3 — Prisma triangular reto [OABCDE] com bases inscritas em semicircunferências</p>
+    </div>
+
+    <div class="ex-subitem">
+      <p><span class="subitem-num">6.1.</span> <span class="subitem-cot">12 pts</span> Qual das seguintes equações vetoriais define a reta OD?</p>
+      <p style="margin-left:14pt; font-size:10.5pt;">
+        (A) (x, y, z) = (0, 6, 8) + k(0, 2, 3/2), k ∈ ℝ<br>
+        (B) (x, y, z) = (0, −4, −3) + k(0, 2, 3/2), k ∈ ℝ<br>
+        (C) (x, y, z) = (0, −4, −3) + k(0, 3, −4), k ∈ ℝ<br>
+        (D) (x, y, z) = (0, 6, 8) + k(0, 3, −4), k ∈ ℝ
+      </p>
+    </div>
+
+    <div class="resolucao curta">
+      <p class="lab">Resolução / opção:</p>
+    </div>
+
+    <div class="ex-subitem">
+      <p><span class="subitem-num">6.2.</span> <span class="subitem-cot">14 pts</span> Resolva este item sem recorrer à calculadora. Determine as coordenadas do ponto C.</p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="rodape-pagina">
+    Geometria · Aulas 1 e 2 · Preparação Mat A 12.º · 2026 · Página 6
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 7 — EXERCÍCIO G — Cone reto 2022 F1
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 1 · Geometria 3D · Exercício G</span>
+    <span class="direita">Exame 2022 · 1.ª fase · item 6</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício G — Cone reto <span class="ex-cot">26 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · 1.ª fase · item 6 (6.1 e 6.2)</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Na <strong>Figura 4</strong>, está representado, em referencial o.n. Oxyz, um cone reto de vértice V e base de centro no ponto A.</p>
+      <p>Sabe-se que:</p>
+      <ul>
+        <li>o ponto V pertence ao eixo Oz, e o ponto A pertence ao eixo Oy</li>
+        <li>a base do cone tem raio 3 e está contida no plano definido por <span class="formula">4y + 3z = 16</span></li>
+      </ul>
+    </div>
+
+    <div class="ex-fig">
+      <img src="imagens/fig4.png" alt="Descrição da imagem" style="max-width: 100%; height: auto;">
+      <p class="legenda">Figura 4 — Cone reto de vértice V (eixo Oz) e base de centro A (eixo Oy)</p>
+    </div>
+
+    <div class="ex-subitem">
+      <p><span class="subitem-num">6.1.</span> <span class="subitem-cot">12 pts</span> Qual das seguintes equações define um plano perpendicular ao plano que contém a base do cone e que passa no ponto de coordenadas (1, 2, −1)?</p>
+      <p style="margin-left:14pt; font-size:10.5pt;">
+        (A) 4y + 3z = 11 &nbsp;&nbsp;&nbsp; (B) 3x + 4y + z = 10<br>
+        (C) 3y − 4z = 8 &nbsp;&nbsp;&nbsp; (D) x + 3y − 4z = 3
+      </p>
+    </div>
+
+    <div class="resolucao curta">
+      <p class="lab">Resolução / opção:</p>
+    </div>
+
+    <div class="ex-subitem">
+      <p><span class="subitem-num">6.2.</span> <span class="subitem-cot">14 pts</span> Resolva este item sem recorrer à calculadora. Determine o volume do cone.</p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="rodape-pagina">
+    Geometria · Aulas 1 e 2 · Preparação Mat A 12.º · 2026 · Página 7
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 8 — EXERCÍCIO I — Cilindro reto 2020 F1
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 1 · Geometria 3D · Exercício I (especial)</span>
+    <span class="direita">Exame 2020 · 1.ª fase · item 5</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício I — Cilindro reto · projeção ortogonal <span class="ex-cot">essencial 2026</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2020 · 1.ª fase · item 5 (5.1 e 5.2)</p>
+    </div>
+
+    <div class="nota">
+      <strong>Importância especial deste exercício para 2026.</strong> O subitem 5.2 trabalha o método da projeção ortogonal, que é o método obrigatório em 2026 para calcular distâncias de pontos a planos. Mesmo que não trabalhem mais nenhum exercício, garanta que dominam este.
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Na <strong>Figura 5</strong>, está representado, num referencial o.n. Oxyz, um cilindro reto.</p>
+      <p>Sabe-se que:</p>
+      <ul>
+        <li>o ponto A pertence ao eixo Oy e é o centro de uma das bases do cilindro, e o ponto B pertence ao eixo Ox e é o centro da outra base</li>
+        <li>o ponto C pertence à circunferência de centro B que delimita uma das bases do cilindro</li>
+        <li>o plano ABC é definido pela equação <span class="formula">3x + 4y + 4z − 12 = 0</span></li>
+      </ul>
+    </div>
+
+    <div class="ex-fig">
+      <img src="imagens/fig5.png" alt="Descrição da imagem" style="max-width: 100%; height: auto;">
+      <p class="legenda">Figura 5 — Cilindro reto com bases nos eixos Oy (centro A) e Ox (centro B)</p>
+    </div>
+
+    <div class="ex-subitem">
+      <p><span class="subitem-num">5.1.</span> <span class="subitem-cot">14 pts</span> Resolva este item sem recorrer à calculadora. Determine BC, sabendo que o volume do cilindro é igual a 10π.</p>
+    </div>
+
+    <div class="resolucao media">
+      <p class="lab">Resolução:</p>
+    </div>
+
+    <div class="ex-subitem">
+      <p><span class="subitem-num">5.2.</span> <span class="subitem-cot">14 pts</span> Resolva este item sem recorrer à calculadora. Seja P o ponto de coordenadas (3, 5, 6). Determine as coordenadas do ponto do plano ABC que se encontra mais próximo do ponto P.</p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução (método da projeção ortogonal):</p>
+    </div>
+  </div>
+
+  <div class="rodape-pagina">
+    Geometria · Aulas 1 e 2 · Preparação Mat A 12.º · 2026 · Página 8
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 9 — CONTEÚDOS A REVER (AULA 2)
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 2 · Geometria do plano + Demonstrações</span>
+    <span class="direita">Conteúdos a rever</span>
+  </div>
+
+  <h2 class="titulo-aula">Aula 2 — Geometria do plano + Demonstrações
+    <span class="subtitulo">Conteúdos a rever antes dos exercícios</span>
+  </h2>
+
+  <div class="conteudos">
+    <h4>6. Circunferência no plano</h4>
+    <ul>
+      <li>Equação reduzida: <span class="formula">(x − a)² + (y − b)² = r²</span> — centro (a, b), raio r</li>
+      <li>Comprimento de arco (formulário): <span class="formula">ℓ = α · r</span> com α em radianos</li>
+      <li>Área de sector circular (formulário): <span class="formula">A = (α · r²) / 2</span></li>
+    </ul>
+
+    <h4>7. Produto escalar no plano</h4>
+    <ul>
+      <li>Em coordenadas: <span class="formula">u · v = u₁v₁ + u₂v₂</span></li>
+      <li>Interpretação geométrica: <span class="formula">u · v = |u| · |v| · cos θ</span></li>
+      <li>Vetores perpendiculares: <span class="formula">u · v = 0</span></li>
+      <li>Cuidado: o "ângulo θ" é o ângulo entre os vetores, não necessariamente o ângulo geométrico marcado na figura</li>
+    </ul>
+
+    <h4>8. Coordenadas em circunferência trigonométrica</h4>
+    <ul>
+      <li>Ponto na circunferência de centro O e raio r, fazendo ângulo α com o semieixo Ox: <span class="formula">P = (r cos α, r sin α)</span></li>
+      <li>Para circunferência de centro (a, b) e raio r: <span class="formula">P = (a + r cos α, b + r sin α)</span></li>
+    </ul>
+
+    <h4>9. Equações trigonométricas (item alternativo AE 2018)</h4>
+    <ul>
+      <li>sen x = k tem solução se k ∈ [−1, 1]</li>
+      <li>cos x = k tem solução se k ∈ [−1, 1]</li>
+      <li>Resolver no intervalo dado, verificar se as soluções pertencem ao intervalo</li>
+    </ul>
+
+    <h4>10. Demonstrações de natureza geométrica</h4>
+    <ul>
+      <li>Decompor a região em formas conhecidas (sectores, triângulos, trapézios, retângulos)</li>
+      <li>Calcular cada parte usando as fórmulas do formulário</li>
+      <li>Somar/subtrair conforme a região</li>
+      <li>Manipular algebricamente até chegar à expressão pedida (cuidado com identidades trigonométricas: sen 2α = 2 sen α cos α, etc.)</li>
+      <li>Para mostrar perpendicularidade entre vetores: provar que produto escalar = 0</li>
+      <li>Usar coordenadas (r cos α, r sin α) sempre que existam pontos numa circunferência</li>
+    </ul>
+  </div>
+
+  <div class="nota">
+    <strong>Estratégia para demonstrações.</strong> Os exames recentes (2021–2025) têm pedido sistematicamente demonstrações geométricas. O segredo é não tentar manipular a expressão final logo no início — primeiro calcula-se "em bruto", só depois se simplifica usando identidades. Em demonstrações de perpendicularidade, escreve-se os vetores em coordenadas e calcula-se o produto escalar.
+  </div>
+
+  <div class="rodape-pagina">
+    Geometria · Aulas 1 e 2 · Preparação Mat A 12.º · 2026 · Página 9
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 10 — EXERCÍCIO C — Demonstração de área (2024 F1)
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 2 · Plano · Exercício C</span>
+    <span class="direita">Exame 2024 · 1.ª fase · item 9</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício C — Demonstração de área (sector + trapézio) <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2024 · 1.ª fase · item 9</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Na <strong>Figura 6</strong>, estão representadas, em referencial o.n. Oxy, a circunferência de centro em O e raio 2 e uma região sombreada composta pelo trapézio [OBCD], retângulo em C e em D, e pelo sector circular correspondente ao ângulo orientado AOB, de amplitude α, em radianos, com α ∈ ]0, π/2[, e raio OA.</p>
+      <p>Sabe-se que:</p>
+      <ul>
+        <li>o ponto A pertence à circunferência e ao semieixo positivo Ox</li>
+        <li>os pontos B e C pertencem à circunferência, sendo C o simétrico de B em relação ao eixo Oy</li>
+      </ul>
+    </div>
+
+    <div class="ex-fig">
+      <img src="imagens/fig6.png" alt="Descrição da imagem" style="max-width: 100%; height: auto;">
+      <p class="legenda">Figura 6 — Sector OAB + trapézio [OBCD] (região sombreada)</p>
+    </div>
+
+    <div class="ex-subitem">
+      <p><span class="subitem-num">9.</span> <span class="subitem-cot">14 pts</span> Mostre que a área da região sombreada é dada, em função de α, pela expressão:</p>
+      <p style="text-align:center; font-size:13pt; margin:8pt 0; font-family:'Cambria Math', serif; font-style:italic;"> 2α + 3sen(2α)</p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Demonstração:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Pista didática:</strong> coordenadas dos pontos: A = (2, 0), B = (2 cos α, 2 sen α), C = (−2 cos α, 2 sen α), D = (0, 2 sen α). A região tem duas partes: o sector OAB de área (1/2)·α·2² = 2α; e o trapézio [OBCD] cujas bases são |OD| = 2 sen α e |BC| = 4 cos α, e altura 2 sen α. A identidade-chave é sen(2α) = 2 sen α cos α.
+  </div>
+
+  <div class="rodape-pagina">
+    Geometria · Aulas 1 e 2 · Preparação Mat A 12.º · 2026 · Página 10
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 11 — EXERCÍCIO D — DEMONSTRAÇÃO ÂNGULO RETO 2022 F2
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 2 · Plano · Exercício D</span>
+    <span class="direita">Exame 2022 · 2.ª fase · item 15</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício D — Demonstração: ângulo reto na parábola <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · 2.ª fase · item 15</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Considere, num referencial o.n. Oxy, o gráfico da função f, de domínio ℝ, definida por <span class="formula">f(x) = x²</span>, e uma reta r, não vertical, que passa no ponto de coordenadas (0, 1).</p>
+      <p>Sejam A e B os pontos de intersecção da reta r com o gráfico da função f.</p>
+      <p style="margin-top:8pt;"><strong>Mostre que o ângulo convexo AOB é um ângulo reto.</strong></p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Demonstração:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Pista didática:</strong> Sejam A = (a, a²) e B = (b, b²) os pontos de intersecção. Como a reta passa por A, B e por (0, 1), e os três pontos são colineares, prova-se que ab = −1. Para mostrar que o ângulo AOB é reto, calcula-se OA · OB = a·b + a²·b² = ab(1 + ab). Substituindo ab = −1 obtém-se OA · OB = (−1)(1 + (−1)) = 0. Logo OA ⊥ OB.
+  </div>
+
+  <div class="rodape-pagina">
+    Geometria · Aulas 1 e 2 · Preparação Mat A 12.º · 2026 · Página 11
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 12 — EXERCÍCIO F — Cos(2α) 2023 F1
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 2 · Plano · Exercício F</span>
+    <span class="direita">Exame 2023 · 1.ª fase · item 7</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício F — Coordenadas em circunferência → cos(2α) <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2023 · 1.ª fase · item 7</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Na <strong>Figura 8</strong>, estão representados, em referencial o.n. Oxy, uma circunferência de centro na origem e os pontos A, P e Q, que pertencem à circunferência.</p>
+      <p>Sabe-se que:</p>
+      <ul>
+        <li>o ponto A tem coordenadas (2, 0)</li>
+        <li>o ângulo orientado AOQ tem amplitude α ∈ ]π/2, π]</li>
+        <li>os pontos P e Q têm a mesma abcissa</li>
+        <li><span class="formula">OP · OQ = 3</span></li>
+      </ul>
+      <p style="margin-top:8pt;"><strong>Determine o valor de cos(2α).</strong></p>
+    </div>
+
+    <div class="ex-fig">
+      <img src="imagens/fig7.png" alt="Descrição da imagem" style="max-width: 100%; height: auto;">
+      <p class="legenda">Figura 8 — Circunferência de centro O, pontos A, P, Q (P e Q com mesma abcissa)</p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Pista didática:</strong> Q = (2 cos α, 2 sen α). Como P tem a mesma abcissa que Q e está na circunferência, P = (2 cos α, −2 sen α). O produto escalar é OP · OQ = (2 cos α)·(2 cos α) + (2 sen α)·(−2 sen α) = 4 cos²α − 4 sen²α = 4 cos(2α). Da equação 4 cos(2α) = 3 obtém-se cos(2α) = 3/4.
+  </div>
+
+  <div class="rodape-pagina">
+    Geometria · Aulas 1 e 2 · Preparação Mat A 12.º · 2026 · Página 12
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 13 — EXERCÍCIO H — Arco → produto escalar 2022 F1
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Aula 2 · Plano · Exercício H</span>
+    <span class="direita">Exame 2022 · 1.ª fase · item 7</span>
+  </div>
+
+  <div class="ex">
+    <div class="ex-cabec">
+      <p class="ex-num">Exercício H — Comprimento de arco → produto escalar <span class="ex-cot">14 pts</span></p>
+      <p class="ex-meta">Exame Final Nacional · Mat A 635 · 2022 · 1.ª fase · item 7</p>
+    </div>
+
+    <div class="ex-enunciado">
+      <p>Na <strong>Figura 9</strong>, está representada, em referencial o.n. Oxy, a circunferência de equação <span class="formula">(x − 2)² + (y − 1)² = 9</span>.</p>
+      <p>O ponto C é o centro da circunferência. A e B são dois pontos da circunferência. O arco de circunferência AB tem comprimento <span class="formula">2π</span>.</p>
+      <p style="margin-top:8pt;"><strong>Determine o valor do produto escalar CA · CB.</strong></p>
+    </div>
+
+    <div class="ex-fig">
+      <img src="imagens/fig8.png" alt="Descrição da imagem" style="max-width: 100%; height: auto;">
+      <p class="legenda">Figura 9 — Circunferência (x−2)² + (y−1)² = 9, arco AB de comprimento 2π</p>
+    </div>
+
+    <div class="resolucao longa">
+      <p class="lab">Resolução:</p>
+    </div>
+  </div>
+
+  <div class="nota">
+    <strong>Pista didática:</strong> Da equação da circunferência, raio = 3. Do comprimento de arco ℓ = α · r, com ℓ = 2π e r = 3, obtém-se α = 2π/3 (ângulo central ACB). Pelo produto escalar: CA · CB = |CA| · |CB| · cos α = 3 · 3 · cos(2π/3) = 9 · (−1/2) = −9/2.
+  </div>
+
+  <div class="rodape-pagina">
+    Geometria · Aulas 1 e 2 · Preparação Mat A 12.º · 2026 · Página 13
+  </div>
+</div>
+
+
+<!-- ===========================================================
+     PÁGINA 14 — RESUMO E SÍNTESE FINAL
+     =========================================================== -->
+<div class="pagina">
+  <div class="header-pagina">
+    <span class="esquerda">Síntese final</span>
+    <span class="direita">Aulas 1 e 2 · Geometria</span>
+  </div>
+
+  <h2 class="titulo-aula">Síntese das Aulas 1 e 2 — Geometria</h2>
+
+  <div class="conteudos">
+    <h4>Tabela síntese dos exercícios</h4>
+    <table style="width:100%; border-collapse:collapse; font-size:10pt; margin-top:6pt;">
+      <thead>
+        <tr style="background:#1F4E79; color:white;">
+          <th style="padding:5pt; text-align:left; width:6%;">Ex.</th>
+          <th style="padding:5pt; text-align:left; width:18%;">Origem</th>
+          <th style="padding:5pt; text-align:left;">Tema</th>
+          <th style="padding:5pt; text-align:center; width:10%;">Cot.</th>
+          <th style="padding:5pt; text-align:left; width:30%;">Foco didático</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>A</strong></td>
+          <td style="padding:4pt;">2024 F1 · 3</td>
+          <td style="padding:4pt;">Prisma trapezoidal</td>
+          <td style="padding:4pt; text-align:center;">38 pts</td>
+          <td style="padding:4pt;">Plano + ângulo + probabilidade</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>B</strong></td>
+          <td style="padding:4pt;">2022 F2 · 5</td>
+          <td style="padding:4pt;">Cubo</td>
+          <td style="padding:4pt; text-align:center;">26 pts</td>
+          <td style="padding:4pt;">Produto escalar 3D + ponto na reta</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>E</strong></td>
+          <td style="padding:4pt;">2023 F1 · 6</td>
+          <td style="padding:4pt;">Prisma triangular reto</td>
+          <td style="padding:4pt; text-align:center;">26 pts</td>
+          <td style="padding:4pt;">Retas paralelas + coordenadas</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>G</strong></td>
+          <td style="padding:4pt;">2022 F1 · 6</td>
+          <td style="padding:4pt;">Cone reto</td>
+          <td style="padding:4pt; text-align:center;">26 pts</td>
+          <td style="padding:4pt;">Planos perpendiculares + volume</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>I</strong></td>
+          <td style="padding:4pt;">2020 F1 · 5</td>
+          <td style="padding:4pt;">Cilindro reto</td>
+          <td style="padding:4pt; text-align:center;">28 pts</td>
+          <td style="padding:4pt;"><strong>Projeção ortogonal (essencial 2026!)</strong></td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>C</strong></td>
+          <td style="padding:4pt;">2024 F1 · 9</td>
+          <td style="padding:4pt;">Sector + trapézio</td>
+          <td style="padding:4pt; text-align:center;">14 pts</td>
+          <td style="padding:4pt;"><strong>Demonstração</strong> de área</td>
+        </tr>
+        <tr style="border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>D</strong></td>
+          <td style="padding:4pt;">2022 F2 · 15</td>
+          <td style="padding:4pt;">Parábola + reta</td>
+          <td style="padding:4pt; text-align:center;">14 pts</td>
+          <td style="padding:4pt;"><strong>Demonstração</strong> de ângulo reto</td>
+        </tr>
+        <tr style="background:#FBFAF6; border-bottom:0.5pt solid #ccc;">
+          <td style="padding:4pt;"><strong>F</strong></td>
+          <td style="padding:4pt;">2023 F1 · 7</td>
+          <td style="padding:4pt;">Circunferência + 2 pontos</td>
+          <td style="padding:4pt; text-align:center;">14 pts</td>
+          <td style="padding:4pt;">Coordenadas trig. + cos(2α)</td>
+        </tr>
+        <tr>
+          <td style="padding:4pt;"><strong>H</strong></td>
+          <td style="padding:4pt;">2022 F1 · 7</td>
+          <td style="padding:4pt;">Circunferência + arco</td>
+          <td style="padding:4pt; text-align:center;">14 pts</td>
+          <td style="padding:4pt;">Arco → produto escalar</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="conteudos">
+    <h4>Erros mais comuns nestes exercícios</h4>
+    <ul>
+      <li><strong>Geometria 3D:</strong> confundir vetor diretor de uma reta com vetor normal de um plano; aplicar diretamente a fórmula da distância ponto-plano sem deduzir (penalização severa em 2026); esquecer de verificar se um ponto pertence efetivamente à reta antes de usar coordenadas.</li>
+      <li><strong>Produto escalar:</strong> aplicar |u|·|v|·cos α com α sendo o ângulo da figura, quando o ângulo no produto escalar tem de ser o ângulo entre os vetores (que pode ser diferente do ângulo geométrico).</li>
+      <li><strong>Demonstrações:</strong> tentar manipular a expressão final em vez de calcular primeiro a área "em bruto" e só depois simplificar; esquecer identidades trigonométricas (sen 2α = 2 sen α cos α; cos²α − sen²α = cos 2α).</li>
+      <li><strong>Coordenadas em circunferência:</strong> não usar (r cos α, r sin α) quando aparecem pontos na circunferência — a maioria dos exercícios resolve-se trivialmente quando este é o ponto de partida.</li>
+    </ul>
+  </div>
+
+  <div class="conteudos">
+    <h4>Sugestão de gestão de tempo (90 min × 2 aulas)</h4>
+    <p style="margin:6pt 0; font-size:10pt;"><strong>Aula 1 (90 min):</strong> 25 min de revisão de conteúdos 3D + 30 min Exercício A (resolução guiada) + 30 min Exercício B (autónomo) + 5 min síntese.</p>
+    <p style="margin:6pt 0; font-size:10pt;"><strong>Aula 2 (90 min):</strong> 20 min revisão de conteúdos do plano + 25 min Exercício C (demonstração de área guiada) + 25 min Exercício D (demonstração de ângulo reto autónoma) + 15 min discussão de critérios e erros + 5 min síntese.</p>
+    <p style="margin:6pt 0; font-size:10pt;"><strong>Para casa:</strong> exercícios E, F, G, H. Para alunos mais avançados ou aulas suplementares: I (essencial dominar antes do exame).</p>
+  </div>
+
+  <div class="nota">
+    <strong>Recurso oficial.</strong> Os enunciados originais e os critérios de classificação destes exames estão disponíveis em iave.pt (secção "Provas e exames"). Recomenda-se a consulta dos critérios oficiais após cada resolução para verificar a forma como o IAVE/EduQA classifica cada etapa.
+  </div>
+
+  <div class="nota" style="background:#E1F5EE; border-left-color:#1D9E75; color:#085041;">
+    <strong>Reservado para simulações finais.</strong> Os exames de 2025 (1.ª fase, 2.ª fase, época especial) e o exame de 2024 (2.ª fase, época especial) <em>não</em> foram usados aqui. Estão guardados para as simulações de exame integrais nas semanas finais de preparação.
+  </div>
+
+  <p style="margin-top:18pt; font-size:9pt; color:#888; text-align:center; font-style:italic;">
+    Documento elaborado para a preparação do Exame Nacional de Matemática A — 12.º ano — 1.ª fase, 23 de junho de 2026.<br>
+    Referencial AE 2018. Compilado dos exames originais do IAVE / EduQA (2020–2024).
+  </p>
+
+  <div class="rodape-pagina">
+    Geometria · Aulas 1 e 2 · Preparação Mat A 12.º · 2026 · Página 14
+  </div>
+</div>
+
+</body>
+</html>

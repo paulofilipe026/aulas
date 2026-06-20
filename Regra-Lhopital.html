@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Regra de L'Hôpital — um pequeno guia</title>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js" async></script>
+<style>
+  :root{
+    --paper:#f6f3ec;
+    --ink:#1c1a17;
+    --ink-soft:#4a463f;
+    --rule:#cfc9bb;
+    --accent:#b23a2e;      /* tinta de alerta */
+    --accent-soft:#f3e2df;
+    --ok:#2f6b4f;
+    --ok-soft:#e2eee8;
+    --mono:#5c574d;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Georgia,'Times New Roman',serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:3.5rem 1.5rem 6rem}
+
+  header{border-bottom:3px double var(--ink);padding-bottom:1.4rem;margin-bottom:2.5rem}
+  .eyebrow{
+    font-family:'Courier New',monospace;
+    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--mono);margin:0 0 .8rem
+  }
+  h1{font-size:2.5rem;line-height:1.1;margin:0;font-weight:normal}
+  h1 .sub{display:block;font-size:1.05rem;color:var(--ink-soft);margin-top:.6rem;font-style:italic}
+
+  h2{
+    font-size:1.05rem;font-family:'Courier New',monospace;
+    letter-spacing:.04em;text-transform:uppercase;
+    margin:3rem 0 1rem;padding-bottom:.4rem;border-bottom:1px solid var(--rule)
+  }
+  h2 .n{color:var(--accent);margin-right:.6rem}
+
+  p{margin:1rem 0;color:var(--ink-soft)}
+  strong{color:var(--ink)}
+
+  .statement{
+    background:#fff;border:1px solid var(--rule);
+    border-left:4px solid var(--ink);
+    padding:1.4rem 1.5rem;margin:1.5rem 0;border-radius:2px
+  }
+  .statement p:first-child{margin-top:0}
+  .statement p:last-child{margin-bottom:0}
+
+  .example{
+    margin:1.5rem 0;border-top:1px solid var(--rule);padding-top:1.2rem
+  }
+  .example .tag{
+    display:inline-block;font-family:'Courier New',monospace;
+    font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+    background:var(--ink);color:var(--paper);
+    padding:.18rem .6rem;border-radius:2px;margin-bottom:.6rem
+  }
+  .form{
+    font-family:'Courier New',monospace;font-size:.78rem;
+    color:var(--mono);margin-left:.6rem;letter-spacing:.05em
+  }
+
+  .warn{
+    background:var(--accent-soft);border:1px solid #e3b8b1;
+    border-left:4px solid var(--accent);
+    padding:1.2rem 1.4rem;margin:1.6rem 0;border-radius:2px
+  }
+  .warn .label{
+    font-family:'Courier New',monospace;font-size:.72rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+    font-weight:bold;display:block;margin-bottom:.5rem
+  }
+  .warn p{color:#5a2620}
+
+  .good{
+    background:var(--ok-soft);border-left:4px solid var(--ok);
+    padding:1rem 1.3rem;margin:1.2rem 0;border-radius:2px
+  }
+  .good .label{
+    font-family:'Courier New',monospace;font-size:.72rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ok);
+    font-weight:bold;display:block;margin-bottom:.4rem
+  }
+  .good p{color:#234a39;margin:.3rem 0}
+
+  ol.steps{counter-reset:s;list-style:none;padding-left:0;margin:1rem 0}
+  ol.steps li{
+    position:relative;padding-left:2.4rem;margin:.8rem 0;color:var(--ink-soft)
+  }
+  ol.steps li::before{
+    counter-increment:s;content:counter(s);
+    position:absolute;left:0;top:.05rem;
+    width:1.6rem;height:1.6rem;border:1px solid var(--ink);border-radius:50%;
+    font-family:'Courier New',monospace;font-size:.8rem;
+    display:flex;align-items:center;justify-content:center;color:var(--ink)
+  }
+
+  footer{
+    margin-top:4rem;padding-top:1.4rem;border-top:1px solid var(--rule);
+    font-size:.82rem;color:var(--mono);font-style:italic
+  }
+  a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+
+  @media (max-width:480px){
+    h1{font-size:1.9rem}
+    .wrap{padding:2.5rem 1.1rem 4rem}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow"; style="text-align: center;">12.º Ano · Matemática A</p>
+    <h1>A Regra de L'Hôpital
+      <span class="sub">Uma ferramenta poderosa — e por isso não deve ser aplicada sem pensar.</span>
+    </h1>
+  </header>
+
+  <h2><span class="n">§1</span> O que diz</h2>
+  <p>
+    Serve para calcular limites que, por substituição direta, dão uma das <strong>formas
+    indeterminadas</strong> \(\dfrac{0}{0}\) ou \(\dfrac{\pm\infty}{\pm\infty}\).
+    A ideia: quando numerador e denominador tendem ambos para zero (ou ambos para infinito),
+    o que decide o limite é a <em>rapidez relativa</em> com que o fazem — ou seja, as derivadas.
+  </p>
+
+  <div class="statement">
+    <p><strong>Enunciado.</strong> Sejam \(f\) e \(g\) deriváveis numa vizinhança de \(a\)
+    (exceto talvez em \(a\)), com \(g'(x)\neq 0\) nessa vizinhança. Se</p>
+    \[
+      \lim_{x\to a} f(x) = \lim_{x\to a} g(x) = 0
+      \quad\text{ou}\quad
+      \lim_{x\to a} f(x),\, g(x) = \pm\infty,
+    \]
+    <p>e se o limite \(\displaystyle\lim_{x\to a}\frac{f'(x)}{g'(x)}\) existir (finito ou infinito), então</p>
+    \[
+      \lim_{x\to a}\frac{f(x)}{g(x)} = \lim_{x\to a}\frac{f'(x)}{g'(x)}.
+    \]
+    <p style="font-size:.9rem">Vale também para \(a=\pm\infty\) e para limites laterais.</p>
+  </div>
+
+  <div class="warn">
+    <span class="label">Erro nº 1 dos alunos</span>
+    <p>Derivar \(\dfrac{f}{g}\) como uma fração (regra do quociente). <strong>Não é isso.</strong>
+    Deriva-se o numerador e o denominador <em>em separado</em>: \(\dfrac{f'}{g'}\), não \(\left(\dfrac{f}{g}\right)'\).</p>
+  </div>
+
+  <h2><span class="n">§2</span> Exemplos de aplicação</h2>
+  <p>
+    Em todos os casos seguintes, a substituição direta dá logo \(\frac{0}{0}\) ou
+    \(\frac{\infty}{\infty}\) — sem reescritas. Verificar a forma <em>antes</em> de derivar é o
+    primeiro passo de todos.
+  </p>
+
+  <div class="example">
+    <span class="tag">Exemplo 1</span><span class="form">forma 0/0</span>
+    <p>Um quociente (onde a fatorização também funcionaria):</p>
+    \[
+      \lim_{x\to 1}\frac{x^{3}-1}{x^{2}-1}
+      \;\overset{0/0}{=}\;
+      \lim_{x\to 1}\frac{3x^{2}}{2x}
+      = \frac{3}{2}.
+    \]
+    <div class="good" style="margin-top:1rem">
+      <span class="label">O mesmo por fatorização</span>
+      <p>\(\dfrac{x^3-1}{x^2-1}=\dfrac{(x-1)(x^2+x+1)}{(x-1)(x+1)}\to\dfrac{3}{2}\). Dá o mesmo
+      resultado.</p>
+    </div>
+  </div>
+
+  <div class="example">
+    <span class="tag">Exemplo 2</span><span class="form">forma 0/0 · trigonométrico</span>
+    <p>Aqui a fatorização não ajuda, e é onde a regra mostra a sua utilidade:</p>
+    \[
+      \lim_{x\to 0}\frac{\sin x - x}{x^{3}}
+      \;\overset{0/0}{=}\;
+      \lim_{x\to 0}\frac{\cos x - 1}{3x^{2}}
+      \;\overset{0/0}{=}\;
+      \lim_{x\to 0}\frac{-\sin x}{6x}
+      \;\overset{0/0}{=}\;
+      \lim_{x\to 0}\frac{-\cos x}{6}
+      = -\frac{1}{6}.
+    \]
+    <p>Três aplicações seguidas. Funcionam porque, ao substituir, a indeterminação
+    <em>continua</em> a ser \(0/0\) — confirmar isto a cada passo é obrigatório.</p>
+  </div>
+
+  <div class="example">
+    <span class="tag">Exemplo 3</span><span class="form">forma ∞/∞ · exponencial vs. polinómio</span>
+    <p>Compara a rapidez de crescimento de \(e^{x}\) e de uma potência de \(x\). Resultado
+    importante por si só:</p>
+    \[
+      \lim_{x\to +\infty}\frac{x^{2}}{e^{x}}
+      \;\overset{\infty/\infty}{=}\;
+      \lim_{x\to +\infty}\frac{2x}{e^{x}}
+      \;\overset{\infty/\infty}{=}\;
+      \lim_{x\to +\infty}\frac{2}{e^{x}}
+      = 0.
+    \]
+    <p>Conclusão para guardar: <strong>a exponencial cresce mais depressa do que qualquer
+    polinómio</strong>. O mesmo raciocínio dá \(\dfrac{x^{n}}{e^{x}}\to 0\) para qualquer \(n\),
+    bastando aplicar a regra \(n\) vezes.</p>
+  </div>
+
+  <h2><span class="n">§3</span> Limitações e armadilhas</h2>
+
+  <div class="warn">
+    <span class="label">Limitação A — a hipótese tem de se verificar</span>
+    <p>L'Hôpital só se aplica a \(\dfrac{0}{0}\) ou \(\dfrac{\infty}{\infty}\).
+    Aplicá-la a um limite que <em>não</em> é indeterminado dá disparates:</p>
+    \[
+      \lim_{x\to 0}\frac{x+1}{x+2} = \frac{1}{2}
+      \qquad\text{mas}\qquad
+      \frac{(x+1)'}{(x+2)'} = \frac{1}{1} = 1 \;\;(\text{errado}).
+    \]
+  </div>
+
+  <div class="warn">
+    <span class="label">Limitação B — pode nunca terminar (ou andar em círculos)</span>
+    <p>Há limites onde derivar não simplifica nada. Por exemplo:</p>
+    \[
+      \lim_{x\to +\infty}\frac{e^{x}}{\sqrt{e^{2x}+1}}
+    \]
+    <p>aplicar L'Hôpital reproduz uma expressão tão complicada como a inicial, indefinidamente.
+    Aqui, dividir por \(e^{x}\) resolve e dá \(1\).</p>
+  </div>
+
+  <div class="warn">
+    <span class="label">Limitação C — o recíproco é falso</span>
+    <p>Se \(\displaystyle\lim \frac{f'}{g'}\) <strong>não existir</strong>, isso
+    <em>não</em> significa que \(\displaystyle\lim \frac{f}{g}\) não exista. Contraexemplo clássico:</p>
+    \[
+      \lim_{x\to +\infty}\frac{x+\sin x}{x} = 1,
+    \]
+    <p>mas \(\dfrac{(x+\sin x)'}{x'} = \dfrac{1+\cos x}{1}\) oscila e não tem limite.
+    A regra falhou — o limite original existe na mesma.</p>
+  </div>
+
+  <div class="good">
+    <span class="label">Estratégia — por que ordem tentar</span>
+    <p><strong>L'Hôpital deve ser a última opção, não a primeira.</strong> Antes de derivar, tenta:</p>
+    <ol class="steps">
+      <li>Substituição direta (confirmar que <em>é mesmo</em> indeterminado).</li>
+      <li>Manipulação algébrica: fatorizar (caso \(0/0\) em racionais) ou dividir pela maior potência (caso \(\infty/\infty\)).</li>
+      <li>Só depois, se nada disto servir, L'Hôpital — verificando a forma a cada passo.</li>
+    </ol>
+  </div>
+
+  <footer>
+    <span style="text-align: center; display: block;">Regra de L'Hôpital</span>
+  </footer>
+
+</div>
+</body>
+</html>
